@@ -1,0 +1,1064 @@
+  swagger: '2.0'
+  info:
+    title: 中信云平台供应商适配器管理内部API
+    description: 中信云供应商适配器API定义了供应商/租户/用户管理、服务管理、计费管理等功能模块构成的中信云平台与供应商适配器之间的协议。适配器应在一个URI（统一资源标识符）下实现多个HTTP或HTTPS接入点。一个适配器可以提供多个供应商，每个供应商可包括多个服务（一个供应商的服务仅能存在于一个适配器中）。理想状态是，一个适配器仅包含一个供应商，及其全部服务。适配器应该是可以水平弹性扩展的。多个中信云平台部署实例可以用不同的地址和授权访问同一个适配器.
+    version: "1.0.0"
+  # the domain of the service
+  host: api.c.citic
+  # array of all schemes that your API supports
+  schemes:
+    - http
+  # will be prefixed to all paths
+  basePath: /adapter-management
+  produces:
+    - application/json
+  paths:
+    /catalog:
+      get:
+        summary: 获取服务目录
+        description: 服务目录是一个适配器必须实现的第一个接入点。在初始化时，中信云平台将从所有适配器中读取供应商及其服务信息，并调整用户看到的服务目录。如果服务目录没法初始化或无效，中信云平台将不允许运营管理员注册这一适配器，并将给出具体原因。当适配器更新时，平台将更新响应的服务目录，管理员可以通过命令行中的 update-suppliers-adapter 更新供应商和服务信息。 平台从一个适配器获得服务目录信息后，会用自己存储的供应商和服务的ID unique_id 与适配器中的供应商和服务ID进行比较。如果其中任何一个不存在，则将增加新纪录。对于存在的供应商和服务ID，平台会更新对应服务目录。 如果平台里包含此适配器中没有的服务，并且这个服务没有服务实例，平台将删除此服务，如果服务有服务实例，则此服务会被标识为对所有人不可见。如果供应商不在存在服务，平台将删除此供应商.
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回服务目录.
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/supplier'
+    /services/{service_id}:
+      get:
+        summary: 获取用户相关服务配置GET
+        description:  |
+          此接口为可选实现的接口， 只有当某个服务的配置项的内容（通常是一个 option （选择类配置）,如ECS服务的私有镜像）跟具体的用户相关时，才需要实现这个接口。
+          此接口返回的内容与 服务目录 /catalog 接口返回的单个服务的内容的结构相同。
+        parameters:
+          - name: service_id
+            in: path
+            description: 服务ID
+            type: string
+            required: true
+          - name: org_id
+            in: query
+            description: 组织机构ID
+            type: string
+            required: true
+        responses:
+          200:
+            description: 返回服务的配置详情
+            schema:
+              $ref: '#/definitions/service'
+    /service_instances/verify:
+      put:
+        summary: 服务实例交付前检查
+        description: 此接口为可选实现接口，仅当有某个服务 的 “verify_required = ture” 时， 才需要实现此接口。 适配器接收到此接口点调用时，应检查以所提交的参数，是否能生成一个有效的服务实例。 此处所提交的内容与 服务实例交付 PUT /service_instances/{instance_id} 接口所提交的内容一致。
+        parameters:
+          - name: instance
+            in: body
+            description: 实例数据.
+            required: true
+            schema:
+              $ref: '#/definitions/service_instance'
+        responses:
+          200:
+            description: 返回服务实例交付检查结果.
+            schema:
+              $ref: '#/definitions/return_common'
+    /service_instances/{instance_id}/last_operation:
+      get:
+        summary: 获取正在进行的上一个操作（仅对异步操作有效）.
+        description: 当适配器为服务实例创建、操作（含变更）、释放返回 202 ACCEPTED 时，中信云平台就可以通过 接口获取上一个请求的操作的状态。适配器对这个接口点的响应必须包含 state 域，可选包含 description 域。 state 的有效值包括 in progress，succeeded，和failed。只要返回的是 “state in progress”，中信云平台就可以继续调用last_operation。description域可以给用户提供更多的状态信息，如果需要的话，仅对异步操作有效.
+        parameters:
+          - name: instance_id
+            in: path
+            description: 服务实例ID.
+            required: true
+            type: string
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回服务实例交付状态.
+            schema:
+              $ref: '#/definitions/last_operation_status'
+    /service_instances/{instance_id}:
+      put:
+        summary: 服务实例交付.
+        description: 适配器接收到此接口点调用时，应该按照指定参数创建服务实例。 提示：服务实例的 instance_id 由中信云平台给提供。这个ID会用来对此服务实例进行后继操作，所以适配器必须将此ID与具体的服务实例相关联.
+        parameters:
+          - name: instance_id
+            in: path
+            description: 服务实例ID.
+            required: true
+            type: string
+          - in: body
+            name: body
+            description: 服务实例.
+            required: true
+            schema:
+              $ref: '#/definitions/service_instance'
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 实例创建成功.
+            schema:
+              $ref: '#/definitions/instance_created'
+          201:
+            description: 实例创建成功.
+            schema:
+              $ref: '#/definitions/instance_created'
+          202:
+            description: 实例创建中.
+          409:
+            description: conflict 因资源冲突导致创建失败
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+          422:
+            description: 此服务实例需要进行异步操作。但 accepts_incomplete 不是 true
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+          default:
+            description: 程序错误
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+      post:
+        summary: 操作一个服务实例.
+        description: 适配器应支持用户对已经存在的服务实例进行变更、开机、关机、充值密码等操作，具体支持操作类型和每种类型需要输入的配置信息由服务实例管理API给出。提示：instance_id是前面交付的服务实例的唯一标识.
+        parameters:
+          - name: instance_id
+            in: path
+            description: 服务实例唯一标识.
+            required: true
+            type: string
+          - in: body
+            name: body
+            description: 服务实例.
+            required: true
+            schema:
+              $ref: '#/definitions/service_instance_modify'
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 修改成功.
+            schema:
+              $ref: '#/definitions/instance_updated'
+          202:
+            description: 实例创建中.
+          422:
+            description: 此服务实例需要进行异步操作。但 accepts_incomplete 不是 true
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+          default:
+            description: 程序错误
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+      delete:
+        summary: 服务实例释放.
+        description: 当适配器收到此接口点时，应释放所指明的服务实例。instance_id是服务实例交付时的唯一标识，通常DELETE操作都没有请求内容。支持异步释放.
+        parameters:
+          - name: instance_id
+            in: path
+            description: 服务实例唯一标识.
+            required: true
+            type: string
+          - name: accepts_incomplete
+            in: query
+            description:  支持异步释放.
+            required: true
+            type: boolean
+            default: true
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 释放成功.
+          202:
+            description: 实例释放中.
+          422:
+            description: 此服务实例需要进行异步操作。但 accepts_incomplete 不是 true
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+          default:
+            description: 程序错误
+            schema:
+              $ref: '#/definitions/service_instance_error_msg'
+    /service_instances:
+      get:
+        summary: 服务实例管理.
+        description: |
+          此接口点返回供应商系统中某服务的服务实例列表，包括其配置信息和可进行的操作，其中更新操作为特殊处理，在返回更新操作时，配置选项的默认值为此服务实例的当前值。
+          如果instance_ids为空，则只返回该service_id的20个实例.
+          示例： 适配器地址/service_instances?service_id=5836a0462fbaaf0aee0db7a2&org_id=abde8d3c-7628-4378-a07f-a7bf6c387531&instance_ids=1caf242f-b3a2-41b5-890b-9fbb82b22585,fbf20ccc-ef9e-4377-bbe1-7c56bd6b996c
+        parameters:
+          - name: service_id
+            in: query
+            description:  限定查询的serviceid.
+            required: true
+            type: string
+          - name: instance_ids
+            in: query
+            description:  限定查询的instance id数组，逗号分隔，最多200个.
+            required: false
+            type: array
+            items:
+              type: string
+            collectionFormat: multi
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回供应商系统中某服务的服务实例列表.
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/instances'
+    /suppliers_service/bill_detail:
+      get:
+        summary: 供应商服务管理收支明细.
+        description: 此接口点用于中信云平台按照指定时间周期获取所有供应商服务的服务信息，主要为收支明细.
+        parameters:
+          - name: start_date
+            in: query
+            description: 查询的开始时间 yymmdd 例如 20160501.
+            required: true
+            type: string
+          - name: end_date
+            in: query
+            description: 查询的结束时间 yymmdd 例如 20160531.
+            required: true
+            type: string
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 收支明细.
+            schema:
+              $ref: '#/definitions/bill_detail'
+    /suppliers_service/consume_detail:
+      get:
+        summary: 供应商服务管理消费明细.
+        description: 此接口用于中信云平台按照指定时间周期获取所有供应商服务的服务信息，主要为消费明细.
+        parameters:
+          - name: start_date
+            in: query
+            description: 查询的开始时间 yymmdd 例如 20160501.
+            required: true
+            type: string
+          - name: end_date
+            in: query
+            description: 查询的结束时间 yymmdd 例如 20160531.
+            required: true
+            type: string
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 消费明细.
+            schema:
+              $ref: '#/definitions/balance'
+    /suppliers_service/usage_record:
+      get:
+        summary: 供应商服务管理使用记录.
+        description: 此接口用于中信云平台按照指定时间周期获取所有供应商服务的服务信息，主要为使用记录.
+        parameters:
+          - name: start_date
+            in: query
+            description: 查询的开始时间 yymmdd 例如 20160501.
+            required: true
+            type: string
+          - name: end_date
+            in: query
+            description: 查询的结束时间 yymmdd 例如 20160531.
+            required: true
+            type: string
+          - name: service_id
+            in: query
+            description: 服务ID.
+            required: true
+            type: string
+          - name: grain_size
+            in: query
+            description: 使用粒度，小时或天.
+            required: true
+            type: string
+            enum: ["hour", "day"]
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 使用记录.
+            schema:
+              $ref: '#/definitions/usage_record'
+    /suppliers_service/total_bill:
+      get:
+        summary: 查询供应商总账.
+        description: 此接口用于获取某时间段内的所有账单(时间粒度为月).
+        parameters:
+          - name: start_date
+            in: query
+            description: 查询的开始时间 yymmdd 例如 20160501.
+            required: true
+            type: string
+          - name: end_date
+            in: query
+            description: 查询的结束时间 yymmdd 例如 20160531.
+            required: true
+            type: string
+          - name: supplier_id
+            in: query
+            description: 供应商ID.
+            required: true
+            type: string
+          - name: grain_size
+            in: query
+            description: 使用粒度，目前只有月
+            required: true
+            type: string
+            enum: ["month"]
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 使用记录.
+            schema:
+              $ref: '#/definitions/total_bill'
+    /workorders:
+      post:
+        summary: 新建工单.
+        description: 此接口用于新建工单.
+        parameters:
+          - name: workorder
+            in: body
+            description: 工单内容.
+            required: true
+            schema:
+              $ref: '#/definitions/workorder'
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回创建工单信息.
+            schema:
+              $ref: '#/definitions/workorder_msg'
+      get:
+        summary: 获取工单列表.
+        description: 此接口用于获取工单列表.
+        parameters:
+          - name: ids
+            in: query
+            description: 工单ID列表, 逗号分割， 最多不能超过200个
+            type: string
+          - name: add_start_time
+            in: query
+            description: 开始时间（格式：yyyyMMddHHmmss）
+            type: string
+          - name: add_end_time
+            in: query
+            description: 结束时间（格式：yyyyMMddHHmmss）
+            type: string
+          - name: service_ids
+            in: query
+            description: 服务ID列表, 逗号分割， 最多不能超过200个
+            type: string
+          - name: question_status
+            in: query
+            type: string
+            description: 工单状态，默认全部,assigned    已分派工单刚提交; dealing    处理中; wait_feedback    待反馈; feedback    已反馈    用户添加回复时变为此状态; wait_confirm    待确认    处理完工单，置为此状态，待用户确认; confirmed    已确认    用户确认工单已经处理完毕; score    已评价    用户已经评价工单;
+          - name: page_size
+            in: query
+            description: 每页大小,默认20
+            type: string
+          - name: page_start
+            in: query
+            description: 开始条数,默认0
+            type: string
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回工单列表.
+            schema:
+              $ref: '#/definitions/page_workorder'
+    /workorders/contents:
+      post:
+        summary: 添加工单内容.
+        description: 此接口用于添加工单交流内容.
+        parameters:
+          - in: body
+            name: body
+            description: 添加工单.
+            required: true
+            schema:
+              $ref: '#/definitions/orders_content_insert'
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回添加结果.
+            schema:
+              $ref: '#/definitions/content_insert_msg'
+      get:
+        summary: 获取工单内容.
+        description: 此接口用于获取工单内容.
+        parameters:
+          - in: query
+            name: question_id
+            description: 工单ID.
+            required: true
+            type: string
+        tags:
+          - adapter-management
+        responses:
+          200:
+            description: 返回工单内容.
+            schema:
+              $ref: '#/definitions/workorder_content'
+  definitions:
+    supplier:
+      type: object
+      title: supplier
+      properties:
+        id:
+          type: string
+          description: 供应商的标识，在整个平台中必须是唯一的，推荐使用GUID.
+        citic_org_id:
+          type: string
+          description: 如果这个供应商是集团下属企业，需提供在集团LDAP中的ID.
+        name:
+          type: string
+          description: 一个命令行友好的供应商代号。全小写，没有空格.
+        score:
+          type: string
+          description: 中信云根据统一的服务评价标准给该供应商的评分，百分制.
+        is_a_citic:
+          type: boolean
+          description: 是否是中信集团所属企业.
+        lan:
+          type: boolean
+          description: 是否已接入中信集团集团网（国际电讯VPN）.
+        payment:
+          $ref: '#/definitions/payment'
+        credential:
+          $ref: '#/definitions/credential'
+        metadata:
+          $ref: '#/definitions/supplier_metadata'
+        services:
+          type: array
+          items:
+            $ref: '#/definitions/service'
+    payment:
+      description: 供应商的开户信息，格式定义如下.
+      type: object
+      title: payment
+      required: [deposit_bank,account,account_number]
+      properties:
+        deposit_bank:
+          type: string
+          description: 开户银行.
+        account:
+          type: string
+          description: 供应商在开户银行为中信云开立的账户名称，一般情况下为供应商自己的公司名称.
+        account_number:
+          type: string
+          description: 供应商在开户银行为中信云开立的账户.
+    credential:
+      description: 中信云在供应商处开设的账号信息，格式定义如下
+      type: object
+      title: credential
+      required: [username,password]
+      properties:
+        username:
+          type: string
+          description: 中信云登录供应商使用的用户名.
+        password:
+          type: string
+          description: 中信云登录供应商使用的密码.
+    supplier_metadata:
+      description: 供应商的基本情况信息列表，格式定义如下
+      type: object
+      title: supplier_metadata
+      properties:
+        display_name:
+          type: string
+          description: 显示在WEB界面上的名称.
+        description:
+          type: string
+          description: 显示在WEB页面上的简要描述.
+        long_description:
+          type: string
+          description: 显示在WEB页面上的详细描述.
+        markdown_desc:
+          type: string
+          description: markdown格式的字符串，用来生成服务详情页.
+        image_url:
+          type: string
+          description: 供应商图标图片的URL.
+        document_url:
+          type: string
+          description: 该供应商文档的URL.
+        support_url:
+          type: string
+          description: 该供应商线上支持的URL.
+    service_metadata:
+      description: 服务的基本情况信息列表，格式定义如下
+      type: object
+      title: service_metadata
+      properties:
+        display_name:
+          type: string
+          description: 显示在WEB界面上的名称.
+        description:
+          type: string
+          description: 显示在WEB页面上的简要描述.
+        long_description:
+          type: string
+          description: 显示在WEB页面上的详细描述.
+        markdown_desc:
+          type: string
+          description: markdown格式的字符串，用来生成服务详情页.
+        image_url:
+          type: string
+          description: 供应商图标图片的URL.
+        document_url:
+          type: string
+          description: 该供应商文档的URL.
+        support_url:
+          type: string
+          description: 该供应商线上支持的URL.
+        config_url:
+          type: string
+          description: 该服务在服务购买页面配置个性化参数的URL.
+    service:
+      type: object
+      title: service
+      required: [id,name,score,config_options]
+      properties:
+        id:
+          type: string
+          description: 服务的标识，在整个平台中必须是唯一的，建议使用GUID
+        name:
+          type: string
+          description: 一个命令行友好的服务名称。全部小写，无空格
+        score:
+          type: string
+          description: 中信云按照服务评价标准给服务的评分，百分制
+        price:
+          type: string
+          description: 服务起价
+        customizable:
+          type: boolean
+          description: 此服务是否有用户相关的配置项， 比如ECS里的私有镜像
+          enum: [false, true]
+          default: false
+        verify_required:
+          type: boolean
+          description: 此服务交付前是否需要验证配置的有效性
+          enum: [false, true]
+          default: false
+        editable:
+          type: boolean
+          description: 此服务提交后是否可以修改
+          enum: [false, true]
+          default: false
+        metadata:
+          $ref: '#/definitions/service_metadata'
+        config_options:
+          type: array
+          items:
+            $ref: '#/definitions/config_option'
+    config_option:
+      type: object
+      title: config_option
+      required: [name,display_name,default]
+      properties:
+        name:
+          type: string
+          description: 配置项的名称，在用户选定配置后将以此域作为返回值的key
+        required:
+          type: boolean
+          default: false
+          description: 是否必填项
+        display_name:
+          type: string
+          description: WEB页面显示的选项名称
+        data_type:
+          type: string
+          description: 数据类型, options 指下拉选择框， ooptions_tree 指多级下拉选择框
+          enum: [string,int,double,options,options_tree,image]
+        data_source:
+          type: string
+          description: 数据来源，目前支持两种，1.默认情况 default，通过中信云网的通用配置界面获得; 2. config_url, 通过供应商提供的外部URL获得
+          enum: [default,config_url]
+        default:
+          type: string
+          description: 该配置项的默认值
+        instruction:
+          type: string
+          description: 该配置项的输入说明
+        unit:
+          type: string
+          description: 该配置项的单位
+        min:
+          type: string
+          description: 该配置项的最小值
+        max:
+          type: string
+          description: 该配置项的最大值
+        step:
+          type: string
+          description: 配置项每次增加的值
+        values:
+          type: array
+          items:
+            $ref: '#/definitions/option_value'
+    option_value:
+      type: object
+      required: [key,value]
+      properties:
+        key:
+          type: string
+          description: 可选值的实际返回值
+        value:
+          type: string
+          description: 可选值在WEB页面上的显示
+        info:
+          type: object
+          description: 此选项对应的额外信息， 比如套餐的细节，只用于显示, 用来支持定制服务相关界面
+        sub_config_options:
+          type: array
+          items:
+            $ref: '#/definitions/config_option_clone'
+          description: 此处数组里的对象应该直接 递归引用 config_option, 但由于swagger_editor 对 递归支持不好， 所以定义了一个 config_option_clone.
+    config_option_clone:
+      type: object
+      description: 这个对象的结构跟 config_option一致， 具体内容参见 config_option
+    last_operation_status:
+      type: object
+      required: [state]
+      properties:
+        state:
+          type: string
+          enum: ['in progress', 'succeeded', 'failed']
+          description: 有效值包括 in progress，succeeded，和 failed
+        description:
+          type: string
+          description: 可选域，用于向用户显示更详细的状态信息
+        supplier_instance_id:
+          type: string
+          description: 供应商服务实例ID
+        succeeded_time:
+          type: string
+          description: 操作成功时间
+    service_instance:
+      type: object
+      required: [service_id]
+      properties:
+        instance_id:
+          type: string
+          description: 服务实例ID
+        service_id:
+          type: string
+          description: 在上文服务目录中的服务唯一标识
+        org_id:
+          type: string
+          description: 机构Id
+        parameters:
+          $ref: '#/definitions/parameters'
+        accepts_incomplete:
+          type: boolean
+          description: 参见上文描述的服务实例异步操作
+    service_instance_modify:
+      type: object
+      properties:
+        operation:
+          type: string
+          description: 用户将根据服务实例管理API提供的operations进行操作。适配器要负责 验证。
+        parameters:
+          $ref: '#/definitions/parameters'
+        accepts_incomplete:
+          type: boolean
+          description: 参见上文描述的服务实例异步操作
+    parameters:
+      type: object
+      description: 用户将根据服务实例管理API提供的config_options进行配置，此参数为 配置值。适配器要负责验证。
+      properties:
+        RegionID:
+          type: string
+          description: 地域ID.
+        ZoneId:
+          type: string
+          description: 可用区ID.
+        HostName:
+          type: string
+          description: 域名.
+        SystemDisk.Size:
+          type: string
+          description: 磁盘容量大小.
+        InternetMaxBandwidthIn:
+          type: string
+          description: 带宽.
+        InstanceType:
+          type: string
+          description: 实例类型.
+    instance_created:
+      type: object
+      properties:
+        supplier_instance_id:
+          type: string
+          description: 供应商服务实例ID
+        create_time:
+          type: string
+          description: 交付成功时间
+    instance_updated:
+      type: object
+      properties:
+        update_time:
+          type: string
+          description: 操作成功时间
+    service_instance_error_msg:
+      type: object
+      properties:
+        error:
+          type: string
+          description: 错误信息, 程序堆栈信息
+        description:
+          type: string
+          description: 错误文字描述
+    instances:
+      type: object
+      title: instances
+      required: [id,service_id,configurations]
+      properties:
+        id:
+          type: string
+          description: 服务实例ID.
+        service_id:
+          type: string
+          description: 与上文中的服务目录中的服务ID一致的服务唯一标识.
+        configurations:
+          type: array
+          items:
+            $ref: '#/definitions/configuration'
+        operations:
+          type: array
+          items:
+            $ref: '#/definitions/operations'
+    configuration:
+      type: object
+      title: configuration
+      required: [name,display_name,value,in_list]
+      properties:
+        name:
+          type: string
+          description: 配置项的名称
+        display_name:
+          type: string
+          description: 配置项的显示名称
+        key:
+          type: string
+          description: 配置项key
+        value:
+          type: string
+          description: 配置项取值
+        in_list:
+          type: boolean
+          description: 该配置信息是否显示在列表中
+    operations:
+      type: object
+      title: operations
+      required: [name,display_name]
+      properties:
+        name:
+          type: string
+          description: 名称
+        display_name:
+          type: string
+          description: 显示名称
+        config_url:
+          type: string
+          description: 自定义的操作配置界面URL
+        config_options:
+          type: array
+          items:
+            $ref: '#/definitions/config_option'
+    bill_detail:
+      type: object
+      title: bill_detail
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/definitions/payment_detail'
+    payment_detail:
+      type: object
+      title: payment_detail
+      properties:
+        swift_number:
+          type: string
+          description: 流水号
+        date:
+          type: string
+          description: 日期
+        remark:
+          type: string
+          description: 备注
+        income:
+          type: string
+          description: 收入
+        outcome:
+          type: string
+          description: 支出
+        remain:
+          type: string
+          description: 余额
+    balance:
+      type: object
+      properties:
+        balance:
+          type: string
+          description: 账户余额
+        total_credit:
+          type: string
+          description: 总信用额度
+        left_credit:
+          type: string
+          description: 剩余信用额度
+        items:
+          type: array
+          items:
+            $ref: '#/definitions/consume_detail'
+    consume_detail:
+      type: object
+      title: consume_detail
+      properties:
+        comsume_time:
+          type: string
+          description: 消费时间
+        account_period:
+          type: string
+          description: 账期
+        product:
+          type: string
+          description: 产品
+        bill_number:
+          type: string
+          description: 账单号
+        amount_payable:
+          type: string
+          description: 应付金额
+        pay_state:
+          type: string
+          description: 支付状态 1.已支付2.支付中3.已欠费
+    usage_record:
+      type: object
+      properties:
+        usage_and_expenses_format:
+          type: array
+          items:
+            $ref: '#/definitions/usage_and_expenses_format'
+        usage_and_expenses_data:
+          type: array
+          items:
+            $ref: '#/definitions/usage_and_expenses_data'
+    usage_and_expenses_format:
+      type: object
+      title: usage_and_expenses_format
+      properties:
+        name:
+          type: string
+          description: 信息列的名称
+        display_name:
+          type: string
+          description: 信息列的显示名称
+        in_list:
+          type: boolean
+          description: 是否显示在列表中
+    usage_and_expenses_data:
+      type: object
+      title: usage_and_expenses_data
+      properties:
+        instance_id:
+          type: string
+          description: 服务实例ID
+        start_time:
+          type: string
+          description: 开始时间,采用UTC时间格式；例如2016-10-22T22:00:00Z
+        end_time:
+          type: string
+          description: 结束时间,采用UTC时间格式；例如2016-10-23T23:00:00Z
+    total_bill:
+      type: object
+      title: total_bill
+      properties:
+        bill:
+          type: array
+          items:
+            $ref: '#/definitions/bill_record'
+    bill_record:
+      type: object
+      title: bill_record
+      properties:
+        date:
+          type: string
+          description: 账单时间 201604
+        amount:
+          type: string
+          description: 金额 3000.00
+    workorder:
+      type: object
+      properties:
+        service_id:
+          type: string
+          description: 服务ID
+        customer_common_question_id:
+          type: string
+          description: 常见问题ID
+        title:
+          type: string
+          description: 请求标题
+        content:
+          type: string
+          description: 工单提问正文
+        sec_content:
+          type: string
+          description: 机密信息
+        supplier_uid:
+          type: string
+          description: 供应商用户ID
+        sms_alert_time:
+          type: string
+          description: 短信通知时间
+        telephone:
+          type: string
+          description: 用户手机
+        email:
+          type: string
+          description: 用户邮箱
+        attachments:
+          type: string
+          description: 附加信息
+    workorder_msg:
+      type: object
+      required: [success]
+      properties:
+        data:
+          type: string
+          description: 成功时返回新创建工单的ID
+        success:
+          type: string
+          description: true 成功；false 失败
+        message:
+          type: string
+          description: 接口返回失败时，一般会通过它显示详细错误提示，进行接口调用自查
+        code:
+          type: string
+          description: 错误编码
+    page_workorder:
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: 总条目数
+        data:
+          type: array
+          items:
+            $ref: '#/definitions/workorder_basic'
+        code:
+          type: string
+          description: 错误代码
+        message:
+          type: string
+          description: 错误消息
+    workorder_basic:
+      type: object
+      title: data
+      description: 工单详情列表
+      properties:
+        id:
+          type: string
+          description: 工单ID,用字母ID表示
+        service_id:
+          type: string
+          description: 服务ID
+        title:
+          type: string
+          description: 标题
+        supplier_uid:
+          type: string
+          description: 供应商用户ID
+        question_status:
+          type: string
+          description: 工单状态，默认全部。assigned-已分派工单刚提交; dealing-处理中; wait_feedback-待反馈; feedback-已反馈用户添加回复时变为此状态; wait_confirm-待确认处理完工单，置为此状态，待用户确认; confirmed-已确认用户确认工单已经处理完毕; score-已评价用户已经评价工单
+        add_time:
+          type: string
+          description: 创建时间
+    orders_content_insert:
+      type: object
+      required: [question_id]
+      properties:
+        question_id:
+          type: string
+          description: 工单编号
+        message:
+          type: string
+          description: 交流内容
+        question_sec_content:
+          type: string
+          description: 机密信息
+        attachments:
+          type: string
+          description: 附件key,多个附件用逗号(,)分割,最多支持上传3个附件
+    content_insert_msg:
+      type: object
+      required: [success]
+      properties:
+        success:
+          type: boolean
+          description: 添加结果
+        code:
+          type: string
+          description: 错误代码
+        message:
+          type: string
+          description: 错误信息
+    workorder_content:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/definitions/workorder_content_detail'
+        code:
+          type: string
+          description: 错误代码
+        message:
+          type: string
+          description: 错误消息
+    workorder_content_detail:
+      type: object
+      title: data
+      properties:
+        content:
+          type: string
+          description: 类型为chat和sec_chat的内容
+        note_type:
+          type: string
+          description: 可选值为chat|sec_chat
+        gmt_created:
+          type: string
+          description: 创建时间
+        attach_ids:
+          type: string
+          description: 附件ID列表,逗号分隔
+    return_common:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: 0 表示成功，或有效， 非0表示失败，失败信息应在message里体现。
+        message:
+          type: string
+          description: 与 code 对应的信息。

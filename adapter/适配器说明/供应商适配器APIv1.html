@@ -1,0 +1,1970 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>供应商适配器API</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#428bca;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#f0f6fb;border-left:4px solid #428bca}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#428bca}.warning{color:black;background-color:#fbf1f0;border-left:4px solid #c9302c}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#c9302c}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #d9d9d9;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:#70bbe1;background-color:#d9edf7}.badge.head{color:#70bbe1;background-color:#d9edf7}.badge.options{color:#70bbe1;background-color:#d9edf7}.badge.put{color:#f0db70;background-color:#fcf8e3}.badge.patch{color:#f0db70;background-color:#fcf8e3}.badge.post{color:#93cd7c;background-color:#dff0d8}.badge.delete{color:#ce8383;background-color:#f2dede}.collapse-button{float:right}.collapse-button .close{display:none;color:#428bca;cursor:pointer}.collapse-button .open{color:#428bca;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#428bca}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e8ab8}.definition .method.head{color:#2e8ab8}.definition .method.options{color:#2e8ab8}.definition .method.post{color:#56b82e}.definition .method.put{color:#b8a22e}.definition .method.patch{color:#b8a22e}.definition .method.delete{color:#b82e2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #d9d9d9;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#f2f2f2;border-bottom:1px solid #d9d9d9;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #d9d9d9}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#000;background-color:#337ab7}.action h4.action-heading .method.head{color:#000;background-color:#337ab7}.action h4.action-heading .method.options{color:#000;background-color:#337ab7}.action h4.action-heading .method.put{color:#000;background-color:#ed9c28}.action h4.action-heading .method.patch{color:#000;background-color:#ed9c28}.action h4.action-heading .method.post{color:#000;background-color:#5cb85c}.action h4.action-heading .method.delete{color:#000;background-color:#d9534f}.action h4.action-heading code{color:#444;background-color:#f5f5f5;border-color:#cfcfcf;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#bce8f1}.action.get h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.head{border-color:#bce8f1}.action.head h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.options{border-color:#bce8f1}.action.options h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.post{border-color:#d6e9c6}.action.post h4.action-heading{color:#5cb85c;background:#dff0d8;border-bottom-color:#d6e9c6}.action.put{border-color:#faebcc}.action.put h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.patch{border-color:#faebcc}.action.patch h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.delete{border-color:#ebccd1}.action.delete h4.action-heading{color:#d9534f;background:#f2dede;border-bottom-color:#ebccd1}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#top">Overview</a></div><div class="collapse-content"><ul><li><a href="#header-版本历史">版本历史</a></li><li><a href="#header-变更记录">变更记录</a></li><li><a href="#header-变更策略">变更策略</a></li><li><a href="#header-变更内容">变更内容</a></li><li><a href="#header-依赖">依赖</a></li><li><a href="#header-api概述">API概述</a></li><li><a href="#header-api版本头">API版本头</a></li><li><a href="#header-身份验证（1.0没有身份验证实现）">身份验证（1.0没有身份验证实现）</a></li><li><a href="#header-异步操作">异步操作</a></li><li><a href="#header-阻塞操作">阻塞操作</a></li><li><a href="#header-什么情况下使用异步服务实例操作">什么情况下使用异步服务实例操作</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#供应商适配器">供应商适配器</a></div><div class="collapse-content"><ul><li><a href="#供应商适配器-服务目录-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>获取服务目录</a></li><li><a href="#供应商适配器-获取用户相关服务配置-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>获取用户相关服务配置</a></li><li><a href="#供应商适配器-服务实例交付前检查-put"><span class="badge put"><i class="fa fa-pencil"></i></span>服务实例交付前检查</a></li><li><a href="#供应商适配器-正在进行的上一个操作（仅对异步操作有效）-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>获取正在进行的上一个操作</a></li><li><a href="#供应商适配器-服务实例">服务实例</a><ul><li><a href="#供应商适配器-服务实例-put"><span class="badge put"><i class="fa fa-pencil"></i></span>服务实例交付</a></li><li><a href="#供应商适配器-服务实例-post"><span class="badge post"><i class="fa fa-plus"></i></span>操作一个服务实例</a></li><li><a href="#供应商适配器-服务实例-delete"><span class="badge delete"><i class="fa fa-times"></i></span>服务实例释放</a></li></ul></li><li><a href="#供应商适配器-服务实例集-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>服务实例管理</a></li><li><a href="#供应商适配器-供应商服务收支明细-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>供应商服务管理收支明细</a></li><li><a href="#供应商适配器-供应商服务管理消费明细-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>供应商服务管理消费明细</a></li><li><a href="#供应商适配器-供应商服务管理使用记录-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>供应商服务管理使用记录</a></li><li><a href="#供应商适配器-供应商总账-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>查询供应商总账</a></li><li><a href="#供应商适配器-客服工单">客服工单</a><ul><li><a href="#供应商适配器-客服工单-post"><span class="badge post"><i class="fa fa-plus"></i></span>新建工单</a></li><li><a href="#供应商适配器-客服工单-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>获取工单列表</a></li></ul></li><li><a href="#供应商适配器-工单内容">工单内容</a><ul><li><a href="#供应商适配器-工单内容-post"><span class="badge post"><i class="fa fa-plus"></i></span>添加工单内容</a></li><li><a href="#供应商适配器-工单内容-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>获取工单内容</a></li></ul></li></ul></div></div><p style="text-align: center; word-wrap: break-word;"><a href="http://你自己的适配器地址">http://你自己的适配器地址</a></p></nav><div class="content"><header><h1 id="top">供应商适配器API</h1></header><h2 id="header-版本历史">版本历史 <a class="permalink" href="#header-版本历史" aria-hidden="true">¶</a></h2>
+<h2 id="header-变更记录">变更记录 <a class="permalink" href="#header-变更记录" aria-hidden="true">¶</a></h2>
+<h3 id="header-变更策略">变更策略 <a class="permalink" href="#header-变更策略" aria-hidden="true">¶</a></h3>
+<ul>
+<li>
+<p>已经存在的接入点和json里的域相关参数不能被删除或重命名。</p>
+</li>
+<li>
+<p>可以增加新的可选接入点或已有接入点的新HTTP方法，以便支持新的功能。</p>
+</li>
+<li>
+<p>已有的请求或响应json消息里可以添加新的域。这些域必须是可选的，没处理这些新域的客户端和服务端可以忽略这些可选新域。</p>
+</li>
+</ul>
+<h3 id="header-变更内容">变更内容 <a class="permalink" href="#header-变更内容" aria-hidden="true">¶</a></h3>
+<ul>
+<li>
+<p>接口请求域有多个参数的接口将URL中的请求参数统一加入请求参数列表。</p>
+</li>
+<li>
+<p>添加供应商服务管理收支明细接口</p>
+</li>
+<li>
+<p>添加供应商服务管理消费明细接口供应商服务管理使用记录</p>
+</li>
+<li>
+<p>添加供应商服务管理使用记录接口</p>
+</li>
+<li>
+<p>添加查询供应商总账接口</p>
+</li>
+<li>
+<p>添加服务实例交付接口和获取正在进行的上一个操作接口加入返回项: 供应商实例ID</p>
+</li>
+<li>
+<p>添加服务实例管理接口加入请求参数，可以批量获取服务实例功能</p>
+</li>
+<li>
+<p>删除供应商管理接口</p>
+</li>
+</ul>
+<h2 id="header-依赖">依赖 <a class="permalink" href="#header-依赖" aria-hidden="true">¶</a></h2>
+<p>下面的中信云版本支持供应商适配器API v1.0：</p>
+<ul>
+<li>
+<p>中信云平台v1.0</p>
+</li>
+<li>
+<p>中信云平台命令行工具v1.0（发布日期待定）</p>
+</li>
+<li>
+<p>中信云平台图形界面v2.0（发布日期待定）</p>
+</li>
+</ul>
+<h2 id="header-api概述">API概述 <a class="permalink" href="#header-api概述" aria-hidden="true">¶</a></h2>
+<p>中信云供应商适配器API定义了供应商/租户/用户管理、服务管理、计费管理等功能模块构成的中信云平台与供应商适配器之间的协议。适配器应在一个URI（统一资源标识符）下实现多个HTTP或HTTPS接入点。一个适配器可以提供多个供应商，每个供应商可包括多个服务（一个供应商的服务仅能存在于一个适配器中）。理想状态是，一个适配器仅包含一个供应商，及其全部服务。适配器应该是可以水平弹性扩展的。多个中信云平台部署实例可以用不同的地址和授权访问同一个适配器。<a href="http://json-schema.org/">JSON    Schema</a></p>
+<h2 id="header-api版本头">API版本头 <a class="permalink" href="#header-api版本头" aria-hidden="true">¶</a></h2>
+<p>从中信云平台向适配器的请求头中会包含自己使用的适配器API版本，这样，如果适配器可以拒绝那些自身无法处理的中信云的请求，在拒绝时，适配器应该返回412 Precondition Failed 消息，并告知自己所需的API版本。</p>
+<p>版本号格式为 主版本.小版本, 其中主版本和小版本都是正整数。示例如下：</p>
+<p>X-Adapter-Api-Version: 1.0</p>
+<h2 id="header-身份验证（1.0没有身份验证实现）">身份验证（1.0没有身份验证实现） <a class="permalink" href="#header-身份验证（1.0没有身份验证实现）" aria-hidden="true">¶</a></h2>
+<p>中信云平台的命令行或图形界面工具要求必须使用运营管理员进行适配器的注册（1.0的将提供工具，通过直接改数据库注册适配器）。1.0之后，中信云平台在调用适配器接口时，将通过HTTP基本验证（ Authorization: 头）验证适配器。适配器要去校验用户名和密码，如果校验失败，返回 401 Unauthorized 消息。中信云平台也支持使用https连接适配器。</p>
+<h2 id="header-异步操作">异步操作 <a class="permalink" href="#header-异步操作" aria-hidden="true">¶</a></h2>
+<p>中信云平台的适配器API要求必须在60秒之内返回有效响应（如果响应是 201 CREATED 的话 ），但对于服务实例交付、服务实例释放、服务实例操作（含变更）支持异步操作，适配器在处理这些操作时，仍然必须在60秒内返回，但是返回的结果可以是 202 ACCEPTED, 这表示该操作已经被接受，但尚未完成。中信云平台提供了一个接口点 /service_instances/:guid/last_operation  用于查询上一个操作的状态。
+中信云平台在调用这些支持异步操作的接口时，需要在请求中指定 accepts_incomplete=true 来告诉适配器此调用可以返回异步操作响应，适配器可以自己选择是否返回异步执行。如果要异步执行，必须返回 202 ACCEPTED，同步和异步返回的内容应该相同。</p>
+<p>提示: 现在只有服务实例交付、服务实例释放、服务实例操作（含变更）支持异步操作。其他操作暂不支持。</p>
+<p>如果平台没有指定 accepts_incomplete=true ，适配器又不能在60s内完成操作，适配器应该拒绝此调用，并返回 422 UNPROCESSABLE ENTITY 以及如下内容：
+{
+“error”: “AsyncRequired”,
+“description”: “此服务实例操作需要进行异步执行。”
+}</p>
+<p>对于同步执行的操作，适配器只能为服务实例交付返回 201 CREATED ，为操作（含变更）、释放返回 200 OK 。</p>
+<h2 id="header-阻塞操作">阻塞操作 <a class="permalink" href="#header-阻塞操作" aria-hidden="true">¶</a></h2>
+<p>中信云平台会确保适配器在处理异步操作期间，不会收到新的服务实例操作。比如，适配器在处理服务实例的异步交付过程中，中信云平台不会允许任何操作（含变更）、释放操作，试图做这些操作的客户端会得到一个HTTP 400，错误信息为“该服务实例正在进行另一项操作”。</p>
+<h2 id="header-什么情况下使用异步服务实例操作">什么情况下使用异步服务实例操作 <a class="permalink" href="#header-什么情况下使用异步服务实例操作" aria-hidden="true">¶</a></h2>
+<p>如果适配器无法保障在60s内完成服务实例的操作，则可考虑使用异步服务实例操作。</p>
+<section id="供应商适配器" class="resource-group"><h2 class="group-heading">供应商适配器 <a href="#供应商适配器" class="permalink">&para;</a></h2><div id="供应商适配器-服务目录" class="resource"><h3 class="resource-heading">服务目录 <a href="#供应商适配器-服务目录" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-服务目录-get" class="action get"><h4 class="action-heading"><div class="name">获取服务目录</div><a href="#供应商适配器-服务目录-get" class="method get">GET</a><code class="uri">/catalog</code></h4><p>服务目录是一个适配器必须实现的第一个接入点。在初始化时，中信云平台将从所有适配器中读取供应商及其服务信息，并调整用户看到的服务目录。如果服务目录没法初始化或无效，中信云平台将不允许运营管理员注册这一适配器，并将给出具体原因。当适配器更新时，平台将更新响应的服务目录，管理员可以通过命令行中的 update-suppliers-adapter 更新供应商和服务信息。
+平台从一个适配器获得服务目录信息后，会用自己存储的供应商和服务的ID unique_id 与适配器中的供应商和服务ID进行比较。如果其中任何一个不存在，则将增加新纪录。对于存在的供应商和服务ID，平台会更新对应服务目录。
+如果平台里包含此适配器中没有的服务，并且这个服务没有服务实例，平台将删除此服务，如果服务有服务实例，则此服务会被标识为对所有人不可见。如果供应商不在存在服务，平台将删除此供应商。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/catalog</span></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+<span class="hljs-string">"suppliers"</span>: [{
+  <span class="hljs-string">"id"</span>: <span class="hljs-string">"6ba76566-0251-4e1a-a188-64e1b2d26be2"</span>,
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"aliyun"</span>,
+  <span class="hljs-string">"score"</span>: <span class="hljs-string">"85"</span>,
+  <span class="hljs-string">"is_a_citic"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-string">"lan"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"payment"</span>: {
+    <span class="hljs-string">"deposit_bank"</span>: <span class="hljs-string">"招商银行杭州高新支行"</span>,
+    <span class="hljs-string">"account"</span>: <span class="hljs-string">"阿里云计算有限公司"</span>,
+    <span class="hljs-string">"account_number"</span>: <span class="hljs-string">"为中信云在阿里云申请的招行专属账号"</span>
+  },
+  <span class="hljs-string">"credential"</span>: {
+    <span class="hljs-string">"username"</span>: <span class="hljs-string">"中信云"</span>,
+    <span class="hljs-string">"password"</span>: <span class="hljs-string">"mypassword"</span>
+  },
+  <span class="hljs-string">"metadata"</span>: {
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"阿里云"</span>,
+    <span class="hljs-string">"description"</span>: <span class="hljs-string">"全球领先的云计算服务平台"</span>,
+    <span class="hljs-string">"long_description"</span>: <span class="hljs-string">"阿里云（www.aliyun.com）创立于2009年，是中国最大的云计算平台，为全球200多个国家和地区的创新创业企业、政府机构等提供服务。阿里云致力于提供最安全、可靠的计算和数据处理能力，让计算成为普惠科技和公共服务，为万物互联的DT世界，提供源源不断的新能源。阿里云在全球各地部署高效节能的绿色数据中心，利用清洁计算支持不同的互联网应用。目前，阿里云在中国（华北、华东、华南、香港）、新加坡、美西等地域设有数据中心，未来还将在美东、欧洲、中东、俄罗斯、日本等地设立新的数据中心。"</span>,
+    <span class="hljs-string">"image_url"</span>: <span class="hljs-string">"https://img.alicdn.com/tps/TB16cHjLFXXXXX4XFXXXXXXXXXX-111-27.png"</span>,
+    <span class="hljs-string">"document_url"</span>: <span class="hljs-string">"https://help.aliyun.com/"</span>,
+    <span class="hljs-string">"support_url"</span>: <span class="hljs-string">"https://help.aliyun.com/"</span>
+  },
+  <span class="hljs-string">"services"</span>: [{
+    <span class="hljs-string">"id"</span>: <span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span>,
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"aliyunecs"</span>,
+    <span class="hljs-string">"score"</span>: <span class="hljs-string">"85"</span>,
+    <span class="hljs-string">"price"</span>: <span class="hljs-string">"30.00"</span>,
+    <span class="hljs-string">"customizable"</span>:<span class="hljs-string">"false"</span>,
+    <span class="hljs-string">"verify_required"</span>:<span class="hljs-string">"false"</span>,
+    <span class="hljs-string">"editable"</span>:<span class="hljs-string">"true"</span>,
+    <span class="hljs-string">"metadata"</span>: {
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"云服务器ECS"</span>,
+      <span class="hljs-string">"description"</span>: <span class="hljs-string">"阿里云提供的虚拟主机云服务"</span>,
+      <span class="hljs-string">"long_description"</span>: <span class="hljs-string">"云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"</span>,
+      <span class="hljs-string">"markdown_desc"</span>:<span class="hljs-string">""</span>, ／* markdown格式的描述,用来生成服务详情页. *／
+      <span class="hljs-string">"json_desc"</span>:{
+        <span class="hljs-string">"element1"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-string">"element2"</span>: [],
+        <span class="hljs-string">"element3"</span>: {}
+      },
+      <span class="hljs-string">"image_url"</span>: <span class="hljs-string">"https://img.alicdn.com/tps/TB16cHjLFXXXXX4XFXXXXXXXXXX-111-27.png"</span>,
+      <span class="hljs-string">"document_url"</span>: <span class="hljs-string">"https://help.aliyun.com/product/8314827_25365.html"</span>,
+      <span class="hljs-string">"support_url"</span>: <span class="hljs-string">"https://help.aliyun.com/product/8314827_25365.html"</span>,
+      <span class="hljs-comment">/*
+        当中信云网提供通用配置界面功能不能满足供应商个性化的服务配置功能时，
+        供应商可以开发一个性化的配置界面，把url赋给 config_url
+        此页面由供应商开发提供，样式通过css与中信云网保持一致，
+        中信云网会以iframe的方式，嵌套这个页面并在URL后加上相关参数?param={obj}，
+          1. 用户在服务界面配置服务完成后，调用中信提供的一个js库函数
+               CITIC.serviceConfig({}) 把服务配置数据传回给中信云网
+          2. 用户在服务界面取消配置后，调用中信提供的一个js库函数
+               CITIC.serviceCancel({}) 取消服务配置
+      关于的页面的部署位置，目前有两种方案
+      1. 此页面部署在供应商的服务器上
+          供应商可以随时更新此页面
+
+      2. 此页面部署在中信云网上，需要把页面及相关资源打个包，通过某种机制放到中信云网上
+          供应商更新此页面时需要经过某种机制上传到中信云网上
+  */</span>
+  <span class="hljs-string">"config_url"</span>: <span class="hljs-string">"https://api.aliyun.com/product/ecs_config.html"</span>,
+},
+
+<span class="hljs-string">"config_options"</span>: [{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"RegionID"</span>,
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"地域"</span>,
+  <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"options_tree"</span>,
+  <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+  <span class="hljs-string">"default"</span>: <span class="hljs-string">"huabei1"</span>,
+  <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+  <span class="hljs-string">"values"</span>: [{
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"huabei1"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"华北1"</span>,
+    <span class="hljs-string">"info"</span>: {
+      <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+      <span class="hljs-string">"element2"</span>: [],
+      <span class="hljs-string">"element3"</span>: {}
+    },
+    <span class="hljs-string">"sub_config_options"</span>: [{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"kyq1"</span>,
+      <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+      <span class="hljs-string">"values"</span>: [{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq1"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区1"</span>,
+        <span class="hljs-string">"info"</span>: {
+          <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+          <span class="hljs-string">"element2"</span>: [],
+          <span class="hljs-string">"element3"</span>: {}
+        },
+      },{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq2"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区2"</span>
+      }]
+    }]
+  },{
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"huadong1"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"华东1"</span>,
+    <span class="hljs-string">"info"</span>: {
+      <span class="hljs-string">"key1"</span>: <span class="hljs-string">"value1"</span>,
+      <span class="hljs-string">"key2"</span>: <span class="hljs-string">"value2"</span>
+    },
+    <span class="hljs-string">"sub_config_options"</span>: [{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"kyq3"</span>,
+      <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+      <span class="hljs-string">"values"</span>: [{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq3"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区3"</span>,
+        <span class="hljs-string">"info"</span>: {
+          <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+          <span class="hljs-string">"element2"</span>: [],
+          <span class="hljs-string">"element3"</span>: {}
+        },
+      },{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq4"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区4"</span>,
+        <span class="hljs-string">"info"</span>: {
+          <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+          <span class="hljs-string">"element2"</span>: [],
+          <span class="hljs-string">"element3"</span>: {}
+        },
+      }]
+    }]
+  }]
+},{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"HostName"</span>,
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"主机名"</span>,
+  <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+  <span class="hljs-string">"default"</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>
+},{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"SystemDisk.Size"</span>,
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"系统盘大小"</span>,
+  <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"int"</span>,
+  <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+  <span class="hljs-string">"default"</span>: <span class="hljs-string">"50"</span>,
+  <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+  <span class="hljs-string">"unit"</span>: <span class="hljs-string">"GB"</span>,
+  <span class="hljs-string">"min"</span>: <span class="hljs-string">"50"</span>,
+  <span class="hljs-string">"max"</span>: <span class="hljs-string">"100"</span>
+},{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"InternetMaxBandwidthIn"</span>,
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"互联网入口"</span>,
+  <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"int"</span>,
+  <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+  <span class="hljs-string">"default"</span>: <span class="hljs-string">"1"</span>,
+  <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+  <span class="hljs-string">"unit"</span>: <span class="hljs-string">"MB"</span>
+},{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"InstanceType"</span>,
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"主机规格"</span>,
+  <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"options"</span>,
+  <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+  <span class="hljs-string">"default"</span>: <span class="hljs-string">"1c2"</span>,
+  <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+  <span class="hljs-string">"values"</span>: [{
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"1c2"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"1核2G"</span>
+  },{
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"8c16"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"8核16G"</span>
+  }]
+}]
+  }]
+}]
+}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+"<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"suppliers"</span></span>,
+"<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+  "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商的标识，在整个平台中必须是唯一的，推荐使用GUID。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">citic_org_id</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"如果这个供应商是集团下属企业，需提供在集团LDAP中的ID。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"一个命令行友好的供应商代号。全小写，没有空格。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">score</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云根据统一的服务评价标准给该供应商的评分，百分制。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">is_a_citic</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"是否是中信集团所属企业。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">lan</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"是否已接入中信集团集团网（国际电讯VPN）。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">payment</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商的开户信息，格式定义如下："</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"payment"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">deposit_bank</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开户银行。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">account</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商在开户银行为中信云开立的账户名称，一般情况下为供应商自己的公司名称。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">account_number</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商在开户银行为中信云开立的账户  。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"deposit_bank"</span>,<span class="hljs-string">"account"</span>,<span class="hljs-string">"account_number"</span>]
+    </span>}</span>,
+    "<span class="hljs-attribute">credential</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云在供应商处开设的账号信息，格式定义如下："</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"credential"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">username</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云登录供应商使用的用户名。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">password</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云登录供应商使用的密码。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}</span>,
+      "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"username"</span>,<span class="hljs-string">"password"</span>]
+    </span>}</span>,
+    "<span class="hljs-attribute">metadata</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商的基本情况信息列表，格式定义如下："</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"credential"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">display_name</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"显示在WEB界面上的名称。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">description</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"显示在WEB页面上的简要描述。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">long_description</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"显示在WEB页面上的详细描述。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">image_url</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商图标图片的URL。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">document_url</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该供应商文档的URL。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">support_url</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该供应商线上支持的URL。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}
+    </span>}</span>,
+    "<span class="hljs-attribute">services</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+      "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"services "</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+        "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">id</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务的标识，在整个平台中必须是唯一的，建议使用GUID。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">name</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"一个命令行友好的服务名称。全部小写，无空格。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">score</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云按照服务评价标准给服务的评分，百分制。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">price</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务起价"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">customizable</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"此服务是否有用户相关的配置项， 比如ECS里的私有镜像"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">default</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
+            "<span class="hljs-attribute">oneof</span>": <span class="hljs-value">[<span class="hljs-string">"false"</span>,<span class="hljs-string">"true"</span>]
+          </span>}</span>,
+          "<span class="hljs-attribute">verify_required</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"此服务交付前是否需要验证配置的有效性"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">default</span>": <span class="hljs-value"><span class="hljs-string">"false"</span></span>,
+            "<span class="hljs-attribute">oneof</span>": <span class="hljs-value">[<span class="hljs-string">"false"</span>,<span class="hljs-string">"true"</span>]
+          </span>}</span>,
+          "<span class="hljs-attribute">editable</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"此服务提交后是否可以修改"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+            "<span class="hljs-attribute">default</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
+            "<span class="hljs-attribute">oneof</span>": <span class="hljs-value">[<span class="hljs-string">"false"</span>,<span class="hljs-string">"true"</span>]
+          </span>}</span>,
+          "<span class="hljs-attribute">metadata</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务基本情况信息列表，格式定义如下："</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+            "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"credential"</span></span>,
+            "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">display_name</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"显示在WEB界面上的名称。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">description</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"显示在WEB页面上的简要描述。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">long_description</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"显示在WEB页面上的详细描述。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">markdown_desc</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"markdown格式的字符串，用来生成服务详情页。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">image_url</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务图标图片的URL。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">document_url</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该服务文档的URL。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+              "<span class="hljs-attribute">support_url</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该服务线上支持的URL。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}，
+              <span class="hljs-string">"configu_url"</span>:{
+                "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该服务在服务购买页面配置个性化参数的URL。"</span></span>,
+                "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+              </span>}</span>,
+            }
+          </span>}</span>,
+          "<span class="hljs-attribute">config_options</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+            "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"config_options "</span></span>,
+            "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+              "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+                "<span class="hljs-attribute">name</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"配置项的名称，在用户选定配置后将以此域作为返回值的key。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">required</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"是否必填项。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
+                  "<span class="hljs-attribute">default</span>": <span class="hljs-value"><span class="hljs-literal">false</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">display_name</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"WEB页面显示的选项名称。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">data_type</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"数据类型"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>，
+                  <span class="hljs-string">"oneOf"</span>: [<span class="hljs-string">"string"</span>,<span class="hljs-string">"int"</span>,<span class="hljs-string">"double"</span>,<span class="hljs-string">"options"</span>, <span class="hljs-string">"options_tree"</span>, <span class="hljs-string">"image"</span>]
+                </span>}</span>,
+                "<span class="hljs-attribute">data_source</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"数据来源，目前支持两种，1.默认情况 default，通过中信云网的通用配置界面获得; 2. config_url, 通过供应商提供的外部URL获得"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>，
+                  <span class="hljs-string">"oneOf"</span>: [<span class="hljs-string">"default"</span>,<span class="hljs-string">"config_url"</span>]</span>,
+                }</span>,
+                "<span class="hljs-attribute">default</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该配置项的默认值。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">instruction</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该配置项的输入说明。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}
+                <span class="hljs-string">"unit"</span>:{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该配置项的单位。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">min</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该配置项的最小值。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">max</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该配置项的最大值。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">step</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"配置项每次增加的值。"</span></span>,
+                  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                </span>}</span>,
+                "<span class="hljs-attribute">values</span>":<span class="hljs-value">{
+                  "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+                  "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"values "</span></span>,
+                  "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+                    "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+                    "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+                      "<span class="hljs-attribute">key</span>":<span class="hljs-value">{
+                        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"可选值的实际返回值。"</span></span>,
+                        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                      </span>}</span>,
+                      "<span class="hljs-attribute">value</span>":<span class="hljs-value">{
+                        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"可选值在WEB页面上的显示。"</span></span>,
+                        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+                      </span>}</span>,
+                      "<span class="hljs-attribute">info</span>": <span class="hljs-value">{
+                        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"此选项对应的额外信息， 比如套餐的细节，只用于显示"</span></span>,
+                        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span>
+                      </span>}</span>,
+                      "<span class="hljs-attribute">sub_config_options</span>":<span class="hljs-value">{
+                        "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+                        "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"sub_config_options "</span></span>,
+                        "<span class="hljs-attribute">description</span>":<span class="hljs-value"><span class="hljs-string">"用户选中一个可选值后，显示出来的子配置选项，格式定义参见config_options。"</span></span>,
+                        "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+                          "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+                          "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+                          }
+                        </span>}
+                      </span>}
+                    </span>}</span>,
+                    "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"key"</span>,<span class="hljs-string">"value"</span>]
+                  </span>}
+                </span>}
+              </span>}</span>,
+              "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"name"</span>,<span class="hljs-string">"display_name"</span>,<span class="hljs-string">"default"</span>]
+            </span>}
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"id"</span>,<span class="hljs-string">"name"</span>,<span class="hljs-string">"score"</span>,<span class="hljs-string">"config_options"</span>]
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"id"</span>,<span class="hljs-string">"name"</span>,<span class="hljs-string">"score"</span>,<span class="hljs-string">"is_a_citic"</span>,<span class="hljs-string">"lan"</span>,<span class="hljs-string">"payment"</span>,<span class="hljs-string">"credential"</span>,<span class="hljs-string">"services"</span>]
+</span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-获取用户相关服务配置" class="resource"><h3 class="resource-heading">获取用户相关服务配置 <a href="#供应商适配器-获取用户相关服务配置" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-获取用户相关服务配置-get" class="action get"><h4 class="action-heading"><div class="name">获取用户相关服务配置</div><a href="#供应商适配器-获取用户相关服务配置-get" class="method get">GET</a><code class="uri">/services/{service_id}?org_id=abde8d3c-7628-4378-a07f-a7bf6c387531</code></h4><p>此接口为可选实现的接口， 只有当某个服务的配置项的内容（通常是一个 option （选择类配置）,如ECS服务的私有镜像）跟具体的用户相关时，才需要实现这个接口。
+此接口返回的内容与 服务目录 /catalog 接口返回的单个服务的内容的结构相同。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/services/<span class="hljs-attribute" title="service_id">service_id</span>?org_id=abde8d3c-7628-4378-a07f-a7bf6c387531</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>service_id</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>服务ID</p>
+</dd><dt>org_id</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>组织ID</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+<span class="hljs-string">"id"</span>: <span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span>,
+<span class="hljs-string">"name"</span>: <span class="hljs-string">"aliyunecs"</span>,
+<span class="hljs-string">"score"</span>: <span class="hljs-string">"85"</span>,
+<span class="hljs-string">"price"</span>: <span class="hljs-string">"30.00"</span>,
+<span class="hljs-string">"customizable"</span>:<span class="hljs-string">"false"</span>,
+<span class="hljs-string">"verify_required"</span>:<span class="hljs-string">"false"</span>,
+<span class="hljs-string">"metadata"</span>: {
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"云服务器ECS"</span>,
+  <span class="hljs-string">"description"</span>: <span class="hljs-string">"阿里云提供的虚拟主机云服务"</span>,
+  <span class="hljs-string">"long_description"</span>: <span class="hljs-string">"云服务器（Elastic Compute Service，简称 ECS）是一种简单高效、处理能力可弹性伸缩的计算服务，帮助您快速构建更稳定、安全的应用，提升运维效率，降低 IT 成本，使您更专注于核心业务创新。"</span>,
+  <span class="hljs-string">"markdown_desc"</span>:<span class="hljs-string">""</span>, ／* markdown格式的描述,用来生成服务详情页. *／
+  <span class="hljs-string">"json_desc"</span>:{
+    <span class="hljs-string">"element1"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"element2"</span>: [],
+    <span class="hljs-string">"element3"</span>: {}
+  },
+  <span class="hljs-string">"image_url"</span>: <span class="hljs-string">"https://img.alicdn.com/tps/TB16cHjLFXXXXX4XFXXXXXXXXXX-111-27.png"</span>,
+  <span class="hljs-string">"document_url"</span>: <span class="hljs-string">"https://help.aliyun.com/product/8314827_25365.html"</span>,
+  <span class="hljs-string">"support_url"</span>: <span class="hljs-string">"https://help.aliyun.com/product/8314827_25365.html"</span>,
+  <span class="hljs-comment">/*
+    当中信云网提供通用配置界面功能不能满足供应商个性化的服务配置功能时，
+    供应商可以开发一个性化的配置界面，把url赋给 config_url
+    此页面由供应商开发提供，样式通过css与中信云网保持一致，
+    中信云网会以iframe的方式，嵌套这个页面并在URL后加上相关参数?param={obj}，
+      1. 用户在服务界面配置服务完成后，调用中信提供的一个js库函数
+           CITIC.serviceConfig({}) 把服务配置数据传回给中信云网
+      2. 用户在服务界面取消配置后，调用中信提供的一个js库函数
+           CITIC.serviceCancel({}) 取消服务配置
+  关于的页面的部署位置，目前有两种方案
+  1. 此页面部署在供应商的服务器上
+      供应商可以随时更新此页面
+
+  2. 此页面部署在中信云网上，需要把页面及相关资源打个包，通过某种机制放到中信云网上
+      供应商更新此页面时需要经过某种机制上传到中信云网上
+  */</span>
+  <span class="hljs-string">"config_url"</span>: <span class="hljs-string">"https://api.aliyun.com/product/ecs_config.html"</span>,
+},
+<span class="hljs-string">"config_options"</span>: [
+  {
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"RegionID"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"地域"</span>,
+    <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"options_tree"</span>,
+    <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+    <span class="hljs-string">"default"</span>: <span class="hljs-string">"huabei1"</span>,
+    <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+    <span class="hljs-string">"values"</span>: [
+      {
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"huabei1"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"华北1"</span>,
+        <span class="hljs-string">"info"</span>: {
+          <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+          <span class="hljs-string">"element2"</span>: [],
+          <span class="hljs-string">"element3"</span>: {}
+        },
+        <span class="hljs-string">"sub_config_options"</span>: [
+          {
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+            <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区"</span>,
+            <span class="hljs-string">"default"</span>: <span class="hljs-string">"kyq1"</span>,
+            <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+            <span class="hljs-string">"values"</span>: [
+              {
+                <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq1"</span>,
+                <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区1"</span>,
+                <span class="hljs-string">"info"</span>: {
+                  <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+                  <span class="hljs-string">"element2"</span>: [],
+                  <span class="hljs-string">"element3"</span>: {}
+                },
+              },
+              {
+                <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq2"</span>,
+                <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区2"</span>
+              }
+            ]
+          }
+        ]
+      },
+      {
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"huadong1"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"华东1"</span>,
+        <span class="hljs-string">"info"</span>: {
+          <span class="hljs-string">"key1"</span>: <span class="hljs-string">"value1"</span>,
+          <span class="hljs-string">"key2"</span>: <span class="hljs-string">"value2"</span>
+        },
+        <span class="hljs-string">"sub_config_options"</span>: [
+          {
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+            <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区"</span>,
+            <span class="hljs-string">"default"</span>: <span class="hljs-string">"kyq3"</span>,
+            <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+            <span class="hljs-string">"values"</span>: [
+              {
+                <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq3"</span>,
+                <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区3"</span>,
+                <span class="hljs-string">"info"</span>: {
+                  <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+                  <span class="hljs-string">"element2"</span>: [],
+                  <span class="hljs-string">"element3"</span>: {}
+                },
+              },
+              {
+                <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq4"</span>,
+                <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区4"</span>,
+                <span class="hljs-string">"info"</span>: {
+                  <span class="hljs-string">"element1"</span>: <span class="hljs-string">"value1"</span>,
+                  <span class="hljs-string">"element2"</span>: [],
+                  <span class="hljs-string">"element3"</span>: {}
+                },
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"HostName"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"主机名"</span>,
+    <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+    <span class="hljs-string">"default"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>
+  },
+  {
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"SystemDisk.Size"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"系统盘大小"</span>,
+    <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"int"</span>,
+    <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+    <span class="hljs-string">"default"</span>: <span class="hljs-string">"50"</span>,
+    <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+    <span class="hljs-string">"unit"</span>: <span class="hljs-string">"GB"</span>,
+    <span class="hljs-string">"min"</span>: <span class="hljs-string">"50"</span>,
+    <span class="hljs-string">"max"</span>: <span class="hljs-string">"100"</span>
+  },
+  {
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"InternetMaxBandwidthIn"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"互联网入口"</span>,
+    <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"int"</span>,
+    <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+    <span class="hljs-string">"default"</span>: <span class="hljs-string">"1"</span>,
+    <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+    <span class="hljs-string">"unit"</span>: <span class="hljs-string">"MB"</span>
+  },
+  {
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"InstanceType"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"主机规格"</span>,
+    <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"options"</span>,
+    <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+    <span class="hljs-string">"default"</span>: <span class="hljs-string">"1c2"</span>,
+    <span class="hljs-string">"instruction"</span>: <span class="hljs-string">"此配置项输入说明"</span>,
+    <span class="hljs-string">"values"</span>: [
+      {
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"1c2"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"1核2G"</span>
+      },{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"8c16"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"8核16G"</span>
+      }
+    ]
+  }
+]
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-服务实例交付前检查" class="resource"><h3 class="resource-heading">服务实例交付前检查 <a href="#供应商适配器-服务实例交付前检查" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-服务实例交付前检查-put" class="action put"><h4 class="action-heading"><div class="name">服务实例交付前检查</div><a href="#供应商适配器-服务实例交付前检查-put" class="method put">PUT</a><code class="uri">/service_instances/verify</code></h4><p>此接口为可选实现接口，仅当有某个服务 的 “verify_required = ture” 时， 才需要实现此接口。
+适配器接收到此接口点调用时，应检查以所提交的参数，是否能生成一个有效的服务实例。
+此处所提交的内容与 服务实例交付 PUT /service_instances/{instance_id}  接口所提交的内容一致。</p>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/service_instances/verify</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">instance_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a1 "</span></span>,
+  "<span class="hljs-attribute">service_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0 "</span></span>,
+  "<span class="hljs-attribute">org_id</span>": <span class="hljs-value"><span class="hljs-string">"abde8d3c-7628-4378-a07f-a7bf6c387531"</span></span>,
+  "<span class="hljs-attribute">accepts_incomplete</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">parameters</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">RegionID</span>": <span class="hljs-value"><span class="hljs-string">"huabei1"</span></span>,
+    "<span class="hljs-attribute">ZoneId</span>": <span class="hljs-value"><span class="hljs-string">"kyq1"</span></span>,
+    "<span class="hljs-attribute">HostName</span>": <span class="hljs-value"><span class="hljs-string">"mylinux"</span></span>,
+    "<span class="hljs-attribute">SystemDisk.Size</span>": <span class="hljs-value"><span class="hljs-string">"50"</span></span>,
+    "<span class="hljs-attribute">InternetMaxBandwidthIn</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+    "<span class="hljs-attribute">InstanceType</span>": <span class="hljs-value"><span class="hljs-string">"1c2"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">pricing_model</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">mode</span>": <span class="hljs-value"><span class="hljs-string">"package"</span></span>,
+    "<span class="hljs-attribute">unit</span>": <span class="hljs-value"><span class="hljs-string">"monthly"</span></span>,
+    "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"12"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+"<span class="hljs-attribute">instance_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务实例ID"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">service_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"在上文服务目录中的服务唯一标识。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">org_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"机构Id"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">parameters</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云平台会根据上文服务目录中获取的config_options提供创建一个服务实例所需的配置项值的列表，适配器要负责验证。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"JSON object"</span>
+</span>}</span>,
+"<span class="hljs-attribute">pricing_model</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"计费模式"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">mode</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"计费模式: [包年包月, 按使用量]"</span></span>,
+      "<span class="hljs-attribute">oneOf</span>": <span class="hljs-value">[<span class="hljs-string">"package"</span>, <span class="hljs-string">"usage"</span>]</span>,
+    }</span>,
+    "<span class="hljs-attribute">unit</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"单位: mode = 包年包月 时有效"</span>
+      <span class="hljs-string">"oneOf"</span>: [<span class="hljs-string">"daily"</span>, <span class="hljs-string">"monthly"</span>, <span class="hljs-string">"yearly"</span>]
+    </span>}</span>,
+    "<span class="hljs-attribute">amount</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"int"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"数量: mode = 包年包月 时有效"</span>
+    </span>}</span>,
+  }
+</span>}</span>,
+"<span class="hljs-attribute">accepts_incomplete</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"参见上文描述的服务实例异步操作。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+</span>}</span>,
+"<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"service_id"</span>]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"此地区的ECS不支持磁盘优化"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"返回代码， 0：表示有效，非0：表示无效"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"int"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"当返回代码为非0时，传回错误信息"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-正在进行的上一个操作（仅对异步操作有效）" class="resource"><h3 class="resource-heading">正在进行的上一个操作（仅对异步操作有效） <a href="#供应商适配器-正在进行的上一个操作（仅对异步操作有效）" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-正在进行的上一个操作（仅对异步操作有效）-get" class="action get"><h4 class="action-heading"><div class="name">获取正在进行的上一个操作</div><a href="#供应商适配器-正在进行的上一个操作（仅对异步操作有效）-get" class="method get">GET</a><code class="uri">/service_instances/{instance_id}/last_operation</code></h4><p>当适配器为服务实例创建、操作（含变更）、释放返回 202 ACCEPTED 时，中信云平台就可以用 /service_instances/:instance_id/last_operation 接口点获取上一个请求的操作的状态。适配器对这个接口点的响应必须包含 state 域，可选包含 description 域。
+state 的有效值包括 in progress，succeeded，和failed。只要返回的是 “state”: “in progress”，中信云平台就可以继续调用 last_operation 。description 域可以给用户提供更多的状态信息，如果需要的话。
+仅对异步操作有效.</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/service_instances/<span class="hljs-attribute" title="instance_id">instance_id</span>/last_operation</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>instance_id</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>服务实例ID</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">state</span>": <span class="hljs-value"><span class="hljs-string">"succeeded"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务实例交付成功。"</span></span>,
+  "<span class="hljs-attribute">supplier_instance_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span></span>,
+  "<span class="hljs-attribute">succeeded_time</span>": <span class="hljs-value"><span class="hljs-string">"2016-09-22 16:20:16"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">state</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"有效值包括 in progress，succeeded，和 failed。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"可选域，用于向用户显示更详细的状态信息。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">supplier_instance_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商服务实例ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">succeeded_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"操作成功时间"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"state"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>410</code></strong></div></div></div><div id="供应商适配器-服务实例" class="resource"><h3 class="resource-heading">服务实例 <a href="#供应商适配器-服务实例" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-服务实例-put" class="action put"><h4 class="action-heading"><div class="name">服务实例交付</div><a href="#供应商适配器-服务实例-put" class="method put">PUT</a><code class="uri">/service_instances/{instance_id}</code></h4><p>适配器接收到此接口点调用时，应该按照指定参数创建服务实例。
+提示：服务实例的 instance_id 由中信云平台给提供。这个ID会用来对此服务实例进行后继操作，所以适配器必须将此ID与具体的服务实例相关联。</p>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/service_instances/<span class="hljs-attribute" title="instance_id">instance_id</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>instance_id</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>服务实例唯一标识。</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">instance_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a1 "</span></span>,
+  "<span class="hljs-attribute">service_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0 "</span></span>,
+  "<span class="hljs-attribute">org_id</span>": <span class="hljs-value"><span class="hljs-string">"abde8d3c-7628-4378-a07f-a7bf6c387531"</span></span>,
+  "<span class="hljs-attribute">accepts_incomplete</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">parameters</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">RegionID</span>": <span class="hljs-value"><span class="hljs-string">"huabei1"</span></span>,
+    "<span class="hljs-attribute">ZoneId</span>": <span class="hljs-value"><span class="hljs-string">"kyq1"</span></span>,
+    "<span class="hljs-attribute">HostName</span>": <span class="hljs-value"><span class="hljs-string">"mylinux"</span></span>,
+    "<span class="hljs-attribute">SystemDisk.Size</span>": <span class="hljs-value"><span class="hljs-string">"50"</span></span>,
+    "<span class="hljs-attribute">InternetMaxBandwidthIn</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+    "<span class="hljs-attribute">InstanceType</span>": <span class="hljs-value"><span class="hljs-string">"1c2"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">pricing_model</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">mode</span>": <span class="hljs-value"><span class="hljs-string">"package"</span></span>,
+    "<span class="hljs-attribute">unit</span>": <span class="hljs-value"><span class="hljs-string">"monthly"</span></span>,
+    "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"12"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+"<span class="hljs-attribute">instance_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务实例ID"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">service_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"在上文服务目录中的服务唯一标识。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">org_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"机构Id"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">parameters</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"中信云平台会根据上文服务目录中获取的config_options提供创建一个服务实例所需的配置项值的列表，适配器要负责验证。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"JSON object"</span>
+</span>}</span>,
+"<span class="hljs-attribute">pricing_model</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"计费模式"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">mode</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"计费模式: [包年包月, 按使用量]"</span></span>,
+      "<span class="hljs-attribute">oneOf</span>": <span class="hljs-value">[<span class="hljs-string">"package"</span>, <span class="hljs-string">"usage"</span>]</span>,
+    }</span>,
+    "<span class="hljs-attribute">unit</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"单位: mode = 包年包月 时有效"</span>
+      <span class="hljs-string">"oneOf"</span>: [<span class="hljs-string">"daily"</span>, <span class="hljs-string">"monthly"</span>, <span class="hljs-string">"yearly"</span>]
+    </span>}</span>,
+    "<span class="hljs-attribute">amount</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"int"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"数量: mode = 包年包月 时有效"</span>
+    </span>}</span>,
+  }
+</span>}</span>,
+"<span class="hljs-attribute">accepts_incomplete</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"参见上文描述的服务实例异步操作。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+</span>}</span>,
+"<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"service_id"</span>]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">supplier_instance_id</span>": <span class="hljs-value"><span class="hljs-string">"i-2zee62ni1rdb27xznpu0"</span></span>,
+  "<span class="hljs-attribute">create_time</span>": <span class="hljs-value"><span class="hljs-string">"2016-10-09 12:00:32"</span></span>,
+  "<span class="hljs-attribute">supplier_price</span>": <span class="hljs-value"><span class="hljs-string">"102.00"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">supplier_instance_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商服务实例ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">create_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"交付成功时间"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">supplier_price</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商价格"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">supplier_instance_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商服务实例ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">create_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"交付成功时间"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">supplier_price</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商价格"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>202</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>409</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">supplier_instance_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商服务实例ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">create_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"交付成功时间"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">supplier_price</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商价格"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"AsyncRequired"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"此服务实例需要进行异步操作。"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="供应商适配器-服务实例-post" class="action post"><h4 class="action-heading"><div class="name">操作一个服务实例</div><a href="#供应商适配器-服务实例-post" class="method post">POST</a><code class="uri">/service_instances/{instance_id}</code></h4><pre><code>适配器应支持用户对已经存在的服务实例进行变更、开机、关机、充值密码等操作，具体支持操作类型和每种类型需要输入的配置信息由服务实例管理<span class="hljs-tag">API</span>给出。
+  提示: <span class="hljs-pseudo">:instance_id</span> 是前面交付的服务实例的唯一标识。</code></pre>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/service_instances/<span class="hljs-attribute" title="instance_id">instance_id</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>instance_id</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>服务实例唯一标识。</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">operation</span>": <span class="hljs-value"><span class="hljs-string">"update"</span></span>,
+  "<span class="hljs-attribute">accepts_incomplete</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">parameters</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">RegionID</span>": <span class="hljs-value"><span class="hljs-string">"huabei1"</span></span>,
+    "<span class="hljs-attribute">ZoneId</span>": <span class="hljs-value"><span class="hljs-string">"kyq1"</span></span>,
+    "<span class="hljs-attribute">HostName</span>": <span class="hljs-value"><span class="hljs-string">"mylinux"</span></span>,
+    "<span class="hljs-attribute">SystemDisk.Size</span>": <span class="hljs-value"><span class="hljs-string">"50"</span></span>,
+    "<span class="hljs-attribute">InternetMaxBandwidthIn</span>": <span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+    "<span class="hljs-attribute">InstanceType</span>": <span class="hljs-value"><span class="hljs-string">"1c2"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">pricing_model</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">mode</span>": <span class="hljs-value"><span class="hljs-string">"package"</span></span>,
+    "<span class="hljs-attribute">unit</span>": <span class="hljs-value"><span class="hljs-string">"monthly"</span></span>,
+    "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"12"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+"<span class="hljs-attribute">instance_id</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务实例ID"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">operation</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"用户将根据服务实例管理API提供的operations进行操作。适配器要负责 验证。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">parameters</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"用户将根据服务实例管理API提供的config_options进行配置，此参数为 配置值。适配器要负责验证。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"JSON object"</span>
+</span>}</span>,
+"<span class="hljs-attribute">pricing_model</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"计费模式"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">mode</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"计费模式: [包年包月, 按使用量]"</span></span>,
+      "<span class="hljs-attribute">oneOf</span>": <span class="hljs-value">[<span class="hljs-string">"package"</span>, <span class="hljs-string">"usage"</span>]</span>,
+    }</span>,
+    "<span class="hljs-attribute">unit</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"单位: mode = 包年包月 时有效"</span>
+      <span class="hljs-string">"oneOf"</span>: [<span class="hljs-string">"daily"</span>, <span class="hljs-string">"monthly"</span>, <span class="hljs-string">"yearly"</span>]
+    </span>}</span>,
+    "<span class="hljs-attribute">amount</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"int"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"数量: mode = 包年包月 时有效"</span>
+    </span>}</span>,
+  }
+</span>}</span>,
+"<span class="hljs-attribute">accepts_incomplete</span>":<span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"参见上文描述的异步操作。"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+</span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><div class="description"><ul>
+<li>Body {
+“update_time”: “2016-01-01”,
+“supplier_price”: “200.00”
+}</li>
+</ul>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">update_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"操作成功时间"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">supplier_price</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商价格"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>202</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-string">"AsyncRequired"</span></span>,
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"此服务实例需要进行异步操作。"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="供应商适配器-服务实例-delete" class="action delete"><h4 class="action-heading"><div class="name">服务实例释放</div><a href="#供应商适配器-服务实例-delete" class="method delete">DELETE</a><code class="uri">/service_instances/{instance_id}</code></h4><p>当适配器收到此接口点时，应释放所指明的服务实例。
+:instance_id 是服务实例交付时的唯一标识。通常DELETE操作都没有请求内容。</p>
+<ul>
+<li>URL Parameter</li>
+</ul>
+<ol>
+<li>accepts_incomplete, 支持异步释放。</li>
+</ol>
+<ul>
+<li>示例： 适配器地址 /service_instances/{instance_id}?accepts_incomplete=true</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/service_instances/<span class="hljs-attribute" title="instance_id">instance_id</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>instance_id</dt><dd><code>String</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>服务实例唯一标识。</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>202</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>410</code></strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Body</h5><pre><code>{
+<span class="hljs-string">"error"</span>: <span class="hljs-string">"AsyncRequired"</span>,
+<span class="hljs-string">"description"</span>: <span class="hljs-string">"此服务实例需要进行异步操作。"</span>
+}
+
+其它Response都是失败</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-服务实例集" class="resource"><h3 class="resource-heading">服务实例集 <a href="#供应商适配器-服务实例集" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-服务实例集-get" class="action get"><h4 class="action-heading"><div class="name">服务实例管理</div><a href="#供应商适配器-服务实例集-get" class="method get">GET</a><code class="uri">/service_instances</code></h4><p>此接口点返回供应商系统中某服务的服务实例列表，包括其配置信息和可进行的操作，其中更新操作为特殊处理，在返回更新操作时，配置选项的默认值为此服务实例的当前值。</p>
+<ul>
+<li>URL Parameter</li>
+</ul>
+<ol>
+<li>
+<p>instance_ids, 限定查询的instance id数组，逗号分隔，最多200个</p>
+</li>
+<li>
+<p>service_id,   限定查询的service_id， 必需项。</p>
+</li>
+<li>
+<p>org_id, 必需项， 如果此服务的 “customizable = true”， 针对与用户相关的配置项， 则此接口应返回与此用户相关的配置项选项，（比如ECS的私有镜像）</p>
+</li>
+</ol>
+<p>如果instance_ids为空，则只返回该service_id的20个实例</p>
+<ul>
+<li>示例： 适配器地址/service_instances?service_id=5836a0462fbaaf0aee0db7a2&amp;org_id=abde8d3c-7628-4378-a07f-a7bf6c387531&amp;instance_ids=1caf242f-b3a2-41b5-890b-9fbb82b22585,fbf20ccc-ef9e-4377-bbe1-7c56bd6b996c</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/service_instances</span></div><div class="title"><strong>Request</strong></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+<span class="hljs-string">"instances"</span>: [{
+  <span class="hljs-string">"id"</span>: <span class="hljs-string">"fbf20ccc-ef9e-4377-bbe1-7c56bd6b996c"</span>,
+  <span class="hljs-string">"service_id"</span>: <span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span>,
+  <span class="hljs-string">"configurations"</span>: [{
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"RegionID"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"地域"</span>,
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"huabei1"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"华北1"</span>,
+    <span class="hljs-string">"in_list"</span>: <span class="hljs-literal">true</span>
+  },{
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区1"</span>,
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq1"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区1"</span>,
+    <span class="hljs-string">"in_list"</span>: <span class="hljs-literal">false</span>
+  }],
+  <span class="hljs-string">"operations"</span>: [{
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"update"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"变更"</span>,
+<span class="hljs-comment">/*
+  当中信云网提供通用配置界面功能不能满足供应商个性化的服务配置功能时，
+  供应商可以开发一个性化的配置界面，把url赋给 config_url
+  此页面由供应商开发提供，样式通过css与中信云网保持一致，
+  中信云网会以iframe的方式，嵌套这个页面并在URL后加上相关参数?param={obj}，
+
+  1. 用户在此服务操作界面操作完成后，
+     如需要变更服务配置，则调用中信提供的一个js库函数
+        CITIC.serviceConfig({json})
+    如不需要变更服务配置，则调用中信提供的一个js库函数
+        CITIC.serivceOperDone({}) 结束操作
+  2. 用户在此服务操作界面取消操作后，调用中信提供的一个js库函数
+        CITIC.serviceOperCancel({}) 取消操作
+
+  关于的页面的部署位置，目前有两种方案
+  1. 此页面部署在供应商的服务器上
+      供应商可以随时更新此页面
+
+  2. 此页面部署在中信云网上，需要把页面及相关资源打个包，通过某种机制放到中信云网上
+      供应商更新此页面时需要经过某种机制上传到中信云网上
+*/</span>
+<span class="hljs-string">"config_url"</span>: <span class="hljs-string">"https://api.aliyun.com/product/ecs_oper_update.html"</span>,
+<span class="hljs-string">"config_options"</span>: [{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"RegionID"</span>,
+  <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"地域"</span>,
+  <span class="hljs-string">"default"</span>: <span class="hljs-string">"huabei1"</span>,
+  <span class="hljs-string">"data_type"</span>: <span class="hljs-string">"options_tree"</span>,
+  <span class="hljs-string">"data_source"</span>: <span class="hljs-string">"default"</span>,
+  <span class="hljs-string">"values"</span>: [{
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"huabei1"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"华北1"</span>,
+    <span class="hljs-string">"sub_config_options"</span>: [{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"kyq1"</span>,
+      <span class="hljs-string">"values"</span>: [{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq1"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区1"</span>
+      },{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq2"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区2"</span>
+      }]
+    }]
+  },{
+    <span class="hljs-string">"key"</span>: <span class="hljs-string">"huadong1"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"华东1"</span>,
+    <span class="hljs-string">"sub_config_options"</span>: [{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"ZoneId"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"可用区"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"kyq3"</span>,
+      <span class="hljs-string">"values"</span>: [{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq3"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区3"</span>
+      },{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"kyq4"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"可用区4"</span>
+      }]
+    }]
+  }]
+}]
+  },{
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"startup"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"开机"</span>,
+  },{
+    <span class="hljs-string">"name"</span>: <span class="hljs-string">"otherops"</span>,
+    <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"某种操作"</span>,
+    <span class="hljs-string">"config_options"</span>: [{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"HostName"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"主机名"</span>,
+      <span class="hljs-string">"data_type"</span>:<span class="hljs-string">"string"</span>,
+      <span class="hljs-string">"data_source"</span>:<span class="hljs-string">"default"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">""</span>
+    },{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"SystemDisk.Size"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"系统盘大小"</span>,
+      <span class="hljs-string">"data_type"</span>:<span class="hljs-string">"int"</span>,
+      <span class="hljs-string">"data_source"</span>:<span class="hljs-string">"default"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"50"</span>,
+      <span class="hljs-string">"unit"</span>: <span class="hljs-string">"GB"</span>,
+      <span class="hljs-string">"min"</span>: <span class="hljs-string">"50"</span>,
+      <span class="hljs-string">"max"</span>: <span class="hljs-string">"100"</span>
+    },{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"InternetMaxBandwidthIn"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"互联网入口"</span>,
+      <span class="hljs-string">"data_type"</span>:<span class="hljs-string">"int"</span>,
+      <span class="hljs-string">"data_source"</span>:<span class="hljs-string">"default"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"1"</span>,
+      <span class="hljs-string">"unit"</span>: <span class="hljs-string">"MB"</span>
+    },{
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"InstanceType"</span>,
+      <span class="hljs-string">"display_name"</span>: <span class="hljs-string">"主机规格"</span>,
+      <span class="hljs-string">"data_type"</span>:<span class="hljs-string">"string"</span>,
+      <span class="hljs-string">"data_source"</span>:<span class="hljs-string">"default"</span>,
+      <span class="hljs-string">"default"</span>: <span class="hljs-string">"1c2"</span>,
+      <span class="hljs-string">"values"</span>: [{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"1c2"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"1核2G"</span>
+      },{
+        <span class="hljs-string">"key"</span>: <span class="hljs-string">"8c16"</span>,
+        <span class="hljs-string">"value"</span>: <span class="hljs-string">"8核16G"</span>
+      }]
+    }]
+  }]
+}]
+}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+"<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"instances "</span></span>,
+"<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+  "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务实例ID"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">service_id</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"与上文中的服务目录中的服务ID一致的服务唯一标识。"</span></span>,
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">configurations</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+      "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"configurations "</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+        "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">name</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"配置项的名称。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">display_name</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"配置项的显示名称。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">key</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"配置项key"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">value</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"配置项取值"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">in_list</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"该配置信息是否显示在列表中。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"name"</span>,<span class="hljs-string">"display_name"</span>,<span class="hljs-string">"value"</span>,<span class="hljs-string">"in_list"</span>]
+      </span>}
+    </span>}</span>,
+    "<span class="hljs-attribute">operations</span>":<span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+      "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"operations "</span></span>,
+      "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+        "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+          "<span class="hljs-attribute">name</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"操作的名称。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">display_name</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"操作的显示名称。"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">config_url</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"自定义的操作配置界面URL"</span></span>,
+            "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+          </span>}</span>,
+          "<span class="hljs-attribute">config_options</span>":<span class="hljs-value">{
+            "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+            "<span class="hljs-attribute">title</span>":<span class="hljs-value"><span class="hljs-string">"config_options "</span></span>,
+            "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+              "<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+              "<span class="hljs-attribute">properties</span>":<span class="hljs-value">{
+              }
+            </span>}
+          </span>}
+        </span>}</span>,
+        "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"name"</span>,<span class="hljs-string">"display_name"</span>]
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[<span class="hljs-string">"id"</span>,<span class="hljs-string">"service_id"</span>,<span class="hljs-string">"configurations"</span>]
+</span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-供应商服务收支明细" class="resource"><h3 class="resource-heading">供应商服务收支明细 <a href="#供应商适配器-供应商服务收支明细" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-供应商服务收支明细-get" class="action get"><h4 class="action-heading"><div class="name">供应商服务管理收支明细</div><a href="#供应商适配器-供应商服务收支明细-get" class="method get">GET</a><code class="uri">/suppliers_service/bill_detail</code></h4><p>此接口点用于中信云平台按照指定时间周期获取所有供应商服务的服务信息，主要为收支明细。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/suppliers_service/bill_detail</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">applicaton/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value"><span class="hljs-string">"20160501"</span></span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value"><span class="hljs-string">"20160531"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">begin_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"查询的开始时间。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"查询的结束时间。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">items</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">swift_number</span>": <span class="hljs-value"><span class="hljs-string">"sdafg_fsadf_re10053461"</span></span>,
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"20160401"</span></span>,
+      "<span class="hljs-attribute">remark</span>": <span class="hljs-value"><span class="hljs-string">"无"</span></span>,
+      "<span class="hljs-attribute">income</span>": <span class="hljs-value"><span class="hljs-string">"50000"</span></span>,
+      "<span class="hljs-attribute">outcome</span>": <span class="hljs-value"><span class="hljs-string">"100000"</span></span>,
+      "<span class="hljs-attribute">remain</span>": <span class="hljs-value"><span class="hljs-string">"8078900"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">swift_number</span>": <span class="hljs-value"><span class="hljs-string">"sdafg_fsadf_re10053461"</span></span>,
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"20160401"</span></span>,
+      "<span class="hljs-attribute">remark</span>": <span class="hljs-value"><span class="hljs-string">"无"</span></span>,
+      "<span class="hljs-attribute">income</span>": <span class="hljs-value"><span class="hljs-string">"50000"</span></span>,
+      "<span class="hljs-attribute">outcome</span>": <span class="hljs-value"><span class="hljs-string">"100000"</span></span>,
+      "<span class="hljs-attribute">remain</span>": <span class="hljs-value"><span class="hljs-string">"8078900"</span>
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+  "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"tems "</span></span>,
+  "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+    "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">swift_number</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"流水号"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"日期"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">remark</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"备注"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">income</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"收入"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">outcome</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"支出"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">remain</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"余额"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-供应商服务管理消费明细" class="resource"><h3 class="resource-heading">供应商服务管理消费明细 <a href="#供应商适配器-供应商服务管理消费明细" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-供应商服务管理消费明细-get" class="action get"><h4 class="action-heading"><div class="name">供应商服务管理消费明细</div><a href="#供应商适配器-供应商服务管理消费明细-get" class="method get">GET</a><code class="uri">/suppliers_service/consume_detail</code></h4><p>此接口点用于中信云平台按照指定时间周期获取所有供应商服务的服务信息，主要为消费明细。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/suppliers_service/consume_detail</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value"><span class="hljs-string">"20160501"</span></span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value"><span class="hljs-string">"20160531"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开始日期。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"结束日期。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string "</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">balance</span>": <span class="hljs-value"><span class="hljs-string">"50000"</span></span>,
+  "<span class="hljs-attribute">total_credit</span>": <span class="hljs-value"><span class="hljs-string">"100000"</span></span>,
+  "<span class="hljs-attribute">left_credit</span>": <span class="hljs-value"><span class="hljs-string">"50000"</span></span>,
+  "<span class="hljs-attribute">items</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">comsume_time</span>": <span class="hljs-value"><span class="hljs-string">"2016-06-23 08:00 - 2016-06-23 09:00"</span></span>,
+      "<span class="hljs-attribute">account_period</span>": <span class="hljs-value"><span class="hljs-string">"201604"</span></span>,
+      "<span class="hljs-attribute">product</span>": <span class="hljs-value"><span class="hljs-string">"云服务器ECS-包年包月"</span></span>,
+      "<span class="hljs-attribute">bill_number</span>": <span class="hljs-value"><span class="hljs-string">"3397830047"</span></span>,
+      "<span class="hljs-attribute">amount_payable</span>": <span class="hljs-value"><span class="hljs-string">"0.01"</span></span>,
+      "<span class="hljs-attribute">pay_state</span>": <span class="hljs-value"><span class="hljs-string">"1"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">comsume_time</span>": <span class="hljs-value"><span class="hljs-string">"2016-06-23 08:00 - 2016-06-23 09:00"</span></span>,
+      "<span class="hljs-attribute">account_period</span>": <span class="hljs-value"><span class="hljs-string">"201604"</span></span>,
+      "<span class="hljs-attribute">product</span>": <span class="hljs-value"><span class="hljs-string">"云服务器ECS-包年包月"</span></span>,
+      "<span class="hljs-attribute">bill_number</span>": <span class="hljs-value"><span class="hljs-string">"3397830048"</span></span>,
+      "<span class="hljs-attribute">amount_payable</span>": <span class="hljs-value"><span class="hljs-string">"0.01"</span></span>,
+      "<span class="hljs-attribute">pay_state</span>": <span class="hljs-value"><span class="hljs-string">"1"</span>
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">balance</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"账户余额。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">total_credit</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"总信用额度。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">left_credit</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"剩余信用额度。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-object"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"items "</span></span>,
+    "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">consume_time</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"消费时间。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">account_period</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"账期。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">product</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"产品。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">bill_number</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"账单号。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">amount_payable</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"应付金额。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">pay_state</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"支付状态。1.已支付2.支付中3.已欠费"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-供应商服务管理使用记录" class="resource"><h3 class="resource-heading">供应商服务管理使用记录 <a href="#供应商适配器-供应商服务管理使用记录" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-供应商服务管理使用记录-get" class="action get"><h4 class="action-heading"><div class="name">供应商服务管理使用记录</div><a href="#供应商适配器-供应商服务管理使用记录-get" class="method get">GET</a><code class="uri">/suppliers_service/usage_record/</code></h4><p>此接口点用于中信云平台按照指定时间周期获取所有供应商服务的服务信息，主要为使用记录。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/suppliers_service/usage_record/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">service_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a1"</span></span>,
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value"><span class="hljs-string">"20160531"</span></span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value"><span class="hljs-string">"20160631"</span></span>,
+  "<span class="hljs-attribute">grain_size</span>": <span class="hljs-value"><span class="hljs-string">"hour"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">service_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开始日期。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"结束日期。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string "</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">grain_size</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"使用粒度，小时或天。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">usage_and_expenses_format </span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"usage_and_expenses_format "</span></span>,
+    "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"信息列的名称。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">display_name</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"信息列的显示名称。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">in_list</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"是否显示在列表中。"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">usage_and_expenses_data</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"usage_and_expenses_data "</span></span>,
+    "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"objects"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">instance_id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务实例ID"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">start_time</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开始时间,采用UTC时间格式；例如2016-10-22T22:00:00Z"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">end_time</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"结束时间,采用UTC时间格式；例如2016-10-23T23:00:00Z"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-供应商总账" class="resource"><h3 class="resource-heading">供应商总账 <a href="#供应商适配器-供应商总账" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-供应商总账-get" class="action get"><h4 class="action-heading"><div class="name">查询供应商总账</div><a href="#供应商适配器-供应商总账-get" class="method get">GET</a><code class="uri">/suppliers_service/total_bill/</code></h4><p>此接口用于获取某时间段内的所有账单(时间粒度为月)。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/suppliers_service/total_bill/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">supplier_id</span>": <span class="hljs-value"><span class="hljs-string">"fbf20ccc-ef9e-4377-bbe1-7c56bd6b996c"</span></span>,
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value"><span class="hljs-string">"201603"</span></span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value"><span class="hljs-string">"201606"</span></span>,
+  "<span class="hljs-attribute">grain_size</span>": <span class="hljs-value"><span class="hljs-string">"month"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">supplier_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商ID。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">start_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开始日期。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">end_date</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"结束日期。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string "</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">grain_size</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"使用粒度，目前只有月。"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">applicaton/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">bill</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"201603"</span></span>,
+      "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"3000.00"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"201604"</span></span>,
+      "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"3000.00"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"201605"</span></span>,
+      "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"3000.00"</span>
+    </span>},
+    {
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"201606"</span></span>,
+      "<span class="hljs-attribute">amount</span>": <span class="hljs-value"><span class="hljs-string">"3000.00"</span>
+    </span>}
+  ]
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-object"</span></span>,
+  "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"bill "</span></span>,
+  "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+    "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">date</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"账单时间"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}</span>,
+      "<span class="hljs-attribute">amount</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"金额"</span></span>,
+        "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      </span>}
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-客服工单" class="resource"><h3 class="resource-heading">客服工单 <a href="#供应商适配器-客服工单" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-客服工单-post" class="action post"><h4 class="action-heading"><div class="name">新建工单</div><a href="#供应商适配器-客服工单-post" class="method post">POST</a><code class="uri">/workorders</code></h4><p>新建工单。</p>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/workorders</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">service_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span></span>,
+  "<span class="hljs-attribute">customer_common_question_id</span>": <span class="hljs-value"><span class="hljs-string">"REQ00001001"</span></span>,
+  "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"网络故障"</span></span>,
+  "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"设备1网络不通"</span></span>,
+  "<span class="hljs-attribute">sec_content</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">supplier_uid</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">sms_alert_time</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">telephone</span>": <span class="hljs-value"><span class="hljs-string">"13922235509"</span></span>,
+  "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"zhangsan@xxx.com"</span></span>,
+  "<span class="hljs-attribute">attachments</span>": <span class="hljs-value"><span class="hljs-string">""</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">service_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">customer_common_question_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"常见问题ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"请求标题"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">content</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单提问正文"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">sec_content</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"机密信息"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">supplier_uid</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商用户ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">telephone</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"用户手机"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">email</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"用户邮箱"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">attachments</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"附件信息"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">applicaton/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value"><span class="hljs-string">"858647778444"</span></span>,
+  "<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"00007"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"成功时返回新创建工单的ID"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">success</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"true 成功；false 失败"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"接口返回失败时，一般会通过它显示详细错误提示，进行接口调用自查"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误编码"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"success"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="供应商适配器-客服工单-get" class="action get"><h4 class="action-heading"><div class="name">获取工单列表</div><a href="#供应商适配器-客服工单-get" class="method get">GET</a><code class="uri">/workorders</code></h4><p>获取工单列表。</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/workorders</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">ids</span>": <span class="hljs-value"><span class="hljs-string">"REQ00001001"</span></span>,
+  "<span class="hljs-attribute">add_start_time</span>": <span class="hljs-value"><span class="hljs-string">"20161211093000"</span></span>,
+  "<span class="hljs-attribute">add_end_time</span>": <span class="hljs-value"><span class="hljs-string">"20161211093500"</span></span>,
+  "<span class="hljs-attribute">service_ids</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span></span>,
+  "<span class="hljs-attribute">page_size</span>": <span class="hljs-value"><span class="hljs-string">"20"</span></span>,
+  "<span class="hljs-attribute">question_status</span>": <span class="hljs-value"><span class="hljs-string">"feedback"</span></span>,
+  "<span class="hljs-attribute">page_start</span>": <span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">ids</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单ID列表 "</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">add_start_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开始时间（格式：yyyyMMddHHmmss）"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">add_end_time</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"结束时间（格式：yyyyMMddHHmmss）"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">service_ids</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务ID列表,不能超过100个，逗号分隔,默认全部产品"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">page_size</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"每页大小,默认20"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Integer"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">question_status</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单状态，默认全部,assigned    已分派工单刚提交; dealing    处理中; wait_feedback    待反馈; feedback    已反馈    用户添加回复时变为此状态; wait_confirm    待确认    处理完工单，置为此状态，待用户确认; confirmed    已确认    用户确认工单已经处理完毕; score    已评价    用户已经评价工单; "</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">page_start</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"开始条数"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Integer"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">applicaton/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">total_count</span>": <span class="hljs-value"><span class="hljs-string">"100"</span></span>,
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"REQ00001001"</span></span>,
+      "<span class="hljs-attribute">service_id</span>": <span class="hljs-value"><span class="hljs-string">"cffe8d3c-7628-4378-a07f-a7bf6c3871a0"</span></span>,
+      "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"ecs报错"</span></span>,
+      "<span class="hljs-attribute">supplier_uid</span>": <span class="hljs-value"><span class="hljs-string">"4546576576"</span></span>,
+      "<span class="hljs-attribute">question_status</span>": <span class="hljs-value"><span class="hljs-string">"feedback"</span></span>,
+      "<span class="hljs-attribute">add_time</span>": <span class="hljs-value"><span class="hljs-string">"20161211093500"</span>
+    </span>}
+  ]</span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">""</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">total_count</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"总条目数"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Integer"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单详情列表"</span></span>,
+    "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单ID,用字母ID表示"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">service_id</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"服务ID"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Int"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">title</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"标题"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">supplier_uid</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"供应商用户ID"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">question_status</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单状态，默认全部。assigned    已分派工单刚提交; dealing    处理中; wait_feedback    待反馈; feedback    已反馈    用户添加回复时变为此状态; wait_confirm    待确认    处理完工单，置为此状态，待用户确认; confirmed    已确认    用户确认工单已经处理完毕; score    已评价    用户已经评价工单;"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">add_time</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"创建时间"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Long"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误代码"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误消息"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="供应商适配器-工单内容" class="resource"><h3 class="resource-heading">工单内容 <a href="#供应商适配器-工单内容" class="permalink">&nbsp;&para;</a></h3><div id="供应商适配器-工单内容-post" class="action post"><h4 class="action-heading"><div class="name">添加工单内容</div><a href="#供应商适配器-工单内容-post" class="method post">POST</a><code class="uri">/workorders/contents</code></h4><p>添加工单交流内容。</p>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/workorders/contents</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">question_id</span>": <span class="hljs-value"><span class="hljs-string">"REQ00001001"</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"请解决XXX"</span></span>,
+  "<span class="hljs-attribute">question_sec_content</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">attachments</span>": <span class="hljs-value"><span class="hljs-string">""</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">question_id</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"工单编号"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"交流内容"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">question_sec_content</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"机密信息"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">attachments</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"附件key,多个附件用逗号(,) 分割,最多支持上传3个附件 "</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"question_id"</span>
+  ]
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">applicaton/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+"<span class="hljs-attribute">success</span>": <span class="hljs-value"><span class="hljs-string">"true"</span></span>,
+"<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"77777"</span></span>,
+"<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+"<span class="hljs-attribute">success</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"添加结果"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+</span>}</span>,
+"<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误代码"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}</span>,
+"<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+  "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误消息"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+</span>}
+<span class="hljs-string">"required"</span>: [<span class="hljs-string">"success"</span>]
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="供应商适配器-工单内容-get" class="action get"><h4 class="action-heading"><div class="name">获取工单内容</div><a href="#供应商适配器-工单内容-get" class="method get">GET</a><code class="uri">/workorders/contents</code></h4><p>获取某条工单的交流内容</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">http://你自己的适配器地址</span>/workorders/contents</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">question_id</span>": <span class="hljs-value"><span class="hljs-string">"REQ00001001"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
+    {
+      "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"REQ00001001"</span></span>,
+      "<span class="hljs-attribute">note_type</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+      "<span class="hljs-attribute">gmt_created</span>": <span class="hljs-value"><span class="hljs-string">"20161211093500"</span></span>,
+      "<span class="hljs-attribute">attach_ids</span>": <span class="hljs-value"><span class="hljs-string">""</span>
+    </span>}
+  ]</span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">""</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">""</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array-of-objects"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"data"</span></span>,
+    "<span class="hljs-attribute">items</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">content</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"类型为chat和sec_chat的内容 "</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">note_type</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"可选值为chat|sec_chat"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">gmt_created</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"创建时间"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"Long"</span>
+        </span>}</span>,
+        "<span class="hljs-attribute">attach_ids</span>": <span class="hljs-value">{
+          "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"附件ID列表,逗号分隔"</span></span>,
+          "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+        </span>}
+      </span>}
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误代码"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}</span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"错误消息"</span></span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"String"</span>
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 28 Feb 2017</p><script>/* eslint-env browser */
+/* eslint quotes: [2, "single"] */
+'use strict';
+
+/*
+  Determine if a string ends with another string.
+*/
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/*
+  Get a list of direct child elements by class name.
+*/
+function childrenByClass(element, name) {
+  var filtered = [];
+
+  for (var i = 0; i < element.children.length; i++) {
+    var child = element.children[i];
+    var classNames = child.className.split(' ');
+    if (classNames.indexOf(name) !== -1) {
+      filtered.push(child);
+    }
+  }
+
+  return filtered;
+}
+
+/*
+  Get an array [width, height] of the window.
+*/
+function getWindowDimensions() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.body,
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+  return [x, y];
+}
+
+/*
+  Collapse or show a request/response example.
+*/
+function toggleCollapseButton(event) {
+    var button = event.target.parentNode;
+    var content = button.parentNode.nextSibling;
+    var inner = content.children[0];
+
+    if (button.className.indexOf('collapse-button') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        // Currently showing, so let's hide it
+        button.className = 'collapse-button';
+        content.style.maxHeight = '0px';
+    } else {
+        // Currently hidden, so let's show it
+        button.className = 'collapse-button show';
+        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+function toggleTabButton(event) {
+    var i, index;
+    var button = event.target;
+
+    // Get index of the current button.
+    var buttons = childrenByClass(button.parentNode, 'tab-button');
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i] === button) {
+            index = i;
+            button.className = 'tab-button active';
+        } else {
+            buttons[i].className = 'tab-button';
+        }
+    }
+
+    // Hide other tabs and show this one.
+    var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+    for (i = 0; i < tabs.length; i++) {
+        if (i === index) {
+            tabs[i].style.display = 'block';
+        } else {
+            tabs[i].style.display = 'none';
+        }
+    }
+}
+
+/*
+  Collapse or show a navigation menu. It will not be hidden unless it
+  is currently selected or `force` has been passed.
+*/
+function toggleCollapseNav(event, force) {
+    var heading = event.target.parentNode;
+    var content = heading.nextSibling;
+    var inner = content.children[0];
+
+    if (heading.className.indexOf('heading') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+      // Currently showing, so let's hide it, but only if this nav item
+      // is already selected. This prevents newly selected items from
+      // collapsing in an annoying fashion.
+      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+        content.style.maxHeight = '0px';
+      }
+    } else {
+      // Currently hidden, so let's show it
+      content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+/*
+  Refresh the page after a live update from the server. This only
+  works in live preview mode (using the `--server` parameter).
+*/
+function refresh(body) {
+    document.querySelector('body').className = 'preload';
+    document.body.innerHTML = body;
+
+    // Re-initialize the page
+    init();
+    autoCollapse();
+
+    document.querySelector('body').className = '';
+}
+
+/*
+  Determine which navigation items should be auto-collapsed to show as many
+  as possible on the screen, based on the current window height. This also
+  collapses them.
+*/
+function autoCollapse() {
+  var windowHeight = getWindowDimensions()[1];
+  var itemsHeight = 64; /* Account for some padding */
+  var itemsArray = Array.prototype.slice.call(
+    document.querySelectorAll('nav .resource-group .heading'));
+
+  // Get the total height of the navigation items
+  itemsArray.forEach(function (item) {
+    itemsHeight += item.parentNode.offsetHeight;
+  });
+
+  // Should we auto-collapse any nav items? Try to find the smallest item
+  // that can be collapsed to show all items on the screen. If not possible,
+  // then collapse the largest item and do it again. First, sort the items
+  // by height from smallest to largest.
+  var sortedItems = itemsArray.sort(function (a, b) {
+    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+  });
+
+  while (sortedItems.length && itemsHeight > windowHeight) {
+    for (var i = 0; i < sortedItems.length; i++) {
+      // Will collapsing this item help?
+      var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+      if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+        // It will, so let's collapse it, remove its content height from
+        // our total and then remove it from our list of candidates
+        // that can be collapsed.
+        itemsHeight -= itemHeight;
+        toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+        sortedItems.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+/*
+  Initialize the interactive functionality of the page.
+*/
+function init() {
+    var i, j;
+
+    // Make collapse buttons clickable
+    var buttons = document.querySelectorAll('.collapse-button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = toggleCollapseButton;
+
+        // Show by default? Then toggle now.
+        if (buttons[i].className.indexOf('show') !== -1) {
+            toggleCollapseButton({target: buttons[i].children[0]});
+        }
+    }
+
+    var responseCodes = document.querySelectorAll('.example-names');
+    for (i = 0; i < responseCodes.length; i++) {
+        var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+        for (j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].onclick = toggleTabButton;
+
+            // Show by default?
+            if (j === 0) {
+                toggleTabButton({target: tabButtons[j]});
+            }
+        }
+    }
+
+    // Make nav items clickable to collapse/expand their content.
+    var navItems = document.querySelectorAll('nav .resource-group .heading');
+    for (i = 0; i < navItems.length; i++) {
+        navItems[i].onclick = toggleCollapseNav;
+
+        // Show all by default
+        toggleCollapseNav({target: navItems[i].children[0]});
+    }
+}
+
+// Initial call to set up buttons
+init();
+
+window.onload = function () {
+    autoCollapse();
+    // Remove the `preload` class to enable animations
+    document.querySelector('body').className = '';
+};
+</script></body></html>
