@@ -63,11 +63,24 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
     @Override
     public Response serviceInstancesInstanceIdPut(String instanceId, ServiceInstance body, SecurityContext securityContext) throws NotFoundException {
     	
-    	//记录操作日志
-    	
-    	//将异步操作job URI（OPC API返回json中）记录，用于查询job状态。调用OPC API后，从返回的header中解析Location获取job。例如：https://dbaas.oraclecloud.com:443/paas/service/dbcs/api/v1.1/instances/midas/status/delete/job/11901471
-    	
-    	//先返回202 ACCEPTED
+        //记录操作日志
+        
+        //将异步操作job URI（OPC API返回json中）记录，用于查询job状态。调用OPC API后，从返回的header中解析Location获取job。例如：https://dbaas.oraclecloud.com:443/paas/service/dbcs/api/v1.1/instances/midas/status/delete/job/11901471
+        
+        //先返回202 ACCEPTED
+        
+        /*
+         * @RAY 处理逻辑 理解
+         * 
+        1. 记录操作日志 。疑问：记录操作日志指的是往数据库中插入本次操作相关的记录数据吗 ？若是 输入哪些业务内容？
+        2. 将异步操作job URI。 接口: 调用 POST: /paas/service/dbcs/api/v1.1/instances/{identityDomainId}: ，获得JSON文件。疑问：请确认API是否正确？
+        3. 判断HTTP 状态是否为202 
+        3.1. 状态为202时，重JSON文件中获取Location对应的URI
+        3.1.1. 疑问：存location对应的URI信息到要插入到数据中吗？
+        3.1.2. 组装Response为202 并返回。 疑问：若只返回状态202 ACCEPRED的话，需要转换到中信的接口中的对应字段是？ 若返回的Response不仅仅需要状态202 ACCPET的话，应该返回哪些信息？对应的字段是哪些？
+        3.2. 疑问：状态不是202时，怎么处理？
+        4. 疑问：数据库中插入数据吗？若需要插入的话需要哪些内容？
+        */
     	
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -81,7 +94,25 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
     public Response serviceInstancesInstanceIdPost(String instanceId, ServiceInstanceModify body, SecurityContext securityContext) throws NotFoundException {
     	//记录操作日志
     	
-    	//先查看该instance是否有未完成任务
+        //先查看该instance是否有未完成任务
+        
+        /*
+         *@RAY 处理逻辑 理解： 
+         * 
+        1. 记录操作日志。
+        疑问：数据库中插入本次操作相关的记录数据吗 ？还是数据库中更新数据？ 输入哪些内容？
+        2. 先查看该instance是否有未完成任务。
+        疑问：调用的接口顺序是什么？
+        调用查看Instance接口获取该instance的job？ GET : /paas/service/dbcs/api/v1.1/instances/{identityDomainId}/{serviceId} ； 疑问：对应的jobid是creation_job_id吗？有多个JOB的时候怎么办？
+        调用查看Job状态的接口获取job信息？ GET :/paas/service/dbcs/api/v1.1/instances/{identityDomainId}/status/{requestName}/job/{jobId}；疑问：request参数requestName有三种值：delete,create,control ,这三种都去查吗？还是？
+        获取job状态后怎么处理？
+        变更服务实例的接口：PUT : /paas/service/dbcs/api/v1.1/instances/{identityDomainId}/{serviceId}/ibkup
+        
+        更新完毕后，还需要往数据库中存入数据吗？需要存入的话有哪些业务数据？
+        最后封装response的数据项要有哪些？
+        
+        
+        */
     	
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -95,7 +126,16 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
     public Response serviceInstancesInstanceIdDelete(String instanceId,  @NotNull Boolean acceptsIncomplete, SecurityContext securityContext) throws NotFoundException {
     	//记录操作日志
     	
-    	
+        /*
+         *@RAY 处理逻辑 理解： 
+         * 
+        1. 记录操作日志。
+        疑问：数据库中插入本次操作相关的记录数据吗 ？还是数据库中更新数据？ 输入哪些内容？
+     2.调用删除的接口：DELETE：/paas/service/dbcs/api/v1.1/instances/{identityDomainId}/{serviceId}
+        此时还需要往数据库中存入数据吗？需要存入的话有哪些业务数据？
+        最后封装response的数据项要有哪些？
+        
+        */
     	return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     
@@ -107,7 +147,13 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
     @Override
     public Response serviceInstancesInstanceIdLastOperationGet(String instanceId, SecurityContext securityContext) throws NotFoundException {
         // TODO：通过instanceId查询job URI，根据job URI查job status
-    	
+        /*
+         *@RAY 处理逻辑 理解： 
+         * 
+        直接从数据库中查询Job Status吗？前提是数据库中提前存入job URI 和job status.
+        或者 
+        需要从OPC中获取的话，三种操作都有不同的接口，因此都需要去调用一次吗？还是？ 
+        */ 
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     
