@@ -1,0 +1,246 @@
+{
+  "id": "oracleid",
+  "name": "Oracle Cloud",
+  "score": "85",
+  "is_a_citic": false,
+  "lan": true,
+  "payment": {
+    "deposit_bank": "招商银行杭州高新支行",
+    "account": "阿里云计算有限公司",
+    "account_number": "为中信云在阿里云申请的招行专属账号"
+  },
+  "credential": {
+    "username": "中信云",
+    "password": "mypassword"
+  },
+  "services": [
+    {
+        "id": "369fb62a-6341-4581-8ed0-b355f7c3093a",
+        "name": "oracle_dbcs",
+        "score": "99",
+        "config_options": [
+            {
+                "name": "description",
+                "display_name": "Description",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "edition",
+                "required": true,
+                "display_name": "Software Edition",
+                "data_type": "options_tree",
+                "default": "EE",
+                "values": [
+                    {
+                        "key": "SE",
+                        "value": "Standard Edition"
+                    },{
+                        "key": "EE",
+                        "value": "Enterprise Edition"
+                    },{
+                        "key": "EE_HP",
+                        "value": "Enterprise Edition - High Performance"
+                    },{
+                        "key": "EE_EP",
+                        "value": "Enterprise Edition - Extreme Performance"
+                    }
+                ]
+            },{
+                "name": "level",
+                "required": true,
+                "display_name": "Service level",
+                "data_type": "options_tree",
+                "default": "PAAS",
+                "values": [
+                    {
+                        "key": "PAAS",
+                        "value": "PAAS"
+                    },{
+                        "key": "BASIC",
+                        "value": "BASIC"
+                    }
+                ]
+            },{
+                "name": "parameters",
+                "required": true
+            },{
+                "name": "serviceName",
+                "required": true,
+                "display_name": "Service Name",
+                "data_type": "string",
+                "default": "",
+                "instruction": "Must not exceed 50 characters.Must start with a letter.Must contain only letters, numbers, or hyphens.Must not contain any other special characters.Must be unique within the identity domain."
+            },{
+                "name": "subscriptionType",
+                "required": true,
+                "display_name": "Metering Frequency",
+                "data_type": "options_tree",
+                "default": "MONTHLY",
+                "values": [
+                    {
+                        "key": "MONTHLY",
+                        "value": "Monthly"
+                    },{
+                        "key": "HOURLY",
+                        "value": "Hourly"
+                    }
+                ]
+            },{
+                "name": "version",
+                "required": true,
+                "display_name": "Software Release",
+                "data_type": "options_tree",
+                "default": "12.1.0.2",
+                "values": [
+                    {
+                        "key": "11.2.0.4",
+                        "value": "Oracle Database 11g Release 2"
+                    },{
+                        "key": "12.1.0.2",
+                        "value": "Oracle Database 12c Release 1"
+                    },{
+                        "key": "12.2.0.1",
+                        "value": "Oracle Database 12c Release 2"
+                    }
+                ]
+            },{
+                "name": "vmPublicKeyText",
+                "required": true,
+                "display_name": "SSH Public Key",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "sid",
+                "required": true,
+                "display_name": "DB Name(SID)",
+                "data_type": "string",
+                "default": "ORCL"
+            },{
+                "name": "pdbName",
+                "display_name": "PDB Name",
+                "data_type": "string",
+                "default": "pdb1",
+                "instruction": "This attribute is valid when Database Cloud Service instance is configured with version 12c."
+            },{
+                "name": "adminPassword",
+                "required": true,
+                "display_name": "Administration Password",
+                "data_type": "string",
+                "default": "",
+                "instruction": "Starts with a letter.Is between 8 and 30 characters long.Contains letters, at least one number, and optionally, any number of these special characters: dollar sign ($), pound sign (#), and underscore (_)."
+            },{
+                "name": "type",
+                "required": true,
+                "display_name": "Component type",
+                "data_type": "string",
+                "default": "db"
+            },{
+                "name": "usableStorage",
+                "display_name": "Usable Database Storage(GB)",
+                "data_type": "string",
+                "default": "15"
+            },{
+                "name": "shape",
+                "display_name": "Compute shape",
+                "data_type": "options_tree",
+                "default": "oc3",
+                "values": [
+                    {
+                        "key": "oc3",
+                        "value": "oc3: 1 OCPU, 7.5 GB memory"
+                    },{
+                        "key": "oc4",
+                        "value": "oc4: 2 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc5",
+                        "value": "oc5: 4 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc6",
+                        "value": "oc6: 8 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc1m",
+                        "value": "oc1m: 1 OCPU, 15 GB memory"
+                    },{
+                        "key": "oc2m",
+                        "value": "oc2m: 2 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc3m",
+                        "value": "oc3m: 4 OCPUs, 60 GB memory"
+                    },{
+                        "key": "oc4m",
+                        "value": "oc4m: 8 OCPUs, 120 GB memory"
+                    }
+                ]
+            },{
+                "name": "backupDestination",
+                "required": true,
+                "display_name": "Backup Destination",
+                "data_type": "options_tree",
+                "default": "BOTH",
+                "values": [
+                    {
+                        "key": "BOTH",
+                        "value": "Both Cloud Storage and Local Storage"
+                    },{
+                        "key": "OSS",
+                        "value": "Cloud Storage only"
+                    },{
+                        "key": "NONE",
+                        "value": "None"
+                    }
+                ]
+            },{
+                "name": "cloudStorageUser",
+                "required": true,
+                "display_name": "Username for the Oracle Storage Cloud Service administrator",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "cloudStoragePwd",
+                "required": true,
+                "display_name": "Password for the Oracle Storage Cloud Service administrator",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "cloudStoragePwd",
+                "display_name": "Cloud Storage Container",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "cloudStorageContainer",
+                "display_name": "Cloud Storage Container",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "timezone",
+                "display_name": "Time Zone",
+                "data_type": "string",
+                "default": "UTC"
+            },{
+                "name": "charset",
+                "display_name": "Character Set",
+                "data_type": "string",
+                "default": "AL32UTF8"
+            },{
+                "name": "ncharset",
+                "display_name": "National Character Set",
+                "data_type": "string",
+                "default": "AL16UTF16"
+            }
+            
+        ]
+    },
+    {
+        "id": "25ac1eec-28d9-4978-bbfb-cb8ae68969b9",
+        "name": "oracle_jcs",
+        "score": "99",
+        "config_options": [
+            {
+                "name": "配置项的名称，在用户选定配置后将以此域作为返回值的key",
+                "display_name": "WEB页面显示的选项名称",
+                "default": "该配置项的默认值"
+            }
+        ]
+    }
+]
+}
