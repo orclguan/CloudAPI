@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+       <driver>com.mysql.jdbc.Driver</driver>
+       <url>jdbc:mysql://localhost:3306/testdb</url>
+       <username>root</username>
+       <password>root</password>
+</database>
+
+<!-- 
+
+<database>
+       <driver>com.mysql.jdbc.Driver</driver>
+       <url>jdbc:mysql://localhost:3306/citicOracle</url>
+       <username>root</username>
+       <password>root</password>
+</database>
+ -->
