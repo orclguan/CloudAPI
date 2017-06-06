@@ -92,6 +92,12 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Mysql -->
+      <plugin>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.7.17</version>
+	  </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -144,6 +150,16 @@
       <artifactId>jackson-jaxrs-json-provider</artifactId>
       <version>${jackson-version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-base</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+     <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
     <!-- Base64 encoding that works in both JVM and Android -->
     <dependency>
       <groupId>com.brsanthu</groupId>
@@ -165,6 +181,41 @@
     	<artifactId>gson</artifactId>
     	<version>2.2.2</version>
     </dependency>
+
+    <dependency>
+	    <groupId>com.googlecode.json-simple</groupId>
+	    <artifactId>json-simple</artifactId>
+	    <version>1.1.1</version>
+	</dependency>
+	
+	<!-- Mysql -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.34</version>
+	</dependency>
+		
+	<!-- DOM -->
+	<dependency>   
+      <groupId>junit</groupId>    
+      <artifactId>junit</artifactId>    
+      <version>4.11</version>   
+    </dependency>    
+    <dependency>   
+      <groupId>log4j</groupId>    
+      <artifactId>log4j</artifactId>    
+      <version>1.2.17</version>   
+    </dependency>    
+    <dependency>   
+      <groupId>dom4j</groupId>    
+      <artifactId>dom4j</artifactId>    
+      <version>1.6</version>   
+    </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.1</version>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
@@ -176,7 +227,7 @@
     </repository>
   </repositories>
   <properties>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <swagger-core-version>1.5.12</swagger-core-version>
