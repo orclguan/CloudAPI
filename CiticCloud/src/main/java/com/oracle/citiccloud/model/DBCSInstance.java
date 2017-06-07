@@ -1,20 +1,15 @@
 package com.oracle.citiccloud.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * DBCS Instance Model
  * API:View a Service Instance#Response
  * @author xuelli
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DBCSInstance {
-
-	private static DBCSInstance instance  = new DBCSInstance();
-	public static synchronized DBCSInstance getInstance() {
-		if (instance == null) {
-			instance = new DBCSInstance();
-		}
-		return instance;
-	}
-
 	private String apex_url;
 	private String backup_destination;
 	private String backup_supported_version;

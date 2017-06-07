@@ -1,4 +1,5 @@
-{
+{"suppliers":
+[{
   "id": "oracleid",
   "name": "Oracle Cloud",
   "score": "85",
@@ -244,3 +245,4 @@
     }
 ]
 }
+]}

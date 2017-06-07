@@ -16,6 +16,7 @@ package com.oracle.citiccloud.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.oracle.citiccloud.model.ConfigOption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,6 +28,7 @@ import javax.validation.constraints.*;
  * Operations
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Operations   {
   @JsonProperty("name")
   private String name = null;
