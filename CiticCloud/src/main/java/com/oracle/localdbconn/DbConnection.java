@@ -4,13 +4,17 @@
 package com.oracle.localdbconn;
 
 import java.io.File;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -28,7 +32,7 @@ public class DbConnection {
 	private String filePath = "src/LocalDbConnect.xml";
 	File xmlFile = new File(filePath);
 
-	// 从XML中获取数据库信息
+	// 从XML中获取数据库配置信息
 	public HashMap<String, String> getDbConfig() {
 
 		HashMap<String, String> resultMap = new HashMap<String, String>();
@@ -55,7 +59,8 @@ public class DbConnection {
 		HashMap<String, String> resultMap = dbcc.getDbConfig();
 
 		String Driver = resultMap.get("driver");
-		String URL = resultMap.get("url");
+		String ServerURL = resultMap.get("url");
+		String TableName = resultMap.get("tablename");
 		String UserName = resultMap.get("username");
 		String PassWord = resultMap.get("password");
 
@@ -67,8 +72,8 @@ public class DbConnection {
 			e.printStackTrace();
 		}
 		try {
-			conn = (Connection) DriverManager.getConnection(URL, UserName,
-					PassWord);
+			conn = (Connection) DriverManager.getConnection(ServerURL
+					+ TableName, UserName, PassWord);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,6 +105,7 @@ public class DbConnection {
 
 	// 查询数据库对象
 	public ResultSet SelectData(String selectSql) {
+		
 		ResultSet rs = null;
 		DbConnection dbcc = new DbConnection();
 		Connection con = dbcc.getConn();
@@ -116,12 +122,115 @@ public class DbConnection {
 		return rs;
 	}
 
-	// 更新数据库对象
+	// 新增数据库对象
+	public void InsertData(String sql, LocalDbObject ldo) {
 
+		DbConnection dbcc = new DbConnection();
+
+		try {
+			/**
+			 * Insert SQL Template
+			 * 
+			 * insert into co_operation
+			 * (instanceId,instanceType,oprationType,req_UpdateTime,jobId,serviceUri,rep_CreateTime,rep_LastModifiedTime,operationId)
+			 * values(?,?,?,?,?,?,?,?,?)"
+			*/
+			PreparedStatement preStmt = dbcc.getConn().prepareStatement(sql);
+			
+			preStmt.setString(1, ldo.getInstanceId());
+			preStmt.setString(2, ldo.getInstanceType());
+			preStmt.setString(3, ldo.getOprationType());
+			preStmt.setTimestamp(4, ldo.getReq_UpdateTime());
+			preStmt.setString(5, ldo.getJobId());
+			preStmt.setString(6, ldo.getServiceUri());
+			preStmt.setTimestamp(7, ldo.getRep_CreateTime());
+			preStmt.setTimestamp(8, ldo.getRep_LastModifiedTime());
+			preStmt.setString(9, ldo.getOperationId());
+
+			preStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// 更新数据库对象
+	public void UpdateData(String sql, LocalDbObject ldo) {
+
+		DbConnection dbcc = new DbConnection();
+
+		try {
+
+			/**
+			 * Insert SQL Template
+			 * 
+			 * update 
+			 * 		co_operation
+			 * set 
+			 * 		instanceId = ?,
+			 * 		instanceType = ?,
+			 * 		oprationType = ?,
+			 * 		req_UpdateTime = ?,
+			 * 		jobId = ?,
+			 * 		serviceUri= ?,
+			 * 		rep_CreateTime = ?,
+			 * 		rep_LastModifiedTime = ?
+			 *  where 
+			 * 		operationId= ?
+			*/
+			PreparedStatement preStmt = dbcc.getConn().prepareStatement(sql);
+			
+			preStmt.setString(1, ldo.getInstanceId());
+			preStmt.setString(2, ldo.getInstanceType());
+			preStmt.setString(3, ldo.getOprationType());
+			preStmt.setTimestamp(4, ldo.getReq_UpdateTime());
+			preStmt.setString(5, ldo.getJobId());
+			preStmt.setString(6, ldo.getServiceUri());
+			preStmt.setTimestamp(7, ldo.getRep_CreateTime());
+			preStmt.setTimestamp(8, ldo.getRep_LastModifiedTime());
+			preStmt.setString(9, ldo.getOperationId());
+			
+			preStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// 生成32位随机数，用于区分每次操作
+	public String getRamdomId() {
+		UUID uuid = UUID.randomUUID();
+		String OperationId = uuid.toString();
+		return OperationId;
+	}
+	
 	
 	// 测试
 	public static void main(String[] args) {
+
 		DbConnection dbcc = new DbConnection();
+
+		/*
+		 * String insetSql = "insert into co_operation" +
+		 * "(instanceId,instanceType,oprationType,req_UpdateTime,jobId,serviceUri,rep_CreateTime,rep_LastModifiedTime,operationId) "
+		 * + "values(?,?,?,?,?,?,?,?,?)";
+		 */
+		String insetSql = "update co_operation set instanceId = ?,instanceType = ?,"
+				+ "oprationType = ?,req_UpdateTime = ?,jobId = ?,serviceUri= ?,rep_CreateTime = ?,"
+				+ "rep_LastModifiedTime = ?"
+				+ " where operationId= ?";
+		LocalDbObject ldo = new LocalDbObject();
+		ldo.setInstanceId("444");
+		ldo.setOperationId("fef1737e-199d-480a-96c9-1dd9ebc676b5");
+
+		Timestamp d = new Timestamp(System.currentTimeMillis());
+		ldo.setReq_UpdateTime(d);
+
+		// dbcc.InsertData(insetSql, ldo);
+		dbcc.UpdateData(insetSql,ldo);
+
 		/*
 		 * HashMap<String, String> resultMap = dbcc.getDbConfig();
 		 * System.out.println(resultMap.get("driver"));
@@ -130,30 +239,25 @@ public class DbConnection {
 		 * System.out.println(resultMap.get("password"));
 		 */
 
-		Connection con = dbcc.getConn();
-
-		try {
-
-			Statement statement = (Statement) con.createStatement();
-			String sql = "select * from co_operation";
-			ResultSet rs = statement.executeQuery(sql);
-			System.out.println("-----------------");
-			String job = null;
-			String id = null;
-			while (rs.next()) {
-				// 获取stuname这列数据
-				job = rs.getString("id");
-				// 获取stuid这列数据
-				id = rs.getString("instanceId");
-				// 输出结果
-				System.out.println(id + "\t" + job);
-			}
-			rs.close();
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		/*
+		 * Connection con = dbcc.getConn();
+		 * 
+		 * try {
+		 * 
+		 * Statement statement = (Statement) con.createStatement(); String sql =
+		 * "insert into co_operation" +
+		 * "(instanceId,instanceType,oprationType,req_UpdateTime,jobId,serviceUri,rep_CreateTime,rep_LastModifiedTime) "
+		 * + "values(?,?,?,?,?,?,?,?)";
+		 * 
+		 * 
+		 * ResultSet rs = statement.executeQuery(sql);
+		 * System.out.println("-----------------"); String job = null; String id
+		 * = null; while (rs.next()) { // 获取stuname这列数据 job =
+		 * rs.getString("id"); // 获取stuid这列数据 id = rs.getString("instanceId");
+		 * // 输出结果 System.out.println(id + "\t" + job); } rs.close();
+		 * con.close(); } catch (SQLException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); }
+		 */
 
 	}
 }
