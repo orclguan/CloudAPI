@@ -62,9 +62,6 @@
                     }
                 ]
             },{
-                "name": "parameters",
-                "required": true
-            },{
                 "name": "serviceName",
                 "required": true,
                 "display_name": "Service Name",
@@ -200,11 +197,6 @@
                 "name": "cloudStoragePwd",
                 "required": true,
                 "display_name": "Password for the Oracle Storage Cloud Service administrator",
-                "data_type": "string",
-                "default": ""
-            },{
-                "name": "cloudStoragePwd",
-                "display_name": "Cloud Storage Container",
                 "data_type": "string",
                 "default": ""
             },{

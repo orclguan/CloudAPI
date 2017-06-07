@@ -10,10 +10,32 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DBCSInstance {
+	// Create Instance params
+	private String description;
+	private String edition;
+	private String level;
+	private String serviceName;
+	private String subscriptionType;
+	private String version;
+	private String vmPublicKeyText;
+	private String sid;
+	private String pdbName;
+	private String adminPassword;
+	private String type; //Component Type
+	private String usableStorage;
+	private String shape;
+	private String backupDestination;
+	private String cloudStorageUser;
+	private String cloudStoragePwd;
+	private String cloudStorageContainer;
+	private String timezone;
+	private String charset;
+	private String ncharset;
+
+	// View Instance Response params (also include above)
 	private String apex_url;
 	private String backup_destination;
 	private String backup_supported_version;
-	private String charset;
 	private String cloud_storage_container;
 	private String compute_site_name;
 	private String connect_descriptor;
@@ -23,32 +45,142 @@ public class DBCSInstance {
 	private String creation_time;
 	private String current_version;
 	private String dbaasmonitor_url;
-	private String description;
-	private String edition;
 	private String em_url;
 	private boolean failover_database;
 	private String glassfish_url;
 	private String identity_domain;
 	private String jaas_instances_using_service;
 	private String last_modified_time;
-	private String level;
 	private Integer listenerPort;
-	private String ncharset;
 	private Integer num_ip_reservations;
 	private String num_nodes;
-	private String pdbName;
 	private boolean rac_database;
 	private String service_name;
 	private String service_uri;
-	private String shape;
-	private String sid;
 	private String sm_plugin_version;
 	private String status;
-	private String subscriptionType;
-	private String timezone;
 	private Integer total_shared_storage;
-	private String version;
 
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getEdition() {
+		return edition;
+	}
+	public void setEdition(String edition) {
+		this.edition = edition;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getServiceName() {
+		return serviceName;
+	}
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+	public String getSubscriptionType() {
+		return subscriptionType;
+	}
+	public void setSubscriptionType(String subscriptionType) {
+		this.subscriptionType = subscriptionType;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getVmPublicKeyText() {
+		return vmPublicKeyText;
+	}
+	public void setVmPublicKeyText(String vmPublicKeyText) {
+		this.vmPublicKeyText = vmPublicKeyText;
+	}
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	public String getPdbName() {
+		return pdbName;
+	}
+	public void setPdbName(String pdbName) {
+		this.pdbName = pdbName;
+	}
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getUsableStorage() {
+		return usableStorage;
+	}
+	public void setUsableStorage(String usableStorage) {
+		this.usableStorage = usableStorage;
+	}
+	public String getShape() {
+		return shape;
+	}
+	public void setShape(String shape) {
+		this.shape = shape;
+	}
+	public String getBackupDestination() {
+		return backupDestination;
+	}
+	public void setBackupDestination(String backupDestination) {
+		this.backupDestination = backupDestination;
+	}
+	public String getCloudStorageUser() {
+		return cloudStorageUser;
+	}
+	public void setCloudStorageUser(String cloudStorageUser) {
+		this.cloudStorageUser = cloudStorageUser;
+	}
+	public String getCloudStoragePwd() {
+		return cloudStoragePwd;
+	}
+	public void setCloudStoragePwd(String cloudStoragePwd) {
+		this.cloudStoragePwd = cloudStoragePwd;
+	}
+	public String getCloudStorageContainer() {
+		return cloudStorageContainer;
+	}
+	public void setCloudStorageContainer(String cloudStorageContainer) {
+		this.cloudStorageContainer = cloudStorageContainer;
+	}
+	public String getTimezone() {
+		return timezone;
+	}
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+	public String getCharset() {
+		return charset;
+	}
+	public void setCharset(String charset) {
+		this.charset = charset;
+	}
+	public String getNcharset() {
+		return ncharset;
+	}
+	public void setNcharset(String ncharset) {
+		this.ncharset = ncharset;
+	}
 	public String getApex_url() {
 		return apex_url;
 	}
@@ -66,12 +198,6 @@ public class DBCSInstance {
 	}
 	public void setBackup_supported_version(String backup_supported_version) {
 		this.backup_supported_version = backup_supported_version;
-	}
-	public String getCharset() {
-		return charset;
-	}
-	public void setCharset(String charset) {
-		this.charset = charset;
 	}
 	public String getCloud_storage_container() {
 		return cloud_storage_container;
@@ -127,18 +253,6 @@ public class DBCSInstance {
 	public void setDbaasmonitor_url(String dbaasmonitor_url) {
 		this.dbaasmonitor_url = dbaasmonitor_url;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getEdition() {
-		return edition;
-	}
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
 	public String getEm_url() {
 		return em_url;
 	}
@@ -175,23 +289,11 @@ public class DBCSInstance {
 	public void setLast_modified_time(String last_modified_time) {
 		this.last_modified_time = last_modified_time;
 	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
 	public Integer getListenerPort() {
 		return listenerPort;
 	}
 	public void setListenerPort(Integer listenerPort) {
 		this.listenerPort = listenerPort;
-	}
-	public String getNcharset() {
-		return ncharset;
-	}
-	public void setNcharset(String ncharset) {
-		this.ncharset = ncharset;
 	}
 	public Integer getNum_ip_reservations() {
 		return num_ip_reservations;
@@ -204,12 +306,6 @@ public class DBCSInstance {
 	}
 	public void setNum_nodes(String num_nodes) {
 		this.num_nodes = num_nodes;
-	}
-	public String getPdbName() {
-		return pdbName;
-	}
-	public void setPdbName(String pdbName) {
-		this.pdbName = pdbName;
 	}
 	public boolean isRac_database() {
 		return rac_database;
@@ -229,18 +325,6 @@ public class DBCSInstance {
 	public void setService_uri(String service_uri) {
 		this.service_uri = service_uri;
 	}
-	public String getShape() {
-		return shape;
-	}
-	public void setShape(String shape) {
-		this.shape = shape;
-	}
-	public String getSid() {
-		return sid;
-	}
-	public void setSid(String sid) {
-		this.sid = sid;
-	}
 	public String getSm_plugin_version() {
 		return sm_plugin_version;
 	}
@@ -253,48 +337,35 @@ public class DBCSInstance {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getSubscriptionType() {
-		return subscriptionType;
-	}
-	public void setSubscriptionType(String subscriptionType) {
-		this.subscriptionType = subscriptionType;
-	}
-	public String getTimezone() {
-		return timezone;
-	}
-	public void setTimezone(String timezone) {
-		this.timezone = timezone;
-	}
 	public Integer getTotal_shared_storage() {
 		return total_shared_storage;
 	}
 	public void setTotal_shared_storage(Integer total_shared_storage) {
 		this.total_shared_storage = total_shared_storage;
 	}
-	public String getVersion() {
-		return version;
-	}
-	public void setVersion(String version) {
-		this.version = version;
-	}
 	@Override
 	public String toString() {
-		return "DBCSInstance [apex_url=" + apex_url + ", backup_destination=" + backup_destination
-				+ ", backup_supported_version=" + backup_supported_version + ", charset=" + charset
-				+ ", cloud_storage_container=" + cloud_storage_container + ", compute_site_name=" + compute_site_name
-				+ ", connect_descriptor=" + connect_descriptor + ", connect_descriptor_with_public_ip="
-				+ connect_descriptor_with_public_ip + ", created_by=" + created_by + ", creation_job_id="
-				+ creation_job_id + ", creation_time=" + creation_time + ", current_version=" + current_version
-				+ ", dbaasmonitor_url=" + dbaasmonitor_url + ", description=" + description + ", edition=" + edition
-				+ ", em_url=" + em_url + ", failover_database=" + failover_database + ", glassfish_url=" + glassfish_url
+		return "DBCSInstance [description=" + description + ", edition=" + edition + ", level=" + level
+				+ ", serviceName=" + serviceName + ", subscriptionType=" + subscriptionType + ", version=" + version
+				+ ", vmPublicKeyText=" + vmPublicKeyText + ", sid=" + sid + ", pdbName=" + pdbName + ", adminPassword="
+				+ adminPassword + ", type=" + type + ", usableStorage=" + usableStorage + ", shape=" + shape
+				+ ", backupDestination=" + backupDestination + ", cloudStorageUser=" + cloudStorageUser
+				+ ", cloudStoragePwd=" + cloudStoragePwd + ", cloudStorageContainer=" + cloudStorageContainer
+				+ ", timezone=" + timezone + ", charset=" + charset + ", ncharset=" + ncharset + ", apex_url="
+				+ apex_url + ", backup_destination=" + backup_destination + ", backup_supported_version="
+				+ backup_supported_version + ", cloud_storage_container=" + cloud_storage_container
+				+ ", compute_site_name=" + compute_site_name + ", connect_descriptor=" + connect_descriptor
+				+ ", connect_descriptor_with_public_ip=" + connect_descriptor_with_public_ip + ", created_by="
+				+ created_by + ", creation_job_id=" + creation_job_id + ", creation_time=" + creation_time
+				+ ", current_version=" + current_version + ", dbaasmonitor_url=" + dbaasmonitor_url + ", em_url="
+				+ em_url + ", failover_database=" + failover_database + ", glassfish_url=" + glassfish_url
 				+ ", identity_domain=" + identity_domain + ", jaas_instances_using_service="
-				+ jaas_instances_using_service + ", last_modified_time=" + last_modified_time + ", level=" + level
-				+ ", listenerPort=" + listenerPort + ", ncharset=" + ncharset + ", num_ip_reservations="
-				+ num_ip_reservations + ", num_nodes=" + num_nodes + ", pdbName=" + pdbName + ", rac_database="
-				+ rac_database + ", service_name=" + service_name + ", service_uri=" + service_uri + ", shape=" + shape
-				+ ", sid=" + sid + ", sm_plugin_version=" + sm_plugin_version + ", status=" + status
-				+ ", subscriptionType=" + subscriptionType + ", timezone=" + timezone + ", total_shared_storage="
-				+ total_shared_storage + ", version=" + version + "]";
+				+ jaas_instances_using_service + ", last_modified_time=" + last_modified_time + ", listenerPort="
+				+ listenerPort + ", num_ip_reservations=" + num_ip_reservations + ", num_nodes=" + num_nodes
+				+ ", rac_database=" + rac_database + ", service_name=" + service_name + ", service_uri=" + service_uri
+				+ ", sm_plugin_version=" + sm_plugin_version + ", status=" + status + ", total_shared_storage="
+				+ total_shared_storage + "]";
 	}
+
 
 }
