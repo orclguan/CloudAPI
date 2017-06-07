@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.oracle.dbconn;
+package com.oracle.localdbconn;
 
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +18,6 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 
 /**
  * @author Ray.Nan
@@ -98,6 +98,28 @@ public class DbConnection {
 			}
 	}
 
+	// 查询数据库对象
+	public ResultSet SelectData(String selectSql) {
+		ResultSet rs = null;
+		DbConnection dbcc = new DbConnection();
+		Connection con = dbcc.getConn();
+
+		try {
+			if (!con.isClosed())
+				System.out.println("Succeeded connecting to the Database!");
+			Statement statement = (Statement) con.createStatement();
+			rs = statement.executeQuery(selectSql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+
+	// 更新数据库对象
+
+	
+	// 测试
 	public static void main(String[] args) {
 		DbConnection dbcc = new DbConnection();
 		/*
@@ -111,19 +133,18 @@ public class DbConnection {
 		Connection con = dbcc.getConn();
 
 		try {
-			if (!con.isClosed())
-				System.out.println("Succeeded connecting to the Database!");
+
 			Statement statement = (Statement) con.createStatement();
-			String sql = "select * from test";
+			String sql = "select * from co_operation";
 			ResultSet rs = statement.executeQuery(sql);
 			System.out.println("-----------------");
 			String job = null;
 			String id = null;
 			while (rs.next()) {
 				// 获取stuname这列数据
-				job = rs.getString("instance_id");
+				job = rs.getString("id");
 				// 获取stuid这列数据
-				id = rs.getString("name");
+				id = rs.getString("instanceId");
 				// 输出结果
 				System.out.println(id + "\t" + job);
 			}
