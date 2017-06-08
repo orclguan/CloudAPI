@@ -5,7 +5,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -13,7 +18,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.citiccloud.model.Catalog;
-import com.oracle.citiccloud.model.DBCSInstance;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.ModelConfiguration;
 import com.oracle.citiccloud.model.Operations;
@@ -21,8 +25,8 @@ import com.oracle.citiccloud.model.Service;
 
 public final class TransformUtil {
 
-	public final static String SERVICE_NAME_DBCS = "oracle_dbcs";
-	public final static String SERVICE_NAME_JCS = "oracle_jcs";
+	public final static String SERVICE_NAME_DBCS = "dbaas";
+	public final static String SERVICE_NAME_JCS = "jaas";
 
 	public static Catalog getCatalog() {
 		if (catalog == null) {
@@ -46,18 +50,23 @@ public final class TransformUtil {
 
 		return catalog;
 	}
-
+	
+	/**
+	 * 转换为中信云服务实例格式
+	 * @param dbcsJson
+	 * @return
+	 */
 	public static Instances targetDBCSInstance(String dbcsJson) {
 		Instances ins = new Instances();
-		DBCSInstance dbcs = mapToObject(dbcsJson, DBCSInstance.class);
+		//DBCSInstance dbcs = mapToObject(dbcsJson, DBCSInstance.class);
 
 		String operationsJson = readJsonFile("operations_dbcs.json");
-		//operationList = mapper.readValue(operationsJson, List.class);
 		List<Operations> operationList = mapToObject(operationsJson, new TypeReference<List<Operations>>(){});
 
-		String configurationsJson = readJsonFile("configurations_dbcs.json");
-		List<ModelConfiguration> configurations = mapToObject(
-			configurationsJson, new TypeReference<List<ModelConfiguration>>(){});
+//		现有的Operation不需要参数配置
+//		String configurationsJson = readJsonFile("configurations_dbcs.json");
+//		List<ModelConfiguration> configurations = mapToObject(
+//			configurationsJson, new TypeReference<List<ModelConfiguration>>(){});
 
 		List<Service> serviceList = getCatalog().getSuppliers().get(0).getServices();
 
@@ -68,17 +77,26 @@ public final class TransformUtil {
 		}
 
 		ins.setId(""); // instance_id DB中读取？
-		//ins.setServiceId("");
-		ins.setConfigurations(configurations);
+		ins.setConfigurations(new ArrayList<ModelConfiguration>());//现有的Operation不需要参数配置
 		ins.setOperations(operationList);
 
 		return ins;
 	}
 
-	public static <T> T mapToObject(String json, Class<T> T) {
+	public static <T> T mapToObject(JSONObject json, Class<T> T) {
+		json.toJSONString();
+		return mapToObject(json.toJSONString(), T);
+	}
+
+	public static <T> T mapToObject(JSONObject json, TypeReference<T> typeRef) {
+		json.toJSONString();
+		return mapToObject(json.toJSONString(), typeRef);
+	}
+
+	public static <T> T mapToObject(String jsonStr, Class<T> T) {
 		T obj = null;
 		try {
-			obj = mapper.readValue(json, T);
+			obj = mapper.readValue(jsonStr, T);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -89,10 +107,10 @@ public final class TransformUtil {
 		return obj;
 	}
 
-	public static <T> T mapToObject(String json, TypeReference<T> typeRef) {
+	public static <T> T mapToObject(String jsonStr, TypeReference<T> typeRef) {
 		T obj = null;
 		try {
-			obj = mapper.readValue(json, typeRef);
+			obj = mapper.readValue(jsonStr, typeRef);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -103,10 +121,23 @@ public final class TransformUtil {
 		return obj;
 	}
 
-	public static String mapToJson(Object model) {
-		String json = "";
+	public static JSONObject mapToJson(Object model) {
+		String jsonStr = mapToJsonStr(model);
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
 		try {
-			json = mapper.disableDefaultTyping().writeValueAsString(model);
+			json = (JSONObject) parser.parse(jsonStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return json;
+	}
+
+	public static String mapToJsonStr(Object model) {
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.disableDefaultTyping().writeValueAsString(model);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -114,7 +145,7 @@ public final class TransformUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return json;
+		return jsonStr;
 	}
 
 	private static String readJsonFile(String fileName) {
