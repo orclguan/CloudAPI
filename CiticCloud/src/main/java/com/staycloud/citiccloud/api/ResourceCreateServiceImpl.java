@@ -1,4 +1,4 @@
-package com.staycloud.citiccloud.api.service.impl;
+/*package com.staycloud.citiccloud.api.service.impl;
 
 import com.google.common.collect.Maps;
 import com.staycloud.citiccloud.api.domain.ExistedResourceResponse;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-/**
+*//**
  * Created by ccl on 16/6/16.
- */
+ *//*
 @Service("resourceCreateService")
 public class ResourceCreateServiceImpl extends AbstractResourceService implements ResourceCreateService {
 
@@ -56,11 +56,11 @@ public class ResourceCreateServiceImpl extends AbstractResourceService implement
     @Autowired
     ResourceInstanceService resourceInstanceService;
 
-    /**
+    *//**
      * 服务实例交付
      *
      * @return
-     */
+     *//*
     @Override
     public SimpleActionResponse createInstance(ResourceCreateRequest request) {
         //200 OK
@@ -234,3 +234,4 @@ public class ResourceCreateServiceImpl extends AbstractResourceService implement
         return createResponse;
     }
 }
+*/

@@ -1,4 +1,4 @@
-package com.staycloud.citiccloud.api.action;
+/*package com.staycloud.citiccloud.api.action;
 
 import com.staycloud.citiccloud.api.ActionExecuteException;
 import com.staycloud.citiccloud.api.domain.ResourceCreateRequest;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
-/**
+*//**
  * @author lulin
  * @date 2016/6/12.
- */
+ *//*
 @Service
 public class ResourceCreateAction extends SimpleAction<ResourceCreateRequest, SimpleActionResponse> {
     @Inject
@@ -23,3 +23,4 @@ public class ResourceCreateAction extends SimpleAction<ResourceCreateRequest, Si
         return resourceCreateService.createInstance(request);
     }
 }
+*/

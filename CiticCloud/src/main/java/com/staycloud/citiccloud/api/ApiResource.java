@@ -1,4 +1,4 @@
-package com.staycloud.citiccloud.api.resource;
+/*package com.staycloud.citiccloud.api.resource;
 
 import com.staycloud.citiccloud.api.ActionResponse;
 import com.staycloud.citiccloud.api.action.*;
@@ -24,10 +24,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
+*//**
  * @author lulin
  * @date 2016/6/12.
- */
+ *//*
 @Component
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -334,3 +334,4 @@ public class ApiResource {
         return requestHeaders;
     }
 }
+*/

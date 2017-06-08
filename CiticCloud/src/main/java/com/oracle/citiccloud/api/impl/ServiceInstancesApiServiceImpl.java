@@ -374,7 +374,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
     	//jsonObject.put("parameters", jsonObject1);
     	/*
     	jsonObject1.put("RegionID", "huabei1");
-    	jsonObject1.put("ZoneId", "kyq1");
+    	jsonObject1.put("ZoneId", "kyq1"); 
     	jsonObject1.put("HostName", "mylinux");*/
     	return jsonObject;
     }

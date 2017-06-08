@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 import org.dom4j.Document;
@@ -132,20 +131,36 @@ public class DbConnection {
 			 * Insert SQL Template
 			 * 
 			 * insert into co_operation
-			 * (instanceId,instanceType,oprationType,req_UpdateTime,jobId,serviceUri,rep_CreateTime,rep_LastModifiedTime,operationId)
-			 * values(?,?,?,?,?,?,?,?,?)"
+			 * (
+			 * req_instanceId,
+			 * instanceId,
+			 * req_serviceId,
+			 * instanceType,
+			 * req_orgId,
+			 * operationId,
+			 * oprationType,
+			 * req_UpdateTime,
+			 * jobId,
+			 * serviceUri,
+			 * rep_CreateTime,
+			 * rep_LastModifiedTime
+			 * )
+			 * values(?,?,?,?,?,?,?,?,?,?,?,?)"
 			*/
 			PreparedStatement preStmt = dbcc.getConn().prepareStatement(sql);
 			
 			preStmt.setString(1, ldo.getInstanceId());
-			preStmt.setString(2, ldo.getInstanceType());
-			preStmt.setString(3, ldo.getOprationType());
-			preStmt.setTimestamp(4, ldo.getReq_UpdateTime());
-			preStmt.setString(5, ldo.getJobId());
-			preStmt.setString(6, ldo.getServiceUri());
-			preStmt.setTimestamp(7, ldo.getRep_CreateTime());
-			preStmt.setTimestamp(8, ldo.getRep_LastModifiedTime());
-			preStmt.setString(9, ldo.getOperationId());
+			preStmt.setString(2, ldo.getReq_instanceId());
+			preStmt.setString(3, ldo.getReq_serviceId());
+			preStmt.setString(4, ldo.getInstanceType());
+			preStmt.setString(5, ldo.getReq_orgId());
+			preStmt.setString(6, ldo.getOperationId());
+			preStmt.setString(7, ldo.getOprationType());
+			preStmt.setTimestamp(8, ldo.getReq_UpdateTime());
+			preStmt.setString(9, ldo.getJobId());
+			preStmt.setString(10, ldo.getServiceUri());
+			preStmt.setTimestamp(11, ldo.getRep_CreateTime());
+			preStmt.setTimestamp(12, ldo.getRep_LastModifiedTime());
 
 			preStmt.executeUpdate();
 
@@ -168,8 +183,11 @@ public class DbConnection {
 			 * update 
 			 * 		co_operation
 			 * set 
+			 * 		req_instanceId=?,
 			 * 		instanceId = ?,
+			 * 		req_serviceId=?,
 			 * 		instanceType = ?,
+			 * 		req_orgId=?
 			 * 		oprationType = ?,
 			 * 		req_UpdateTime = ?,
 			 * 		jobId = ?,
@@ -182,14 +200,17 @@ public class DbConnection {
 			PreparedStatement preStmt = dbcc.getConn().prepareStatement(sql);
 			
 			preStmt.setString(1, ldo.getInstanceId());
-			preStmt.setString(2, ldo.getInstanceType());
-			preStmt.setString(3, ldo.getOprationType());
-			preStmt.setTimestamp(4, ldo.getReq_UpdateTime());
-			preStmt.setString(5, ldo.getJobId());
-			preStmt.setString(6, ldo.getServiceUri());
-			preStmt.setTimestamp(7, ldo.getRep_CreateTime());
-			preStmt.setTimestamp(8, ldo.getRep_LastModifiedTime());
-			preStmt.setString(9, ldo.getOperationId());
+			preStmt.setString(2, ldo.getReq_instanceId());
+			preStmt.setString(3, ldo.getReq_serviceId());
+			preStmt.setString(4, ldo.getInstanceType());
+			preStmt.setString(5, ldo.getReq_orgId());
+			preStmt.setString(6, ldo.getOprationType());
+			preStmt.setTimestamp(7, ldo.getReq_UpdateTime());
+			preStmt.setString(8, ldo.getJobId());
+			preStmt.setString(9, ldo.getServiceUri());
+			preStmt.setTimestamp(10, ldo.getRep_CreateTime());
+			preStmt.setTimestamp(11, ldo.getRep_LastModifiedTime());
+			preStmt.setString(12, ldo.getOperationId());
 			
 			preStmt.executeUpdate();
 
