@@ -4,6 +4,7 @@
 package com.oracle.citiccloud.model;
 
 import com.oracle.citiccloud.model.dbaas.OraDbaasParameters;
+import com.oracle.citiccloud.model.dbaas.PricingModel;
 
 /**
  * @author Ray.Nan
