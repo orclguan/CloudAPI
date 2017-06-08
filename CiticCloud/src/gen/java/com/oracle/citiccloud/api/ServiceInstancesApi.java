@@ -17,12 +17,14 @@ import com.oracle.citiccloud.model.ServiceInstanceErrorMsg;
 import com.oracle.citiccloud.model.ServiceInstanceModify;
 
 import java.util.List;
+
 import com.oracle.citiccloud.api.NotFoundException;
 
 import java.io.InputStream;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.simple.JSONObject;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -119,7 +121,7 @@ public class ServiceInstancesApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "程序错误", response = InstanceCreated.class) })
     public Response serviceInstancesInstanceIdPut(@ApiParam(value = "服务实例ID.",required=true) @PathParam("instance_id") String instanceId
-,@ApiParam(value = "服务实例." ,required=true) ServiceInstance body
+,@ApiParam(value = "服务实例." ,required=true) JSONObject body
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.serviceInstancesInstanceIdPut(instanceId,body,securityContext);
