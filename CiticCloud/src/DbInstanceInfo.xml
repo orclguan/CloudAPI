@@ -5,3 +5,32 @@
        <username>wanghl6@citic.com</username>
        <password>Zhongxin123!</password>
 </database>
+
+<!-- SQL 语句
+Create Table
+
+
+Create Table
+
+CREATE TABLE `co_operation` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '主键自增长',
+  `req_instanceId` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT 'C请求的InstanceId',
+  `instanceId` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT 'O服务名_serviceName_serviceId',
+  `req_serviceId` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT 'C请求的服务类型dbaas或jaas',
+  `instanceType` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'O提供的暂时dbaas或jaas',
+  `req_orgId` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT 'C请求的公司ID,识别Oracle',
+  `operationId` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '每次操作对应的随机数，以区分不同的每次操作',
+  `oprationType` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'C请求lifecycleState_操作类型_O操作类型_stop_start_restart',
+  `req_UpdateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '接收C请求的时间',
+  `jobId` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT 'O_jobURL_Location',
+  `serviceUri` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT 'O_ServiceUrl',
+  `rep_CreateTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'O返回创建时间creation_time',
+  `rep_LastModifiedTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'O返回最后更新时间last_modified_time',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
+
+
+
+
+ -->
