@@ -34,6 +34,9 @@ public class LocalDbObject {
 	//O_ServiceUrl
 	private String serviceUri;
 	
+	//O_返回状态
+	private String rep_status;
+	
 	//O返回创建时间creation_time
 	private Timestamp rep_CreateTime;
 	
@@ -111,6 +114,12 @@ public class LocalDbObject {
 	}
 	public void setReq_orgId(String req_orgId) {
 		this.req_orgId = req_orgId;
+	}
+	public String getRep_status() {
+		return rep_status;
+	}
+	public void setRep_status(String rep_status) {
+		this.rep_status = rep_status;
 	}
 	
 }
