@@ -28,7 +28,7 @@ import com.mysql.jdbc.Connection;
  */
 public class DbConnection {
 
-	private String filePath = "src/LocalDbConnect.xml";
+	private String filePath = this.getClass().getClassLoader().getResource("LocalDbConnect.xml").getFile(); //"src/LocalDbConnect.xml";
 	File xmlFile = new File(filePath);
 
 	// 从XML中获取数据库配置信息
@@ -238,9 +238,9 @@ public class DbConnection {
 		 * "(instanceId,instanceType,oprationType,req_UpdateTime,jobId,serviceUri,rep_CreateTime,rep_LastModifiedTime,operationId) "
 		 * + "values(?,?,?,?,?,?,?,?,?)";
 		 */
-		String insetSql = "update co_operation set instanceId = ?,instanceType = ?,"
-				+ "oprationType = ?,req_UpdateTime = ?,jobId = ?,serviceUri= ?,rep_CreateTime = ?,"
-				+ "rep_LastModifiedTime = ?"
+		String insetSql = "update co_operation set instanceId = ?, req_instanceId = ?, req_serviceId = ?,"
+				+ "req_orgId = ?, instanceType = ?, oprationType = ?,req_UpdateTime = ?,jobId = ?,serviceUri= ?,"
+				+ "rep_CreateTime = ?, rep_LastModifiedTime = ?"
 				+ " where operationId= ?";
 		LocalDbObject ldo = new LocalDbObject();
 		ldo.setInstanceId("444");

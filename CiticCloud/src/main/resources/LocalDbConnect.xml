@@ -4,7 +4,8 @@
        <url>jdbc:mysql://localhost:3306/</url>
        <tablename>citic_oracle</tablename>
        <username>root</username>
-       <password>root</password>
+       <password>Oracle123</password>
+       <!-- <password>root</password> -->
 </database>
  
 <!-- 
