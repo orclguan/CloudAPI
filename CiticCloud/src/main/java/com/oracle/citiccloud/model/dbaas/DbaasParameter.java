@@ -3,10 +3,16 @@
  */
 package com.oracle.citiccloud.model.dbaas;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * @author Ray.Nan
  *
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DbaasParameter {
 
 	private DbaasadditionalParams additionalParams;

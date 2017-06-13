@@ -29,7 +29,7 @@ public abstract class ServiceInstancesApiService {
     public abstract Response serviceInstancesGet( @NotNull String serviceId, List<String> instanceIds,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesInstanceIdDelete(String instanceId, @NotNull Boolean acceptsIncomplete,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesInstanceIdLastOperationGet(String instanceId,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response serviceInstancesInstanceIdPost(String instanceId,ServiceInstanceModify body,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response serviceInstancesInstanceIdPost(String instanceId,JSONObject body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesInstanceIdPut(String instanceId,JSONObject body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesVerifyPut(ServiceInstance instance,SecurityContext securityContext) throws NotFoundException;
 }

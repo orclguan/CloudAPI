@@ -1,5 +1,8 @@
 package com.oracle.citiccloud.model.dbaas;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DbaasadditionalParams {
 	
 	private String db_demo;

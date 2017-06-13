@@ -1,14 +1,19 @@
 package com.oracle.citiccloud.model.dbaas;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ParaOfOraBody {
 
 	// Oracle OPC 的 Body 参数
 	private String description;
 	private String edition; // 必填
 	private String level; // 必填
-	private List<DbaasParameter> parameters; // 必填
+	private ArrayList<DbaasParameter> parameters; // 必填
 	private String serviceName; // 必填
 	private String shape; // 必填
 	private String subscriptionType; // 必填
@@ -39,11 +44,11 @@ public class ParaOfOraBody {
 		this.level = level;
 	}
 
-	public List<DbaasParameter> getParameters() {
+	public ArrayList<DbaasParameter> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(List<DbaasParameter> parameters) {
+	public void setParameters(ArrayList<DbaasParameter> parameters) {
 		this.parameters = parameters;
 	}
 

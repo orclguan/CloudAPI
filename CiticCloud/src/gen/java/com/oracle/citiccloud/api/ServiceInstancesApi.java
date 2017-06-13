@@ -41,8 +41,6 @@ public class ServiceInstancesApi  {
    private final ServiceInstancesApiService delegate = ServiceInstancesApiServiceFactory.getServiceInstancesApi();
 
     @GET
-    
-    
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "服务实例管理.", notes = "此接口点返回供应商系统中某服务的服务实例列表，包括其配置信息和可进行的操作，其中更新操作为特殊处理，在返回更新操作时，配置选项的默认值为此服务实例的当前值。 如果instance_ids为空，则只返回该service_id的20个实例. 示例： 适配器地址/service_instances?service_id=5836a0462fbaaf0aee0db7a2&org_id=abde8d3c-7628-4378-a07f-a7bf6c387531&instance_ids=1caf242f-b3a2-41b5-890b-9fbb82b22585,fbf20ccc-ef9e-4377-bbe1-7c56bd6b996c ", response = Instances.class, responseContainer = "List", tags={ "adapter-management", })
     @io.swagger.annotations.ApiResponses(value = { 
@@ -73,8 +71,7 @@ public class ServiceInstancesApi  {
         return delegate.serviceInstancesInstanceIdDelete(instanceId,acceptsIncomplete,securityContext);
     }
     @GET
-    @Path("/{instance_id}/last_operation")
-    
+    @Path("/{instance_id}/last_operation")    
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "获取正在进行的上一个操作（仅对异步操作有效）.", notes = "当适配器为服务实例创建、操作（含变更）、释放返回 202 ACCEPTED 时，中信云平台就可以通过 接口获取上一个请求的操作的状态。适配器对这个接口点的响应必须包含 state 域，可选包含 description 域。 state 的有效值包括 in progress，succeeded，和failed。只要返回的是 “state in progress”，中信云平台就可以继续调用last_operation。description域可以给用户提供更多的状态信息，如果需要的话，仅对异步操作有效.", response = LastOperationStatus.class, tags={ "adapter-management", })
     @io.swagger.annotations.ApiResponses(value = { 
@@ -98,7 +95,7 @@ public class ServiceInstancesApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "程序错误", response = InstanceUpdated.class) })
     public Response serviceInstancesInstanceIdPost(@ApiParam(value = "服务实例唯一标识.",required=true) @PathParam("instance_id") String instanceId
-,@ApiParam(value = "服务实例." ,required=true) ServiceInstanceModify body
+,@ApiParam(value = "服务实例." ,required=true) JSONObject body
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.serviceInstancesInstanceIdPost(instanceId,body,securityContext);

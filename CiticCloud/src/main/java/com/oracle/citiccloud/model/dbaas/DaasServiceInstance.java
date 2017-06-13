@@ -1,5 +1,10 @@
 package com.oracle.citiccloud.model.dbaas;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DaasServiceInstance {
 
 	// 中信Request Body对象
@@ -13,7 +18,7 @@ public class DaasServiceInstance {
 
 	private ParaOfOraBody parameters;
 
-	private PricingModel pricingModel;
+	private PricingModel pricing_model;
 
 	public String getInstance_id() {
 		return instance_id;
@@ -47,12 +52,12 @@ public class DaasServiceInstance {
 		this.accepts_incomplete = accepts_incomplete;
 	}
 
-	public PricingModel getPricingModel() {
-		return pricingModel;
+	public PricingModel getPricing_model() {
+		return pricing_model;
 	}
 
-	public void setPricingModel(PricingModel pricingModel) {
-		this.pricingModel = pricingModel;
+	public void setPricing_model(PricingModel pricing_model) {
+		this.pricing_model = pricing_model;
 	}
 
 	public ParaOfOraBody getParameters() {
