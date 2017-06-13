@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.citiccloud.model.Catalog;
+import com.oracle.citiccloud.model.DbaasView;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.ModelConfiguration;
 import com.oracle.citiccloud.model.Operations;
-import com.oracle.citiccloud.model.Service;
+import com.oracle.localdbconn.DbConnection;
 
 public final class TransformUtil {
 
@@ -56,10 +59,8 @@ public final class TransformUtil {
 	 * @param dbcsJson
 	 * @return
 	 */
-	public static Instances targetDBCSInstance(String dbcsJson) {
+	public static Instances targetDBCSInstance(DbaasView dbcs, String serviceId) {
 		Instances ins = new Instances();
-		//DBCSInstance dbcs = mapToObject(dbcsJson, DBCSInstance.class);
-
 		String operationsJson = readJsonFile("operations_dbcs.json");
 		List<Operations> operationList = mapToObject(operationsJson, new TypeReference<List<Operations>>(){});
 
@@ -68,16 +69,27 @@ public final class TransformUtil {
 //		List<ModelConfiguration> configurations = mapToObject(
 //			configurationsJson, new TypeReference<List<ModelConfiguration>>(){});
 
-		List<Service> serviceList = getCatalog().getSuppliers().get(0).getServices();
+		String instanceId = "";
+		try {
+			DbConnection conn = new DbConnection();
 
-		for (Service s : serviceList) {
-			if (SERVICE_NAME_DBCS.equals(s.getName())) {
-				ins.setServiceId(s.getId());
+			String selectSQL =
+					"SELECT MAX(t.req_instanceId) req_instanceId FROM co_operation t "
+					+ "WHERE t.instanceId = '" + dbcs.getService_name() + "';";
+
+			ResultSet rs = conn.selectData(selectSQL);
+			
+			if (rs.next()) {
+				instanceId = rs.getString("req_instanceId");
 			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
-		ins.setId(""); // instance_id DB中读取？
-		ins.setConfigurations(new ArrayList<ModelConfiguration>());//现有的Operation不需要参数配置
+		ins.setId(instanceId); // instance_id DB中读取
+		ins.setServiceId(serviceId);
+		ins.setConfigurations(new ArrayList<ModelConfiguration>());//现有的Operation不需要参数配置, 若匹配需传入catalog>service>configuratoin_options
 		ins.setOperations(operationList);
 
 		return ins;

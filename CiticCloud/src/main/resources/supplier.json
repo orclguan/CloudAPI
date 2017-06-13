@@ -68,14 +68,14 @@
                 "data_type": "array",
                 "default": "",
                 "instruction": "This array is not required if the level value is BASIC",
-                "items": [
+                "array_item": [
                     {
                         "name": "additionalParams",
                         "required": true,
                         "display_name": "additionalParams",
                         "data_type": "object",
                         "default": "",
-                        "sub_config_options": {
+                        "nested_object": {
                             "name": "db_demo",
                             "required": true,
                             "display_name": "Whether to include the Demos PDB",

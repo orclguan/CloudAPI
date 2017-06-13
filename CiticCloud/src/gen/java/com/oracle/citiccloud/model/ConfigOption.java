@@ -38,6 +38,39 @@ public class ConfigOption   {
   @JsonProperty("display_name")
   private String displayName = null;
 
+  @JsonProperty("data_type")
+  private DataTypeEnum dataType = null;
+
+  @JsonProperty("data_source")
+  private DataSourceEnum dataSource = null;
+
+  @JsonProperty("default")
+  private String _default = null;
+
+  @JsonProperty("instruction")
+  private String instruction = null;
+
+  @JsonProperty("unit")
+  private String unit = null;
+
+  @JsonProperty("min")
+  private String min = null;
+
+  @JsonProperty("max")
+  private String max = null;
+
+  @JsonProperty("step")
+  private String step = null;
+
+  @JsonProperty("values")
+  private List<OptionValue> values = null;
+  
+  @JsonProperty("array_item")
+  private List<ConfigOption> arrayItem = null; // when dataType == array
+  
+  @JsonProperty("nested_object")
+  private ConfigOption nestedObject = null; // when dataType == object
+
   /**
    * 数据类型, options 指下拉选择框， ooptions_tree 指多级下拉选择框
    */
@@ -52,7 +85,11 @@ public class ConfigOption   {
     
     OPTIONS_TREE("options_tree"),
     
-    IMAGE("image");
+    IMAGE("image"),
+    
+    ARRAY("array"),
+    
+    OBJECT("object");
 
     private String value;
 
@@ -76,9 +113,6 @@ public class ConfigOption   {
       return null;
     }
   }
-
-  @JsonProperty("data_type")
-  private DataTypeEnum dataType = null;
 
   /**
    * 数据来源，目前支持两种，1.默认情况 default，通过中信云网的通用配置界面获得; 2. config_url, 通过供应商提供的外部URL获得
@@ -110,30 +144,6 @@ public class ConfigOption   {
       return null;
     }
   }
-
-  @JsonProperty("data_source")
-  private DataSourceEnum dataSource = null;
-
-  @JsonProperty("default")
-  private String _default = null;
-
-  @JsonProperty("instruction")
-  private String instruction = null;
-
-  @JsonProperty("unit")
-  private String unit = null;
-
-  @JsonProperty("min")
-  private String min = null;
-
-  @JsonProperty("max")
-  private String max = null;
-
-  @JsonProperty("step")
-  private String step = null;
-
-  @JsonProperty("values")
-  private List<OptionValue> values = null;
 
   public ConfigOption name(String name) {
     this.name = name;
@@ -347,10 +357,19 @@ public class ConfigOption   {
     this.step = step;
   }
 
-  public ConfigOption values(List<OptionValue> values) {
-    this.values = values;
-    return this;
+  @JsonProperty("nested_object")
+  public ConfigOption getNestedObject() {
+	return nestedObject;
   }
+
+  public void setNestedObject(ConfigOption nestedObject) {
+  	this.nestedObject = nestedObject;
+  }
+  
+  public ConfigOption values(List<OptionValue> values) {
+      this.values = values;
+      return this;
+    }
 
   public ConfigOption addValuesItem(OptionValue valuesItem) {
     if (this.values == null) {
@@ -395,12 +414,14 @@ public class ConfigOption   {
         Objects.equals(this.min, configOption.min) &&
         Objects.equals(this.max, configOption.max) &&
         Objects.equals(this.step, configOption.step) &&
-        Objects.equals(this.values, configOption.values);
+        Objects.equals(this.values, configOption.values) &&
+        Objects.equals(this.arrayItem, configOption.arrayItem) &&
+        Objects.equals(this.nestedObject, configOption.nestedObject);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, required, displayName, dataType, dataSource, _default, instruction, unit, min, max, step, values);
+    return Objects.hash(name, required, displayName, dataType, dataSource, _default, instruction, unit, min, max, step, values, arrayItem, nestedObject);
   }
 
 
@@ -421,6 +442,8 @@ public class ConfigOption   {
     sb.append("    max: ").append(toIndentedString(max)).append("\n");
     sb.append("    step: ").append(toIndentedString(step)).append("\n");
     sb.append("    values: ").append(toIndentedString(values)).append("\n");
+    sb.append("    arrayItem: ").append(toIndentedString(arrayItem)).append("\n");
+    sb.append("    nestedObject: ").append(toIndentedString(nestedObject)).append("\n");
     sb.append("}");
     return sb.toString();
   }
