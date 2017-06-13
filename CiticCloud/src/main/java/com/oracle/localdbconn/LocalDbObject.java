@@ -88,8 +88,8 @@ public class LocalDbObject {
 	public Timestamp getRep_CreateTime() {
 		return rep_CreateTime;
 	}
-	public void setRep_CreateTime(Timestamp rep_CreateTime) {
-		this.rep_CreateTime = rep_CreateTime;
+	public void setRep_CreateTime(Timestamp timestamp) {
+		this.rep_CreateTime = timestamp;
 	}
 	public String getOperationId() {
 		return operationId;

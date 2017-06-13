@@ -28,6 +28,7 @@ import com.mysql.jdbc.Connection;
  *
  */
 public class DbConnection {
+	
 
 	// 获取数据库连接
 	public Connection getConn() {
