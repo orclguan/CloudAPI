@@ -21,20 +21,17 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.json.simple.JSONObject;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mysql.jdbc.Connection;
 import com.oracle.citiccloud.api.ApiResponseMessage;
-import com.oracle.citiccloud.api.CloudUtil;
-import com.oracle.citiccloud.api.JacksonUtil;
 import com.oracle.citiccloud.api.NotFoundException;
 import com.oracle.citiccloud.api.ServiceInstancesApiService;
 import com.oracle.citiccloud.api.TransformUtil;
-import com.oracle.citiccloud.model.DBCSInstance;
+import com.oracle.citiccloud.model.DbaasView;
+import com.oracle.citiccloud.model.DbaasViewList;
 import com.oracle.citiccloud.model.Instances;
+import com.oracle.citiccloud.model.Service;
 import com.oracle.citiccloud.model.ServiceInstance;
-import com.oracle.citiccloud.model.ServiceInstanceModify;
 import com.oracle.citiccloud.model.dbaas.DaasServiceInstance;
 import com.oracle.localdbconn.DbConnection;
 import com.oracle.localdbconn.LocalDbObject;
@@ -47,22 +44,25 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 * 
 	 */
 
-	public final static String SERVICE_NAME_DBCS = "oracle_dbcs";
-	public final static String SERVICE_NAME_JCS = "oracle_jcs";
+	public final static String SERVICE_NAME_DBCS = "dbaas";
+	public final static String SERVICE_NAME_JCS = "jcs";
 
 	@Override
 	public Response serviceInstancesGet(@NotNull String serviceId,
 			List<String> instanceIds, SecurityContext securityContext)
 			throws NotFoundException {
-		if (serviceId == null || serviceId.equals("")) {
+
+		String serviceName = getServiceNameById(serviceId);
+
+		if (serviceName.equals("")) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.type(MediaType.APPLICATION_JSON).build();
-		} else if (serviceId.equalsIgnoreCase("dbcs")) {
-			return Response.ok().entity(this.getDBCSInstances()).build();
-		} else if (serviceId.equalsIgnoreCase("jcs")) {
+		} else if (serviceName.equalsIgnoreCase(SERVICE_NAME_DBCS)) {
+			return Response.ok().entity(this.getDBCSInstances(instanceIds)).build();
+		} else if (serviceName.equalsIgnoreCase(SERVICE_NAME_JCS)) {
 			return Response.ok().entity(this.getJCSInstances()).build();
 
-		} else if (serviceId.equalsIgnoreCase("iaas")) {
+		} else if (serviceName.equalsIgnoreCase("iaas")) {
 			return Response.ok().entity(this.getIaaSInstances()).build();
 
 		} else {
@@ -99,17 +99,18 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 例如：https://dbaas.oraclecloud.com:443/paas/service/dbcs/api/v1.1/instances/midas/status/delete/job/11901471
 
 		String serviceId = (String) body.get("service_id");
+		String serviceName = getServiceNameById(serviceId);
 
 		// String serviceId = body.getServiceId();
 		System.out.println("requestJSON: " + body);
 
-		if (serviceId == null || serviceId.equals("")) {
+		if (serviceName == null || serviceName.equals("")) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.type(MediaType.APPLICATION_JSON).build();
 		}
 
 		// 创建DBAAS服务实例
-		else if (serviceId.equalsIgnoreCase("dbaas")) {
+		else if (serviceName.equalsIgnoreCase("dbaas")) {
 
 			// JSON Body 转 DBAAS对象
 			DaasServiceInstance dsi = TransformUtil.mapToObject(body,
@@ -120,14 +121,14 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 					.build();
 		}
 
-		else if (serviceId.equalsIgnoreCase("jaas")) {
+		else if (serviceName.equalsIgnoreCase("jaas")) {
 
 			return Response.ok().entity(this.createJCSInstance(body)).build();
 
 		} else {
 
 			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("incorrect serviceId")
+					.entity("{\"error\": \"incorrect serviceId\"")
 					.type(MediaType.APPLICATION_JSON).build();
 		}
 		// return null;
@@ -179,12 +180,15 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("lifecycleState", localobj.getOprationType());
 
-			return Response.ok().entity(this.operateDBCSInstance(jsonObject, ramdonId,localobj)).build();
+			return Response
+					.ok()
+					.entity(this.operateDBCSInstance(jsonObject, ramdonId,localobj)).build();
 			// Response.ok().entity(new
 			// ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
 		} else {
 			// JOB有未完成任务时返回错误
-			return Response.status(Response.Status.SERVICE_UNAVAILABLE).type(MediaType.APPLICATION_JSON).build();
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+					.type(MediaType.APPLICATION_JSON).build();
 		}
 	}
 
@@ -243,13 +247,50 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 */
 	@Override
 	public Response serviceInstancesInstanceIdLastOperationGet(
-			String instanceId, SecurityContext securityContext)
+			String reqInstanceId, SecurityContext securityContext)
 			throws NotFoundException {
-		// TODO：通过instanceId查询job URI，根据job URI查job status
+		// 通过reqInstanceId查询job URI，根据job URI查job status
+
+		DbConnection dbconn = new DbConnection();
+		String sql = dbconn.getLocalSql().get("selectSQL") + " '"
+				+ reqInstanceId + "' ";
+
+		// 根据SeriviceId 查询最新的数据
+		ResultSet rs = dbconn.selectData(sql);
+		String jobId = "";
+		try {
+			while (rs.next()) {
+				jobId = rs.getString("jobId");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		JSONObject resp = new JSONObject();
+
+		// 请求的instance不存在对应job
+		if (jobId == null || "".equals(jobId)) {
+			resp.put("state", "failed");
+			resp.put("description", "Last Operation does not exist");
+
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity(resp)
+					.type(MediaType.APPLICATION_JSON).build();
+		}
+
+		// 根据JobId获取Job状态
+		String jobStatus = queryJobStatus(jobId).toLowerCase();
+		
+		if (!jobStatus.equals("succeded") || !jobStatus.equals("failed")) {
+			resp.put("state", "in progress");  // succeded， failed, in progress 外还有其他状态,如 waitingonresource
+		}
+		else {
+			resp.put("state", jobStatus);
+		}
 
 		return Response
 				.ok()
-				.entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!"))
+				.entity(resp)
 				.build();
 	}
 
@@ -266,14 +307,15 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 				.build();
 	}
 
-	private List<Instances> getDBCSInstances() {
+	private JSONObject getDBCSInstances(List<String> instanceIds) {
 		// TODO: 配置文件或者数据库中读取
-		CloudUtil.auth();
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 
-		String domain = "cnzhongxin";
-		String baseUrl = "https://dbaas.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/";
-		String username = "wanghl6@citic.com";
-		String password = "Zhongxin123!";
+		String domain = daasInfo.get("domain");
+		String baseUrl = daasInfo.get("baseUrl");
+		String username = daasInfo.get("username");
+		String password = daasInfo.get("password");
 
 		String usernameAndPassword = username + ":" + password;
 		String authorizationHeaderName = "Authorization";
@@ -290,56 +332,34 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		System.out.println("response: " + response);
 
-		JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
-		System.out.println("service_type:" + obj.get("service_type"));
-
-		// Services Array
-		JsonArray array = obj.getAsJsonArray("services");
-		List<DBCSInstance> dList = new ArrayList<DBCSInstance>();
-
-		for (int i = 0; i < array.size(); i++) {
-			JsonObject o = (JsonObject) array.get(i);
-			DBCSInstance di = new DBCSInstance();
-			System.out.println("service_name:" + o.get("service_name"));
-			System.out.println("service_uri:" + o.get("service_uri"));
-
-			di.setService_uri(o.get("service_uri").getAsString());
-			dList.add(di);
-		}
-
+		// 返回所有instance
+		DbaasViewList apiResponse = TransformUtil.mapToObject(response, DbaasViewList.class);
+		List<DbaasView> services = apiResponse.getServices();
 		List<Instances> list = new ArrayList<Instances>();
-		for (DBCSInstance dbcs : dList) {
-			list.add(getSingleDBCSInstance(dbcs));
+
+		for (DbaasView dbcs : services) {
+			// 转换为中信云Instances结构
+			Instances ins = TransformUtil.targetDBCSInstance(dbcs, getServiceIdByName(SERVICE_NAME_DBCS));
+
+			// 1. instanceIds为空则返回所有列表
+			// 2. 只返回请求的instanceIds对应的实例
+			if (instanceIds.isEmpty() || instanceIds.contains(ins.getId())) {
+				list.add(ins);
+			}
 		}
 
-		return list;
+		JSONObject jsonResp = new JSONObject();
+		jsonResp.put("instances", list);
+
+		return jsonResp;
 	}
 
-	private Instances getSingleDBCSInstance(DBCSInstance di) {
-		String domain = "cnzhongxin";
-		String username = "wanghl6@citic.com";
-		String password = "Zhongxin123!";
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(di.getService_uri());
-
-		// TODO: 如果获取超时需处理
-		String response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain).get(String.class);
-
-		System.out.println("Single DBCS Instance response: \n" + response);
-
-		// transform()
-		Instances ins = TransformUtil.targetDBCSInstance(response);
-
-		return ins;
+	/**
+	 * 获取instance详细信息
+	 * （暂时不实现）
+	 */
+	private DbaasView getSingleDBCSInstance(DbaasView dbcs) {
+		return dbcs;
 	}
 
 	private List<Instances> getJCSInstances() {
@@ -467,7 +487,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 				.header("X-ID-TENANT-NAME", domain).get(String.class);
 
 		JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
-		String status = obj.get("status").toString();
+		String status = obj.get("job_status").toString().replace("\"", "");
 		return status;
 	}
 
@@ -526,50 +546,50 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	private JSONObject deleteDBCSInstance(String ramdonId,LocalDbObject localobj){
 		
 		// TODO: 配置文件或者数据库中读取
-				DbConnection dbCon = new DbConnection();
-				HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 
-				String domain = daasInfo.get("domain");
-				String baseUrl = daasInfo.get(localobj.getServiceUri());
-				String username = daasInfo.get("username");
-				String password = daasInfo.get("password");
+		String domain = daasInfo.get("domain");
+		String baseUrl = daasInfo.get(localobj.getServiceUri());
+		String username = daasInfo.get("username");
+		String password = daasInfo.get("password");
 
-				String usernameAndPassword = username + ":" + password;
-				String authorizationHeaderName = "Authorization";
-				String authorizationHeaderValue = "Basic "
-						+ java.util.Base64.getEncoder().encodeToString(
-								usernameAndPassword.getBytes());
+		String usernameAndPassword = username + ":" + password;
+		String authorizationHeaderName = "Authorization";
+		String authorizationHeaderValue = "Basic "
+				+ java.util.Base64.getEncoder().encodeToString(
+						usernameAndPassword.getBytes());
 
-				Client client = ClientBuilder.newClient();
-				WebTarget myResource = client.target(baseUrl);
+		Client client = ClientBuilder.newClient();
+		WebTarget myResource = client.target(baseUrl);
 
-				// TODO: 如果获取超时需处理
-				Response response = myResource.request()
-						.header(authorizationHeaderName, authorizationHeaderValue)
-						.header("X-ID-TENANT-NAME", domain)
-						.header("Content-Type", "application/json").delete();
-				
-				// 根据返回值更新Local数据库
-				localobj.setJobId(response.getLocation().toString());
-				localobj.setServiceUri(localobj.getServiceUri());
-				localobj.setRep_status(String.valueOf(response.getStatus()));
-				localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
-				localobj.setRep_LastModifiedTime(getOracleTimestamp(response
-						.getLastModified()));
-				localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
+		// TODO: 如果获取超时需处理
+		Response response = myResource.request()
+				.header(authorizationHeaderName, authorizationHeaderValue)
+				.header("X-ID-TENANT-NAME", domain)
+				.header("Content-Type", "application/json").delete();
+		
+		// 根据返回值更新Local数据库
+		localobj.setJobId(response.getLocation().toString());
+		localobj.setServiceUri(localobj.getServiceUri());
+		localobj.setRep_status(String.valueOf(response.getStatus()));
+		localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
+		localobj.setRep_LastModifiedTime(getOracleTimestamp(response
+				.getLastModified()));
+		localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
 
-				String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
-				// 向本地数据库更新数据
-				dbCon.updateSQLByInsertReply(sql, localobj);
-				
-				Map result = new HashMap();
-				result.put("status", String.valueOf(response.getStatus()));
-				
-				JSONObject obj = new JSONObject(result);
+		String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
+		// 向本地数据库更新数据
+		dbCon.updateSQLByInsertReply(sql, localobj);
+		
+		Map result = new HashMap();
+		result.put("status", String.valueOf(response.getStatus()));
+		
+		JSONObject obj = new JSONObject(result);
 
-				return obj;
+		return obj;
 	}
-	
+
 	// 转换成TimeStamp
 	private Timestamp getOracleTimestamp(Object value) {
 		try {
@@ -584,6 +604,40 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	private JSONObject createJCSInstance(JSONObject body) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private String getServiceNameById(String serviceId) {
+		String serviceName = "";
+
+		if (serviceId == null || serviceId.equals("")) {
+			return serviceName;
+		}
+
+		List<Service> serviceList = TransformUtil.getCatalog().getSuppliers().get(0).getServices();
+		for (Service s : serviceList) {
+			if (s.getId().equals(serviceId)) {
+				return s.getName();
+			}
+		}
+
+		return serviceName;
+	}
+	
+	private String getServiceIdByName(String serviceName) {
+		String serviceId = "";
+
+		if (serviceName == null || serviceName.equals("")) {
+			return serviceId;
+		}
+
+		List<Service> serviceList = TransformUtil.getCatalog().getSuppliers().get(0).getServices();
+		for (Service s : serviceList) {
+			if (s.getName().equals(serviceName)) {
+				return s.getId();
+			}
+		}
+
+		return serviceName;
 	}
 
 }
