@@ -56,6 +56,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		if (serviceName.equals("")) {
 			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("{\"error\": \"incorrect serviceId\"}")
 					.type(MediaType.APPLICATION_JSON).build();
 		} else if (serviceName.equalsIgnoreCase(SERVICE_NAME_DBCS)) {
 			return Response.ok().entity(this.getDBCSInstances(instanceIds)).build();
@@ -67,7 +68,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		} else {
 			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("incorrect serviceId")
+					.entity("{\"error\": \"incorrect serviceId\"}")
 					.type(MediaType.APPLICATION_JSON).build();
 		}
 
@@ -116,7 +117,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 			DaasServiceInstance dsi = TransformUtil.mapToObject(body,
 					DaasServiceInstance.class);
 
-			return Response.ok()
+			return Response.status(Response.Status.ACCEPTED)
 					.entity(this.createDBCSInstance(dsi, ramdonId, localobj))
 					.build();
 		}
@@ -128,7 +129,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		} else {
 
 			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("{\"error\": \"incorrect serviceId\"")
+					.entity("{\"error\": \"incorrect serviceId\"}")
 					.type(MediaType.APPLICATION_JSON).build();
 		}
 		// return null;
@@ -233,7 +234,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 				// 没有其他JOB正常运行时，
 				if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
 					// 没有不正常的JOB时，执行删除操作
-					return Response.ok().entity(this.deleteDBCSInstance(ramdonId,localobj)).build();
+					return Response.status(Response.Status.ACCEPTED).entity(this.deleteDBCSInstance(ramdonId,localobj)).build();
 					// Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
 				} else {
 					// JOB有未完成任务时返回错误
@@ -289,7 +290,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		}
 
 		return Response
-				.ok()
+				.status(Response.Status.ACCEPTED)
 				.entity(resp)
 				.build();
 	}
@@ -439,6 +440,9 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 				.post(Entity.json(body.getParameters()));
 
 		String responseStr = response.readEntity(String.class);
+
+		System.out.println(">>>>>> Create DBCSInstance Response:\n" + response);
+		System.out.println(">>>>>> Response Body:\n" + responseStr);
 
 		// 根据返回值更新Local数据库
 		localobj.setJobId(response.getLocation().toString());
