@@ -79,7 +79,8 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 * 
 	 */
 	@Override
-	public Response serviceInstancesInstanceIdPut(String reqInstanceId,JSONObject body, SecurityContext securityContext)
+	public Response serviceInstancesInstanceIdPut(String reqInstanceId,
+			JSONObject body, SecurityContext securityContext)
 			throws NotFoundException {
 
 		// 记录操作日志/向本地数据库插入数据
@@ -109,25 +110,30 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		// 创建DBAAS服务实例
 		else if (serviceId.equalsIgnoreCase("dbaas")) {
-			
+
 			// JSON Body 转 DBAAS对象
 			DaasServiceInstance dsi = TransformUtil.mapToObject(body,
 					DaasServiceInstance.class);
 
-			return Response.ok().entity(this.createDBCSInstance(dsi, ramdonId, localobj)).build();
+			return Response.ok()
+					.entity(this.createDBCSInstance(dsi, ramdonId, localobj))
+					.build();
 		}
 
 		else if (serviceId.equalsIgnoreCase("jaas")) {
-			
+
 			return Response.ok().entity(this.createJCSInstance(body)).build();
-			
+
 		} else {
-			
-			return Response.status(Response.Status.BAD_REQUEST).entity("incorrect serviceId").type(MediaType.APPLICATION_JSON).build();
+
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("incorrect serviceId")
+					.type(MediaType.APPLICATION_JSON).build();
 		}
 		// return null;
 		// 先返回202 ACCEPTED
-		//return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+		// return Response.ok().entity(new
+		// ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
 	}
 
 	/**
@@ -136,24 +142,27 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 * 
 	 */
 	@Override
-	public Response serviceInstancesInstanceIdPost(String reqInstanceId,JSONObject body, SecurityContext securityContext)
+	public Response serviceInstancesInstanceIdPost(String reqInstanceId,
+			JSONObject body, SecurityContext securityContext)
 			throws NotFoundException {
 
 		DbConnection dbconn = new DbConnection();
 		String ramdonId = dbconn.getRamdonId();// 获取随机数，为了识别不同的每次操作的
-		String sql = dbconn.getLocalSql().get("selectSQL") + " '" + reqInstanceId +"' ";
+		String sql = dbconn.getLocalSql().get("selectSQL") + " '" + reqInstanceId + "' ";
+		//中信传过来的operation 必须为 stop,start,restart
 		String oprationType = (String) body.get("operation");
+		
 		// 根据SeriviceId 查询最新的数据
 		ResultSet rs = dbconn.selectData(sql);
 		LocalDbObject localobj = null;
 		try {
 			while (rs.next()) {
-				localobj = dbconn.setInsertRepObj(rs,ramdonId,oprationType);
-				  }
+				localobj = dbconn.setInsertRepObj(rs, ramdonId, oprationType);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		// 记录操作日志/向本地数据库插入数据
 		String insertSql = dbconn.getLocalSql().get("insertSQL");
 
@@ -161,11 +170,22 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		dbconn.insertData(insertSql, localobj);
 
 		// 先查看该instance是否有未完成任务
+		// 根据JobId获取Job状态
+		String jobStatus = queryJobStatus(localobj.getJobId());
+		
+		// 没有其他JOB正常运行时，
+		if (jobStatus.toUpperCase().equals("SUCCEDED")) {
+			// 组装Body // "lifecycleState" : "Restart"
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("lifecycleState", localobj.getOprationType());
 
-		return Response
-				.ok()
-				.entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!"))
-				.build();
+			return Response.ok().entity(this.operateDBCSInstance(jsonObject, ramdonId,localobj)).build();
+			// Response.ok().entity(new
+			// ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+		} else {
+			// JOB有未完成任务时返回错误
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).type(MediaType.APPLICATION_JSON).build();
+		}
 	}
 
 	/**
@@ -174,35 +194,47 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 * 
 	 */
 	@Override
-	public Response serviceInstancesInstanceIdDelete(String instanceId,
+	public Response serviceInstancesInstanceIdDelete(String reqInstanceId,
 			@NotNull Boolean acceptsIncomplete, SecurityContext securityContext)
 			throws NotFoundException {
+		
 		// 记录操作日志
+		DbConnection dbconn = new DbConnection();
+		String ramdonId = dbconn.getRamdonId();// 获取随机数，为了识别不同的每次操作的
+		String sql = dbconn.getLocalSql().get("selectSQL") + " '"
+				+ reqInstanceId + "' ";
+		
+		//确定操作类型
+		String oprationType = "delete";
+		// 根据SeriviceId 查询最新的数据
+		ResultSet rs = dbconn.selectData(sql);
+		LocalDbObject localobj = null;
+		try {
+			while (rs.next()) {
+				localobj = dbconn.setInsertRepObj(rs, ramdonId, oprationType);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-		// DBCS
-		String domain = "midas";
-		String baseUrl = "https://dbaas.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/";
-		String username = "duanhui@midas.site";
-		String password = "CiticC1oud@orc1";
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(baseUrl + domain);
-
-		// TODO: 如果获取超时需处理
-		String response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain).get(String.class);
-
-		return Response
-				.ok()
-				.entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!"))
-				.build();
+		// 记录操作日志
+		String insertSql = dbconn.getLocalSql().get("insertSQL");
+		// 向本地数据库插入数据
+		dbconn.insertData(insertSql, localobj);
+		
+		// 先查看该instance是否有未完成任务
+				// 根据JobId获取Job状态
+				String jobStatus = queryJobStatus(localobj.getJobId());
+				
+				// 没有其他JOB正常运行时，
+				if (jobStatus.toUpperCase().equals("SUCCEDED")) {
+					// 没有不正常的JOB时，执行删除操作
+					return Response.ok().entity(this.deleteDBCSInstance(ramdonId,localobj)).build();
+					// Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+				} else {
+					// JOB有未完成任务时返回错误
+					return Response.status(Response.Status.SERVICE_UNAVAILABLE).type(MediaType.APPLICATION_JSON).build();
+				}
 	}
 
 	/**
@@ -357,11 +389,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		return list;
 	}
 
-	/**
-	 * 创建DBAAS服务实例
-	 * 
-	 * 
-	 */
+	// 创建DBAAS服务实例
 	private JSONObject createDBCSInstance(DaasServiceInstance body,
 			String ramdonId, LocalDbObject localobj) {
 
@@ -412,6 +440,136 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		return obj;
 	}
 
+	// 查询JOB状态
+	private String queryJobStatus(String jobId) {
+
+		// TODO: 配置文件或者数据库中读取
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+
+		String domain = daasInfo.get("domain");
+		String url = jobId;
+		String username = daasInfo.get("username");
+		String password = daasInfo.get("password");
+
+		String usernameAndPassword = username + ":" + password;
+		String authorizationHeaderName = "Authorization";
+		String authorizationHeaderValue = "Basic "
+				+ java.util.Base64.getEncoder().encodeToString(
+						usernameAndPassword.getBytes());
+
+		Client client = ClientBuilder.newClient();
+		WebTarget myResource = client.target(url);
+
+		// TODO: 如果获取超时需处理
+		String response = myResource.request()
+				.header(authorizationHeaderName, authorizationHeaderValue)
+				.header("X-ID-TENANT-NAME", domain).get(String.class);
+
+		JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
+		String status = obj.get("status").toString();
+		return status;
+	}
+
+	// 操作DBAAS服务实例
+	private JSONObject operateDBCSInstance(JSONObject body, String ramdonId,LocalDbObject localobj) {
+
+		// TODO: 配置文件或者数据库中读取
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+
+		String domain = daasInfo.get("domain");
+		String baseUrl = daasInfo.get(localobj.getServiceUri());
+		String username = daasInfo.get("username");
+		String password = daasInfo.get("password");
+
+		String usernameAndPassword = username + ":" + password;
+		String authorizationHeaderName = "Authorization";
+		String authorizationHeaderValue = "Basic "
+				+ java.util.Base64.getEncoder().encodeToString(
+						usernameAndPassword.getBytes());
+
+		Client client = ClientBuilder.newClient();
+		WebTarget myResource = client.target(baseUrl);
+
+		// TODO: 如果获取超时需处理
+		Response response = myResource.request()
+				.header(authorizationHeaderName, authorizationHeaderValue)
+				.header("X-ID-TENANT-NAME", domain)
+				.header("Content-Type", "application/json")
+				.post(Entity.json(body));
+
+		String responseStr = response.readEntity(String.class);
+
+		// 根据返回值更新Local数据库
+		localobj.setJobId(response.getLocation().toString());
+		localobj.setServiceUri(localobj.getServiceUri());
+		localobj.setRep_status(String.valueOf(response.getStatus()));
+		localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
+		localobj.setRep_LastModifiedTime(getOracleTimestamp(response
+				.getLastModified()));
+		localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
+
+		String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
+		// 向本地数据库更新数据
+		dbCon.updateSQLByInsertReply(sql, localobj);
+
+		Map result = new HashMap();
+		result.put("status", String.valueOf(response.getStatus()));
+		
+		JSONObject obj = new JSONObject(result);
+
+		return obj;
+	}
+
+	// 删除DBAAS服务实例
+	private JSONObject deleteDBCSInstance(String ramdonId,LocalDbObject localobj){
+		
+		// TODO: 配置文件或者数据库中读取
+				DbConnection dbCon = new DbConnection();
+				HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+
+				String domain = daasInfo.get("domain");
+				String baseUrl = daasInfo.get(localobj.getServiceUri());
+				String username = daasInfo.get("username");
+				String password = daasInfo.get("password");
+
+				String usernameAndPassword = username + ":" + password;
+				String authorizationHeaderName = "Authorization";
+				String authorizationHeaderValue = "Basic "
+						+ java.util.Base64.getEncoder().encodeToString(
+								usernameAndPassword.getBytes());
+
+				Client client = ClientBuilder.newClient();
+				WebTarget myResource = client.target(baseUrl);
+
+				// TODO: 如果获取超时需处理
+				Response response = myResource.request()
+						.header(authorizationHeaderName, authorizationHeaderValue)
+						.header("X-ID-TENANT-NAME", domain)
+						.header("Content-Type", "application/json").delete();
+				
+				// 根据返回值更新Local数据库
+				localobj.setJobId(response.getLocation().toString());
+				localobj.setServiceUri(localobj.getServiceUri());
+				localobj.setRep_status(String.valueOf(response.getStatus()));
+				localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
+				localobj.setRep_LastModifiedTime(getOracleTimestamp(response
+						.getLastModified()));
+				localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
+
+				String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
+				// 向本地数据库更新数据
+				dbCon.updateSQLByInsertReply(sql, localobj);
+				
+				Map result = new HashMap();
+				result.put("status", String.valueOf(response.getStatus()));
+				
+				JSONObject obj = new JSONObject(result);
+
+				return obj;
+	}
+	
 	// 转换成TimeStamp
 	private Timestamp getOracleTimestamp(Object value) {
 		try {
