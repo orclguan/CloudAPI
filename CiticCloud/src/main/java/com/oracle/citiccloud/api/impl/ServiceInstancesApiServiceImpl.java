@@ -175,7 +175,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		String jobStatus = queryJobStatus(localobj.getJobId());
 		
 		// 没有其他JOB正常运行时，
-		if (jobStatus.toUpperCase().equals("SUCCEDED")) {
+		if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
 			// 组装Body // "lifecycleState" : "Restart"
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("lifecycleState", localobj.getOprationType());
@@ -231,7 +231,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 				String jobStatus = queryJobStatus(localobj.getJobId());
 				
 				// 没有其他JOB正常运行时，
-				if (jobStatus.toUpperCase().equals("SUCCEDED")) {
+				if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
 					// 没有不正常的JOB时，执行删除操作
 					return Response.ok().entity(this.deleteDBCSInstance(ramdonId,localobj)).build();
 					// Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
@@ -281,7 +281,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 根据JobId获取Job状态
 		String jobStatus = queryJobStatus(jobId).toLowerCase();
 		
-		if (!jobStatus.equals("succeded") || !jobStatus.equals("failed")) {
+		if (!jobStatus.equals("succeeded") && !jobStatus.equals("failed")) {
 			resp.put("state", "in progress");  // succeded， failed, in progress 外还有其他状态,如 waitingonresource
 		}
 		else {
@@ -499,7 +499,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 
 		String domain = daasInfo.get("domain");
-		String baseUrl = daasInfo.get(localobj.getServiceUri());
+		String baseUrl = localobj.getServiceUri();
 		String username = daasInfo.get("username");
 		String password = daasInfo.get("password");
 
@@ -550,7 +550,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 
 		String domain = daasInfo.get("domain");
-		String baseUrl = daasInfo.get(localobj.getServiceUri());
+		String baseUrl = localobj.getServiceUri();
 		String username = daasInfo.get("username");
 		String password = daasInfo.get("password");
 
