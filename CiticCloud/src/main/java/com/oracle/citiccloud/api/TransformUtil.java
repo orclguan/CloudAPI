@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,12 +65,35 @@ public final class TransformUtil {
 		String operationsJson = readJsonFile("operations_dbcs.json");
 		List<Operations> operationList = mapToObject(operationsJson, new TypeReference<List<Operations>>(){});
 
-//		现有的Operation不需要参数配置
-//		String configurationsJson = readJsonFile("configurations_dbcs.json");
-//		List<ModelConfiguration> configurations = mapToObject(
-//			configurationsJson, new TypeReference<List<ModelConfiguration>>(){});
+		String configurationsJson = readJsonFile("configurations_dbcs.json");
+		List<ModelConfiguration> configurations = mapToObject(
+			configurationsJson, new TypeReference<List<ModelConfiguration>>(){});
+
+
+		for (ModelConfiguration config : configurations) {
+			try {
+				Field field = dbcs.getClass().getDeclaredField(config.getName());
+				field.setAccessible(true);
+
+				if (field != null && field.get(dbcs) != null) {
+					config.setValue(field.get(dbcs).toString());
+					config.setKey(field.get(dbcs).toString());
+
+					System.out.println(field.getName() + "=" + field.get(dbcs));
+				}
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchFieldException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			}
+		}
 
 		String instanceId = "";
+
 		try {
 			DbConnection conn = new DbConnection();
 
@@ -89,7 +113,7 @@ public final class TransformUtil {
 
 		ins.setId(instanceId); // instance_id DB中读取
 		ins.setServiceId(serviceId);
-		ins.setConfigurations(new ArrayList<ModelConfiguration>());//现有的Operation不需要参数配置, 若匹配需传入catalog>service>configuratoin_options
+		ins.setConfigurations(configurations);//现有的Operation不需要参数配置, 若匹配需传入catalog>service>configuratoin_options
 		ins.setOperations(operationList);
 
 		return ins;

@@ -333,6 +333,8 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		List<Instances> list = new ArrayList<Instances>();
 
 		for (DbaasView dbcs : services) {
+			dbcs = getSingleDBCSInstance(dbcs);
+
 			// 转换为中信云Instances结构
 			Instances ins = TransformUtil.targetDBCSInstance(dbcs, getServiceIdByName(SERVICE_NAME_DBCS));
 
@@ -354,6 +356,30 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 * （暂时不实现）
 	 */
 	private DbaasView getSingleDBCSInstance(DbaasView dbcs) {
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+		String domain = daasInfo.get("domain");
+		String baseUrl = daasInfo.get("baseUrl");
+		String username = daasInfo.get("username");
+		String password = daasInfo.get("password");
+
+		String usernameAndPassword = username + ":" + password;
+		String authorizationHeaderName = "Authorization";
+		String authorizationHeaderValue = "Basic "
+				+ java.util.Base64.getEncoder().encodeToString(
+						usernameAndPassword.getBytes());
+
+		Client client = ClientBuilder.newClient();
+		WebTarget myResource = client.target(baseUrl + domain + "/" + dbcs.getService_name());
+
+		String response = myResource.request()
+				.header(authorizationHeaderName, authorizationHeaderValue)
+				.header("X-ID-TENANT-NAME", domain).get(String.class);
+
+		System.out.println("response: " + response);
+
+		dbcs = TransformUtil.mapToObject(response, DbaasView.class);
+
 		return dbcs;
 	}
 
