@@ -103,6 +103,29 @@ public class DbConnection {
 		return rs;
 	}
 
+	// 根据中信云instance id 查询当前instance最后操作记录
+	public ResultSet selectLastRecordByInstanceId(String reqInstanceId) {
+		ResultSet rs = null;
+		DbConnection dbcc = new DbConnection();
+		Connection con = dbcc.getConn();
+		String selectSql = getLocalSql().get("selectLastRecordByInstanceId");
+
+		try {
+			if (!con.isClosed())
+				System.out.println("Succeeded connecting to the Database!");
+
+			PreparedStatement preStmt = con.prepareStatement(selectSql);
+			preStmt.setString(1, reqInstanceId);
+			preStmt.setString(2, reqInstanceId);
+			rs = preStmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return rs;
+	}
+
 	// 新增数据库对象
 	public void insertData(String sql, LocalDbObject ldo) {
 

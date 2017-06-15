@@ -150,12 +150,11 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		DbConnection dbconn = new DbConnection();
 		String ramdonId = dbconn.getRamdonId();// 获取随机数，为了识别不同的每次操作的
-		String sql = dbconn.getLocalSql().get("selectSQL") + " '" + reqInstanceId + "' ";
 		//中信传过来的operation 必须为 stop,start,restart
 		String oprationType = (String) body.get("operation");
 		
 		// 根据SeriviceId 查询最新的数据
-		ResultSet rs = dbconn.selectData(sql);
+		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		LocalDbObject localobj = null;
 		try {
 			while (rs.next()) {
@@ -206,13 +205,10 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 记录操作日志
 		DbConnection dbconn = new DbConnection();
 		String ramdonId = dbconn.getRamdonId();// 获取随机数，为了识别不同的每次操作的
-		String sql = dbconn.getLocalSql().get("selectSQL") + " '"
-				+ reqInstanceId + "' ";
-		
 		//确定操作类型
 		String oprationType = "delete";
 		// 根据SeriviceId 查询最新的数据
-		ResultSet rs = dbconn.selectData(sql);
+		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		LocalDbObject localobj = null;
 		try {
 			while (rs.next()) {
@@ -253,11 +249,9 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 通过reqInstanceId查询job URI，根据job URI查job status
 
 		DbConnection dbconn = new DbConnection();
-		String sql = dbconn.getLocalSql().get("selectSQL") + " '"
-				+ reqInstanceId + "' ";
 
 		// 根据SeriviceId 查询最新的数据
-		ResultSet rs = dbconn.selectData(sql);
+		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		String jobId = "";
 		try {
 			while (rs.next()) {

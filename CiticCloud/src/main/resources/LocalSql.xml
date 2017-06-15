@@ -3,5 +3,6 @@
        <insertSQL>insert into co_operation (req_instanceId,instanceId,req_serviceId,instanceType,req_orgId,operationId,oprationType,req_UpdateTime,jobId,serviceUri, rep_status,rep_CreateTime,rep_LastModifiedTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?)</insertSQL>
        <updateSQLByInsertReply>UPDATE co_operation SET jobId = ?,serviceUri = ?,rep_status = ?,rep_CreateTime = ?,rep_LastModifiedTime= ? ,req_UpdateTime= ? WHERE operationId= ?</updateSQLByInsertReply>
        <selectSQL>select req_instanceId,instanceId,req_serviceId,instanceType,req_orgId,operationId,oprationType,req_UpdateTime,jobId,serviceUri, rep_status,rep_CreateTime,rep_LastModifiedTime from co_operation where req_UpdateTime IN (SELECT MAX(req_UpdateTime) FROM co_operation) AND req_instanceId = </selectSQL>
+       <selectLastRecordByInstanceId>SELECT req_instanceId, instanceId, req_serviceId, instanceType, req_orgId, operationId, oprationType, req_UpdateTime, jobId, serviceUri, rep_status, rep_CreateTime, rep_LastModifiedTime FROM co_operation WHERE req_instanceId = ? AND req_UpdateTime IN (SELECT MAX(req_UpdateTime) req_UpdateTime FROM co_operation t WHERE t.req_instanceId = ?)</selectLastRecordByInstanceId>
        <insertSQLByWhere>wanghl6@citic.com</insertSQLByWhere>
 </database>
