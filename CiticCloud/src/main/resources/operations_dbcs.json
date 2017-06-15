@@ -1,12 +1,12 @@
 [
-    {
-        "name": "start",
-        "display_name": "Start"
-    },{
-        "name": "stop",
-        "display_name": "Stop"
-    },{
-        "name": "restart",
-        "display_name": "Restart"
-    }
+  {
+      "name": "start",
+      "display_name": "Start"
+  },{
+      "name": "stop",
+      "display_name": "Stop"
+  },{
+      "name": "restart",
+      "display_name": "Restart"
+  }
 ]

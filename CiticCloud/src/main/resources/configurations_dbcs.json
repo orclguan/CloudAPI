@@ -1,13 +1,13 @@
 [{
-    "name": "version",
-    "display_name": "Software Release",
-    "key": "12.1.0.2",
-    "value": "Oracle Database 12c Release 1",
-    "in_list": true
+  "name": "version",
+  "display_name": "Software Release",
+  "key": "12.1.0.2",
+  "value": "Oracle Database 12c Release 1",
+  "in_list": true
 }, {
-    "name": "edition",
-    "display_name": "Software Edition",
-    "key": "EE",
-    "value": "Enterprise Edition",
-    "in_list": true
+  "name": "edition",
+  "display_name": "Software Edition",
+  "key": "EE",
+  "value": "Enterprise Edition",
+  "in_list": true
 }]
