@@ -20,8 +20,10 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.mysql.jdbc.Connection;
+import com.oracle.citiccloud.api.TransformUtil;
 
 /**
  * @author Ray.Nan
@@ -206,7 +208,8 @@ public class DbConnection {
 		LocalDbObject localDBO = new LocalDbObject();
 
 		localDBO.setReq_instanceId(reqInstanceId);
-		localDBO.setInstanceId((String)((JSONObject)body.get("parameters")).get("serviceName"));// serviceName
+		
+		localDBO.setInstanceId((String)TransformUtil.mapToJson(body.get("parameters")).get("serviceName"));// serviceName
 		localDBO.setReq_serviceId((String) body.get("service_id")); // C请求的服务类型dbaas或jaas
 		localDBO.setInstanceType("daas");// 创建时为固定create
 		localDBO.setReq_orgId((String) body.get("org_id"));
@@ -291,9 +294,9 @@ public class DbConnection {
 		return xmlInfo(localSql);
 	}
 
-	File dbaasConfig = new File("src/DbInstanceInfo.xml");
-	File localDbConfig = new File("src/LocalDbConnect.xml");
-	File localSql = new File("src/LocalSql.xml");
+	File dbaasConfig = new File(getClass().getClassLoader().getResource("DbInstanceInfo.xml").getFile());
+	File localDbConfig = new File(getClass().getClassLoader().getResource("LocalDbConnect.xml").getFile());
+	File localSql = new File(getClass().getClassLoader().getResource("LocalSql.xml").getFile());
 
 	// 测试
 	public static void main(String[] args) {
@@ -301,9 +304,10 @@ public class DbConnection {
 		DbConnection dbcc = new DbConnection();
 
 		
-		String insetSql = "update co_operation set instanceId = ?,instanceType = ?,"
-				+ "oprationType = ?,req_UpdateTime = ?,jobId = ?,serviceUri= ?,rep_CreateTime = ?,"
-				+ "rep_LastModifiedTime = ?" + " where operationId= ?";
+		String insetSql = "update co_operation set instanceId = ?, req_instanceId = ?, req_serviceId = ?,"
+				+ "req_orgId = ?, instanceType = ?, oprationType = ?,req_UpdateTime = ?,jobId = ?,serviceUri= ?,"
+				+ "rep_CreateTime = ?, rep_LastModifiedTime = ?"
+				+ " where operationId= ?";
 		LocalDbObject ldo = new LocalDbObject();
 		ldo.setInstanceId("444");
 		ldo.setOperationId("fef1737e-199d-480a-96c9-1dd9ebc676b5");
