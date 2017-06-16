@@ -260,7 +260,7 @@ public class DbConnection {
 			localDBO.setInstanceType(rs.getString("instanceType"));
 			localDBO.setReq_orgId(rs.getString("req_orgId"));
 			localDBO.setOperationId(ramdonId);// 随机数
-			localDBO.setOprationType(oprationType); // 创建时为根据传入的操作stop/start/restart
+			localDBO.setOprationType(oprationType); // 创建时为根据传入的操作stop/start/restart/backup/recovery
 			localDBO.setReq_UpdateTime(new Timestamp(System.currentTimeMillis()));// 当前时间
 			localDBO.setJobId(rs.getString("jobId"));
 			localDBO.setServiceUri(rs.getString("serviceUri")); 

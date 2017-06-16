@@ -8,5 +8,34 @@
   },{
       "name": "restart",
       "display_name": "Restart"
+  },{
+      "name": "backup",
+      "display_name": "Backup"
+  },{
+      "name": "recovery",
+      "display_name": "Recovery",
+      "config_options": [
+        {
+            "name": "latest",
+            "display_name": "Latest Available Backup",
+            "data_type": "string",
+            "default": ""
+        },{
+            "name": "scn",
+            "display_name": "System Change Number",
+            "data_type": "string",
+            "default": ""
+        },{
+            "name": "tag",
+            "display_name": "Database Tag",
+            "data_type": "string",
+            "default": ""
+        },{
+            "name": "timestamp",
+            "display_name": "Timestamp",
+            "data_type": "string",
+            "default": ""
+        }
+      ]
   }
 ]
