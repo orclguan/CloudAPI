@@ -2,6 +2,7 @@
 <database>
        <domain>cnzhongxin</domain>
        <baseUrl>https://dbaas.oraclecloud.com/paas/service/dbcs/api/v1.1/instances/</baseUrl>
+       <mgmtUrl>https://dbaas.oraclecloud.com/paas/api/v1.1/instancemgmt/cnzhongxin/services/dbaas/instances/</mgmtUrl>
        <username>wanghl6@citic.com</username>
        <password>Zhongxin123!</password>
 </database>

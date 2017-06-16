@@ -37,5 +37,32 @@
             "default": ""
         }
       ]
+  },{
+      "name": "patch",
+      "display_name": "Apply a Patch",
+      "config_options": [
+        {
+            "name": "patchId",
+            "required": true,
+            "display_name": "Patch ID",
+            "data_type": "string",
+            "default": ""
+        },{
+            "name": "additionalNote",
+            "display_name": "Additional Information",
+            "data_type": "string",
+            "default": ""
+        },{
+            "name": "forceApply",
+            "display_name": "Force Apply",
+            "data_type": "boolean",
+            "default": false
+        },{
+            "name": "switchOver",
+            "display_name": "Switch Over",
+            "data_type": "boolean",
+            "default": false
+        }
+      ]
   }
 ]

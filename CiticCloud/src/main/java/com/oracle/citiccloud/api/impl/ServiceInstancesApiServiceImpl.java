@@ -300,27 +300,13 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	}
 
 	private JSONObject getDBCSInstances(List<String> instanceIds) {
-		// TODO: 配置文件或者数据库中读取
+		// API 请求
 		DbConnection dbCon = new DbConnection();
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 
 		String domain = daasInfo.get("domain");
 		String baseUrl = daasInfo.get("baseUrl");
-		String username = daasInfo.get("username");
-		String password = daasInfo.get("password");
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(baseUrl + domain);
-		// TODO: 如果获取超时需处理
-		String response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain).get(String.class);
+		String response = dbCon.reqGet(baseUrl + domain);
 
 		System.out.println("response: " + response);
 
@@ -353,28 +339,17 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 * （暂时不实现）
 	 */
 	private DbaasView getSingleDBCSInstance(DbaasView dbcs) {
+		// API 请求
 		DbConnection dbCon = new DbConnection();
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 		String domain = daasInfo.get("domain");
 		String baseUrl = daasInfo.get("baseUrl");
-		String username = daasInfo.get("username");
-		String password = daasInfo.get("password");
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(baseUrl + domain + "/" + dbcs.getService_name());
-
-		String response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain).get(String.class);
+		String targetUrl = baseUrl + domain + "/" + dbcs.getService_name();
+		String response = dbCon.reqGet(targetUrl);
 
 		System.out.println("response: " + response);
 
+		// 返回的json转换为对象
 		dbcs = TransformUtil.mapToObject(response, DbaasView.class);
 
 		return dbcs;
@@ -431,30 +406,15 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	private JSONObject createDBCSInstance(DaasServiceInstance body,
 			String ramdonId, LocalDbObject localobj) {
 
-		// TODO: 配置文件或者数据库中读取
+		// API 请求
 		DbConnection dbCon = new DbConnection();
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
-
 		String domain = daasInfo.get("domain");
 		String baseUrl = daasInfo.get("baseUrl");
-		String username = daasInfo.get("username");
-		String password = daasInfo.get("password");
+		String targetUrl = baseUrl + domain;
+		JSONObject reqBody = TransformUtil.mapToJson(body.getParameters());
 
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(baseUrl + domain);
-
-		// TODO: 如果获取超时需处理
-		Response response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain)
-				.header("Content-Type", "application/json")
-				.post(Entity.json(body.getParameters()));
+		Response response = dbCon.reqPost(reqBody, targetUrl);
 
 		String responseStr = response.readEntity(String.class);
 
@@ -483,30 +443,10 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 	// 查询JOB状态
 	private String queryJobStatus(String jobId) {
-
-		// TODO: 配置文件或者数据库中读取
+		// API 请求
 		DbConnection dbCon = new DbConnection();
-		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
-
-		String domain = daasInfo.get("domain");
-		String url = jobId;
-		String username = daasInfo.get("username");
-		String password = daasInfo.get("password");
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(url);
-
-		// TODO: 如果获取超时需处理
-		String response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain).get(String.class);
-
+		String response = dbCon.reqGet(jobId);
+		// 返回Job状态
 		JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
 		String status = obj.get("job_status").toString().replace("\"", "");
 		return status;
@@ -514,50 +454,44 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 	// 操作DBAAS服务实例
 	private JSONObject operateDBCSInstance(String operationType, JSONObject reqParameters, String ramdonId,LocalDbObject localobj) {
-
-		// TODO: 配置文件或者数据库中读取
+		// API 请求
 		DbConnection dbCon = new DbConnection();
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
-
-		String domain = daasInfo.get("domain");
-		String baseUrl = localobj.getServiceUri();
-		String username = daasInfo.get("username");
-		String password = daasInfo.get("password");
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
+		String targetUrl = localobj.getServiceUri();
 
 		// 组装API地址
-		String targetUrl = baseUrl;
 		if ("backup".equals(operationType)) {
-			targetUrl = baseUrl + "/backups";
+			targetUrl += "/backups";
 		}
 		else if ("recovery".equals(operationType)) {
-			targetUrl = baseUrl + "/backups/recovery";
+			targetUrl += "/backups/recovery";
 		}
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(targetUrl);
+		else if ("patch".equals(operationType)) {
+			targetUrl = daasInfo.get("mgmtUrl")
+				+ localobj.getInstanceId()
+				+ "/patches/"
+				+ reqParameters.get("patchId").toString();
+		}
 
 		/**
 		 *  reqParameters: 请求Body
 		 *  1. start/stop/restart
 		 *  	{"lifecycleState", "start"}
-		 *  
 		 *  2. backup
 		 *  	{}
-		 *  
 		 *  3. recovery (backup存在为前提)
 		 *  	{"tag": "TAG20170616T071444"}
+		 *  4. patch
+		 *  	{"additionalNote": "Applying Oct 2016 PSU"}
 		 */
-		Response response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain)
-				.header("Content-Type", "application/json")
-				.post(Entity.json(reqParameters));
+
+		Response response = null;
+		if ("patch".equals(operationType)) { // patch 为PUT请求
+			response = dbCon.reqPut(reqParameters, targetUrl);
+		}
+		else { // 其他为POST请求
+			response = dbCon.reqPost(reqParameters, targetUrl);
+		}
 
 		String responseStr = response.readEntity(String.class);
 
@@ -587,31 +521,11 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 	// 删除DBAAS服务实例
 	private JSONObject deleteDBCSInstance(String ramdonId,LocalDbObject localobj){
-		
-		// TODO: 配置文件或者数据库中读取
+		// API 请求
 		DbConnection dbCon = new DbConnection();
-		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+		String targetUrl = localobj.getServiceUri();
+		Response response = dbCon.reqDelete(targetUrl);
 
-		String domain = daasInfo.get("domain");
-		String baseUrl = localobj.getServiceUri();
-		String username = daasInfo.get("username");
-		String password = daasInfo.get("password");
-
-		String usernameAndPassword = username + ":" + password;
-		String authorizationHeaderName = "Authorization";
-		String authorizationHeaderValue = "Basic "
-				+ java.util.Base64.getEncoder().encodeToString(
-						usernameAndPassword.getBytes());
-
-		Client client = ClientBuilder.newClient();
-		WebTarget myResource = client.target(baseUrl);
-
-		// TODO: 如果获取超时需处理
-		Response response = myResource.request()
-				.header(authorizationHeaderName, authorizationHeaderValue)
-				.header("X-ID-TENANT-NAME", domain)
-				.header("Content-Type", "application/json").delete();
-		
 		// 根据返回值更新Local数据库
 		localobj.setJobId(response.getLocation().toString());
 		localobj.setServiceUri(localobj.getServiceUri());

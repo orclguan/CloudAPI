@@ -10,17 +10,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.UUID;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.client.WebTarget;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import com.mysql.jdbc.Connection;
 import com.oracle.citiccloud.api.TransformUtil;
@@ -317,6 +322,44 @@ public class DbConnection {
 		return xmlInfo(localSql);
 	}
 
+	public String reqGet(String targetUrl) {
+		return getRequestBuilder(targetUrl).get(String.class);
+	}
+	
+	public Response reqPost(JSONObject body, String targetUrl) {
+		return getRequestBuilder(targetUrl).post(Entity.json(body));
+	}
+	
+	public Response reqPut(JSONObject body, String targetUrl) {
+		return getRequestBuilder(targetUrl).put(Entity.json(body));
+	}
+	
+	public Response reqDelete(String targetUrl) {
+		return getRequestBuilder(targetUrl).delete();
+	}
+
+	private Builder getRequestBuilder(String targetUrl) {
+		HashMap<String, String> daasInfo = getOracleCloudAccInfo();
+
+		String domain = daasInfo.get("domain");
+		String username = daasInfo.get("username");
+		String password = daasInfo.get("password");
+		String usernameAndPassword = username + ":" + password;
+		String authorizationHeaderValue = "Basic "
+				+ java.util.Base64.getEncoder().encodeToString(
+						usernameAndPassword.getBytes());
+
+		Client client = ClientBuilder.newClient();
+		WebTarget myResource = client.target(targetUrl);
+		
+		Builder builder = myResource.request()
+			.header("Authorization", authorizationHeaderValue)
+			.header("X-ID-TENANT-NAME", domain)
+			.header("Content-Type", "application/json");
+
+		return builder;
+	}
+	
 	File dbaasConfig = new File(getClass().getClassLoader().getResource("DbInstanceInfo.xml").getFile());
 	File localDbConfig = new File(getClass().getClassLoader().getResource("LocalDbConnect.xml").getFile());
 	File localSql = new File(getClass().getClassLoader().getResource("LocalSql.xml").getFile());
