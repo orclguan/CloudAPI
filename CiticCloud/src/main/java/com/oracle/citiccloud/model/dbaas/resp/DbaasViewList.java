@@ -1,4 +1,4 @@
-package com.oracle.citiccloud.model;
+package com.oracle.citiccloud.model.dbaas.resp;
 
 import java.util.List;
 

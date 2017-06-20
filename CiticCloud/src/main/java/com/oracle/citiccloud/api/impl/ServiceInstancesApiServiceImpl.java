@@ -27,12 +27,12 @@ import com.oracle.citiccloud.api.ApiResponseMessage;
 import com.oracle.citiccloud.api.NotFoundException;
 import com.oracle.citiccloud.api.ServiceInstancesApiService;
 import com.oracle.citiccloud.api.TransformUtil;
-import com.oracle.citiccloud.model.DbaasView;
-import com.oracle.citiccloud.model.DbaasViewList;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.Service;
 import com.oracle.citiccloud.model.ServiceInstance;
 import com.oracle.citiccloud.model.dbaas.DaasServiceInstance;
+import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
+import com.oracle.citiccloud.model.dbaas.resp.DbaasViewList;
 import com.oracle.localdbconn.DbConnection;
 import com.oracle.localdbconn.LocalDbObject;
 

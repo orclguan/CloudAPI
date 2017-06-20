@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -21,10 +20,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.citiccloud.model.Catalog;
-import com.oracle.citiccloud.model.DbaasView;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.ModelConfiguration;
 import com.oracle.citiccloud.model.Operations;
+import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
 import com.oracle.localdbconn.DbConnection;
 
 public final class TransformUtil {
@@ -57,7 +56,7 @@ public final class TransformUtil {
 	
 	/**
 	 * 转换为中信云服务实例格式
-	 * @param dbcsJson
+	 * @param dbcs
 	 * @return
 	 */
 	public static Instances targetDBCSInstance(DbaasView dbcs, String serviceId) {
