@@ -49,7 +49,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 	@Override
 	public Response serviceInstancesGet(@NotNull String serviceId,
-			List<String> instanceIds, SecurityContext securityContext)
+			String instanceIds, @NotNull String orgId, SecurityContext securityContext)
 			throws NotFoundException {
 
 		String serviceName = getServiceNameById(serviceId);
@@ -59,7 +59,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 					.entity("{\"error\": \"incorrect serviceId\"}")
 					.type(MediaType.APPLICATION_JSON).build();
 		} else if (serviceName.equalsIgnoreCase(SERVICE_NAME_DBCS)) {
-			return Response.ok().entity(this.getDBCSInstances(instanceIds)).build();
+			return Response.ok().entity(this.getDBCSInstances(instanceIds, orgId)).build();
 		} else if (serviceName.equalsIgnoreCase(SERVICE_NAME_JCS)) {
 			return Response.ok().entity(this.getJCSInstances()).build();
 
@@ -299,8 +299,46 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 				.build();
 	}
 
-	private JSONObject getDBCSInstances(List<String> instanceIds) {
-		// API 请求
+	private JSONObject getDBCSInstances(String instanceIds, String orgId) {
+		List<Instances> list = new ArrayList<Instances>();
+		JSONObject jsonResp = new JSONObject();
+		jsonResp.put("instances", list);
+
+		//根据instanceIds, orgId查询本地数据库，返回instance结果
+		StringBuilder str = new StringBuilder();
+		str.append("SELECT req_instanceId,instanceId,req_serviceId,instanceType,req_orgId,operationId,");
+		str.append("oprationType,req_UpdateTime,jobId,serviceUri,rep_status,rep_CreateTime,rep_LastModifiedTime ");
+		str.append("FROM co_operation WHERE req_orgId='");
+		str.append(orgId);
+		str.append("'");
+
+		if (instanceIds != null && !instanceIds.equals("")) {
+			str.append(" AND req_instanceId IN ('");
+			str.append(instanceIds.replaceAll(" ", "").replaceAll(",", "','")); // 去掉空格，添加单引号
+			str.append("')");
+		}
+
+		str.append(" GROUP BY req_instanceId");
+
+		DbConnection conn = new DbConnection();
+		ResultSet rs = conn.selectData(str.toString());
+		List<String> localInstances = new ArrayList<>();
+
+		try {
+			while (rs.next()) {
+				localInstances.add(rs.getString("instanceId"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// 本地数据库无数据，则返回空
+		if (localInstances.isEmpty()) {
+			return jsonResp;
+		}
+
+		// 本地数据库不为空
+		// API 请求, 获取OPC数据
 		DbConnection dbCon = new DbConnection();
 		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 
@@ -313,23 +351,20 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 返回所有instance
 		DbaasViewList apiResponse = TransformUtil.mapToObject(response, DbaasViewList.class);
 		List<DbaasView> services = apiResponse.getServices();
-		List<Instances> list = new ArrayList<Instances>();
+		String serviceName = "";
 
 		for (DbaasView dbcs : services) {
-			dbcs = getSingleDBCSInstance(dbcs);
+			//中信云:instance_id <=> Oracle DBCS:service_name
+			serviceName = dbcs.getService_name();
 
-			// 转换为中信云Instances结构
-			Instances ins = TransformUtil.targetDBCSInstance(dbcs, getServiceIdByName(SERVICE_NAME_DBCS));
-
-			// 1. instanceIds为空则返回所有列表
-			// 2. 只返回请求的instanceIds对应的实例
-			if (instanceIds.isEmpty() || instanceIds.contains(ins.getId())) {
+			if (localInstances.contains(serviceName)) {
+				// 获取Instance详细信息
+				dbcs = getSingleDBCSInstance(dbcs);
+				// 转换为中信云Instances结构
+				Instances ins = TransformUtil.targetDBCSInstance(dbcs, getServiceIdByName(SERVICE_NAME_DBCS));
 				list.add(ins);
 			}
 		}
-
-		JSONObject jsonResp = new JSONObject();
-		jsonResp.put("instances", list);
 
 		return jsonResp;
 	}

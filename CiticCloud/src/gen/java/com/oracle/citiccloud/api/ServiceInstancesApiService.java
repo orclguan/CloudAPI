@@ -26,7 +26,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
 public abstract class ServiceInstancesApiService {
-    public abstract Response serviceInstancesGet( @NotNull String serviceId, List<String> instanceIds,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response serviceInstancesGet( @NotNull String serviceId, String instanceIds,@NotNull String orgId,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesInstanceIdDelete(String instanceId, @NotNull Boolean acceptsIncomplete,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesInstanceIdLastOperationGet(String instanceId,SecurityContext securityContext) throws NotFoundException;
     public abstract Response serviceInstancesInstanceIdPost(String instanceId,JSONObject body,SecurityContext securityContext) throws NotFoundException;

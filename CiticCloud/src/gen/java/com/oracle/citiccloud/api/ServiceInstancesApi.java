@@ -46,10 +46,11 @@ public class ServiceInstancesApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "返回供应商系统中某服务的服务实例列表.", response = Instances.class, responseContainer = "List") })
     public Response serviceInstancesGet(@ApiParam(value = "限定查询的serviceid.",required=true) @QueryParam("service_id") String serviceId
-,@ApiParam(value = "限定查询的instance id数组，逗号分隔，最多200个.") @QueryParam("instance_ids") List<String> instanceIds
+,@ApiParam(value = "限定查询的instance id数组，逗号分隔，最多200个.") @QueryParam("instance_ids") String instanceIds
+,@ApiParam(value = "中信云下子公司ID",required=true) @QueryParam("org_id") String orgId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.serviceInstancesGet(serviceId,instanceIds,securityContext);
+        return delegate.serviceInstancesGet(serviceId,instanceIds,orgId,securityContext);
     }
     @DELETE
     @Path("/{instance_id}")
