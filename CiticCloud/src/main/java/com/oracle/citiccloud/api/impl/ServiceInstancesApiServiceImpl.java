@@ -154,9 +154,10 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		DbConnection dbconn = new DbConnection();
 		String ramdonId = dbconn.getRamdonId();// 获取随机数，为了识别不同的每次操作的
-		//中信传过来的operation 必须为 stop,start,restart
+		//中信传过来的operation 必须为 stop,start,restart,backup,recovery
 		String operationType = (String) body.get("operation");
-		JSONObject reqParameters = TransformUtil.mapToJson(body.get("parameters"));
+		// 省略传入的参数parameters
+		// JSONObject reqParameters = TransformUtil.mapToJson(body.get("parameters"));
 		
 		// 根据SeriviceId 查询最新的数据
 		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
@@ -169,22 +170,29 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 			e.printStackTrace();
 		}
 
-		// 记录操作日志/向本地数据库插入数据
-		String insertSql = dbconn.getLocalSql().get("insertSQL");
+		// 本地无记录，返回错误信息
+		if (localobj == null) {
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity("{\"error\": \"Instance does not exist!\"}")
+					.type(MediaType.APPLICATION_JSON).build();
+		}
 
-		// 向本地数据库插入数据
-		dbconn.insertData(insertSql, localobj);
-
-		// 先查看该instance是否有未完成任务
 		// 根据JobId获取Job状态
 		String jobStatus = queryJobStatus(localobj.getJobId()).getJob_status();
-		
+
 		// 没有其他JOB正常运行时，
 		if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
-
-			return Response
-					.status(Response.Status.ACCEPTED)
-					.entity(this.operateDBCSInstance(operationType, reqParameters, ramdonId, localobj)).build();
+			// 记录操作日志
+			String insertSql = dbconn.getLocalSql().get("insertSQL");
+			// 向本地数据库插入数据
+			dbconn.insertData(insertSql, localobj);
+			// 执行操作
+			if ("patch".equals(operationType)) {
+				return applyPatches(localobj);
+			}
+			else {
+				return operateDBCSInstance(operationType, localobj);
+			}
 		} else {
 			// JOB有未完成任务时返回错误
 			return Response.status(Response.Status.BAD_REQUEST)
@@ -524,24 +532,26 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	}
 
 	// 操作DBAAS服务实例
-	private JSONObject operateDBCSInstance(String operationType, JSONObject reqParameters, String ramdonId,LocalDbObject localobj) {
+	private Response operateDBCSInstance(String operationType, LocalDbObject localobj) {
 		// API 请求
 		DbConnection dbCon = new DbConnection();
-		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
-		String targetUrl = localobj.getServiceUri();
+		JSONObject reqBody = new JSONObject();
+		String targetUrl = "";
 
 		// 组装API地址
-		if ("backup".equals(operationType)) {
+		if ("start".equals(operationType) || "stop".equals(operationType) || "restart".equals(operationType)) {
+			targetUrl = localobj.getServiceUri();
+			reqBody.put("lifecycleState", operationType);
+		}
+		else if ("backup".equals(operationType)) {
 			targetUrl += "/backups";
 		}
 		else if ("recovery".equals(operationType)) {
 			targetUrl += "/backups/recovery";
+			reqBody.put("latest", "true"); // 恢复最新的备份
 		}
-		else if ("patch".equals(operationType)) {
-			targetUrl = daasInfo.get("mgmtUrl")
-				+ localobj.getInstanceId()
-				+ "/patches/"
-				+ reqParameters.get("patchId").toString();
+		else {
+			// return Bad Request;
 		}
 
 		/**
@@ -552,25 +562,23 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		 *  	{}
 		 *  3. recovery (backup存在为前提)
 		 *  	{"tag": "TAG20170616T071444"}
-		 *  4. patch
-		 *  	{"additionalNote": "Applying Oct 2016 PSU"}
 		 */
 
-		Response response = null;
-		if ("patch".equals(operationType)) { // patch 为PUT请求
-			response = dbCon.reqPut(reqParameters, targetUrl);
-		}
-		else { // 其他为POST请求
-			response = dbCon.reqPost(reqParameters, targetUrl);
-		}
-
+		// API 返回
+		Response response = dbCon.reqPost(reqBody, targetUrl);
 		String responseStr = response.readEntity(String.class);
 
 		System.out.println(">>>>>> Operate DBCSInstance Response:\n" + response);
 		System.out.println(">>>>>> Response Body:\n" + responseStr);
 
 		// 根据返回值更新Local数据库
-		localobj.setJobId(response.getLocation().toString());
+		if (response.getStatus() !=  202) {
+			localobj.setJobId(localobj.getJobId());
+		}
+		else {
+			localobj.setJobId(response.getLocation().toString()); //操作成功202， header中返回job id
+		}
+
 		localobj.setServiceUri(localobj.getServiceUri());
 		localobj.setRep_status(String.valueOf(response.getStatus()));
 		localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
@@ -582,12 +590,17 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 向本地数据库更新数据
 		dbCon.updateSQLByInsertReply(sql, localobj);
 
-		Map result = new HashMap();
-		result.put("status", String.valueOf(response.getStatus()));
-		
-		JSONObject obj = new JSONObject(result);
+		return Response.status(response.getStatus()).entity("").build();
+	}
 
-		return obj;
+	// 打补丁
+	private Response applyPatches(LocalDbObject localobj) {
+//			// 查询所有可用补丁
+//			targetUrl = daasInfo.get("mgmtUrl")
+//				+ localobj.getInstanceId()
+//				+ "/patches/available";
+//		}
+		return null;
 	}
 
 	// 删除DBAAS服务实例
