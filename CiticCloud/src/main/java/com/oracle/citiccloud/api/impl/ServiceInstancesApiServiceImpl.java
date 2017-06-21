@@ -4,10 +4,15 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.client.Client;
@@ -21,8 +26,6 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.json.simple.JSONObject;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.oracle.citiccloud.api.ApiResponseMessage;
 import com.oracle.citiccloud.api.NotFoundException;
 import com.oracle.citiccloud.api.ServiceInstancesApiService;
@@ -33,6 +36,7 @@ import com.oracle.citiccloud.model.ServiceInstance;
 import com.oracle.citiccloud.model.dbaas.DaasServiceInstance;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasViewList;
+import com.oracle.citiccloud.model.dbaas.resp.JobStatus;
 import com.oracle.localdbconn.DbConnection;
 import com.oracle.localdbconn.LocalDbObject;
 
@@ -173,7 +177,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		// 先查看该instance是否有未完成任务
 		// 根据JobId获取Job状态
-		String jobStatus = queryJobStatus(localobj.getJobId());
+		String jobStatus = queryJobStatus(localobj.getJobId()).getJob_status();
 		
 		// 没有其他JOB正常运行时，
 		if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
@@ -222,7 +226,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		
 		// 先查看该instance是否有未完成任务
 				// 根据JobId获取Job状态
-				String jobStatus = queryJobStatus(localobj.getJobId());
+				String jobStatus = queryJobStatus(localobj.getJobId()).getJob_status();
 				
 				// 没有其他JOB正常运行时，
 				if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
@@ -250,9 +254,11 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 根据SeriviceId 查询最新的数据
 		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		String jobId = "";
+		String serviceName = "";
 		try {
 			while (rs.next()) {
 				jobId = rs.getString("jobId");
+				serviceName = rs.getString("instanceId");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -264,6 +270,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		if (jobId == null || "".equals(jobId)) {
 			resp.put("state", "failed");
 			resp.put("description", "Last Operation does not exist");
+			resp.put("supplier_instance_id", serviceName);
 
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity(resp)
@@ -271,13 +278,43 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		}
 
 		// 根据JobId获取Job状态
-		String jobStatus = queryJobStatus(jobId).toLowerCase();
+		JobStatus jobStatus = queryJobStatus(jobId);
+		String statusCode = jobStatus.getJob_status().toLowerCase();
 		
-		if (!jobStatus.equals("succeeded") && !jobStatus.equals("failed")) {
+		if (!statusCode.equals("succeeded") && !statusCode.equals("failed")) {
 			resp.put("state", "in progress");  // succeded， failed, in progress 外还有其他状态,如 waitingonresource
 		}
 		else {
-			resp.put("state", jobStatus);
+			resp.put("state", statusCode);
+		}
+
+		if (jobStatus.getMessage() != null) {
+			String allMsg = "";
+			for (String msg : jobStatus.getMessage()) {
+				allMsg = allMsg + msg + "\n";
+			}
+			resp.put("description", allMsg);
+		}
+
+		resp.put("supplier_instance_id", serviceName);
+
+		if (jobStatus.getJob_end_date() != null) {
+			// GMT => CST
+			String gmtStr = jobStatus.getJob_end_date();
+			String jobEndDate = "";
+			try {
+				SimpleDateFormat gmtFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT' yyyy",Locale.US);
+				SimpleDateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				gmtFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+				localFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+
+				Date date = gmtFormat.parse(gmtStr);
+				jobEndDate = localFormat.format(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			resp.put("succeeded_time", jobEndDate);
 		}
 
 		return Response
@@ -477,14 +514,13 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	}
 
 	// 查询JOB状态
-	private String queryJobStatus(String jobId) {
+	private JobStatus queryJobStatus(String jobId) {
 		// API 请求
 		DbConnection dbCon = new DbConnection();
 		String response = dbCon.reqGet(jobId);
 		// 返回Job状态
-		JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
-		String status = obj.get("job_status").toString().replace("\"", "");
-		return status;
+		JobStatus jobStatus = TransformUtil.mapToObject(response, JobStatus.class);
+		return jobStatus;
 	}
 
 	// 操作DBAAS服务实例
