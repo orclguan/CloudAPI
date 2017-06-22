@@ -1,4 +1,4 @@
-package com.oracle.citiccloud.model.dbaas;
+package com.oracle.citiccloud.model;
 
 public class PricingModel {
 	

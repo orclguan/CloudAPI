@@ -7,13 +7,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ParaOfOraBody {
-
+public class DbaasCreateInstanceBody {
 	// Oracle OPC 的 Body 参数
 	private String description;
 	private String edition; // 必填
 	private String level; // 必填
-	private ArrayList<DbaasParameter> parameters; // 必填
+	private ArrayList<DbaasParameter> parameters = new ArrayList<DbaasParameter>(); // 必填
 	private String serviceName; // 必填
 	private String shape; // 必填
 	private String subscriptionType; // 必填
@@ -91,5 +90,6 @@ public class ParaOfOraBody {
 	public void setVmPublicKeyText(String vmPublicKeyText) {
 		this.vmPublicKeyText = vmPublicKeyText;
 	}
+
 
 }
