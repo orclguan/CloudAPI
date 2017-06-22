@@ -539,11 +539,10 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// API 请求
 		DbConnection dbCon = new DbConnection();
 		JSONObject reqBody = new JSONObject();
-		String targetUrl = "";
+		String targetUrl = localobj.getServiceUri();
 
 		// 组装API地址
 		if ("start".equals(operationType) || "stop".equals(operationType) || "restart".equals(operationType)) {
-			targetUrl = localobj.getServiceUri();
 			reqBody.put("lifecycleState", operationType);
 		}
 		else if ("backup".equals(operationType)) {
@@ -554,7 +553,9 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 			reqBody.put("latest", "true"); // 恢复最新的备份
 		}
 		else {
-			// return Bad Request;
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Operation Not Supported!")
+					.type(MediaType.TEXT_PLAIN).build();
 		}
 
 		/**
