@@ -119,7 +119,7 @@ public class ServiceInstancesApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "程序错误", response = InstanceCreated.class) })
     public Response serviceInstancesInstanceIdPut(@ApiParam(value = "服务实例ID.",required=true) @PathParam("instance_id") String instanceId
-,@ApiParam(value = "服务实例." ,required=true) JSONObject body
+,@ApiParam(value = "服务实例." ,required=true) ServiceInstance body
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.serviceInstancesInstanceIdPut(instanceId,body,securityContext);

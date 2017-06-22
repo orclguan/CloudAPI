@@ -14,12 +14,12 @@
 package com.oracle.citiccloud.model;
 
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.oracle.citiccloud.model.Parameters;
-import io.swagger.annotations.ApiModel;
+
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
 
 /**
  * ServiceInstance
@@ -36,10 +36,13 @@ public class ServiceInstance   {
   private String orgId = null;
 
   @JsonProperty("parameters")
-  private Parameters parameters = null;
+  private Object parameters = null;
 
   @JsonProperty("accepts_incomplete")
   private Boolean acceptsIncomplete = null;
+
+  @JsonProperty("pricing_model")
+  private PricingModel pricingModel = null;
 
   public ServiceInstance instanceId(String instanceId) {
     this.instanceId = instanceId;
@@ -99,7 +102,7 @@ public class ServiceInstance   {
     this.orgId = orgId;
   }
 
-  public ServiceInstance parameters(Parameters parameters) {
+  public ServiceInstance parameters(Object parameters) {
     this.parameters = parameters;
     return this;
   }
@@ -110,11 +113,11 @@ public class ServiceInstance   {
   **/
   @JsonProperty("parameters")
   @ApiModelProperty(value = "")
-  public Parameters getParameters() {
+  public Object getParameters() {
     return parameters;
   }
 
-  public void setParameters(Parameters parameters) {
+  public void setParameters(Object parameters) {
     this.parameters = parameters;
   }
 

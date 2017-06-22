@@ -29,6 +29,7 @@ import org.json.simple.JSONObject;
 
 import com.mysql.jdbc.Connection;
 import com.oracle.citiccloud.api.TransformUtil;
+import com.oracle.citiccloud.model.ServiceInstance;
 
 /**
  * @author Ray.Nan
@@ -231,16 +232,16 @@ public class DbConnection {
 	}
 
 	// 新增数据库时根据CITIC的请求对象组装
-	public LocalDbObject setInsertObj(String reqInstanceId, String ramdonId,JSONObject body) {
+	public LocalDbObject setInsertObj(String reqInstanceId, String ramdonId, ServiceInstance body) {
 
+		JSONObject parameters = TransformUtil.mapToJson(body.getParameters());
 		LocalDbObject localDBO = new LocalDbObject();
 
 		localDBO.setReq_instanceId(reqInstanceId);
-		
-		localDBO.setInstanceId((String)TransformUtil.mapToJson(body.get("parameters")).get("serviceName"));// serviceName
-		localDBO.setReq_serviceId((String) body.get("service_id")); // C请求的服务类型dbaas或jaas
-		localDBO.setInstanceType("daas");// 创建时为固定create
-		localDBO.setReq_orgId((String) body.get("org_id"));
+		localDBO.setInstanceId((String) parameters.get("serviceName"));// serviceName
+		localDBO.setReq_serviceId(body.getServiceId()); // C请求的服务类型dbaas或jaas
+		localDBO.setInstanceType("dbaas");// 创建时为固定create
+		localDBO.setReq_orgId(body.getOrgId());
 		localDBO.setOperationId(ramdonId);// 随机数
 		localDBO.setOprationType("create"); // 创建时为固定create
 		localDBO.setReq_UpdateTime(new Timestamp(System.currentTimeMillis()));// 当前时间

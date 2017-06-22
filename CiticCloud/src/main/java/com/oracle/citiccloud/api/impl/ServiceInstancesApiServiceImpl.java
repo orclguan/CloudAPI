@@ -33,7 +33,9 @@ import com.oracle.citiccloud.api.TransformUtil;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.Service;
 import com.oracle.citiccloud.model.ServiceInstance;
-import com.oracle.citiccloud.model.dbaas.DaasServiceInstance;
+import com.oracle.citiccloud.model.dbaas.DbaasadditionalParams;
+import com.oracle.citiccloud.model.dbaas.DbaasCreateInstanceBody;
+import com.oracle.citiccloud.model.dbaas.DbaasParameter;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasViewList;
 import com.oracle.citiccloud.model.dbaas.resp.JobStatus;
@@ -49,7 +51,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 */
 
 	public final static String SERVICE_NAME_DBCS = "dbaas";
-	public final static String SERVICE_NAME_JCS = "jcs";
+	public final static String SERVICE_NAME_JCS = "jaas";
 
 	@Override
 	public Response serviceInstancesGet(@NotNull String serviceId,
@@ -85,15 +87,14 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	 */
 	@Override
 	public Response serviceInstancesInstanceIdPut(String reqInstanceId,
-			JSONObject body, SecurityContext securityContext)
+			ServiceInstance body, SecurityContext securityContext)
 			throws NotFoundException {
 
 		// 记录操作日志/向本地数据库插入数据
 		DbConnection dbconn = new DbConnection();
 
 		String ramdonId = dbconn.getRamdonId();// 获取随机数，为了识别不同的每次操作的
-		LocalDbObject localobj = dbconn.setInsertObj(reqInstanceId, ramdonId,
-				body);
+		LocalDbObject localobj = dbconn.setInsertObj(reqInstanceId, ramdonId, body);
 		String sql = dbconn.getLocalSql().get("insertSQL");
 
 		// 向本地数据库插入数据
@@ -103,8 +104,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// API后，从返回的header中解析Location获取job。
 		// 例如：https://dbaas.oraclecloud.com:443/paas/service/dbcs/api/v1.1/instances/midas/status/delete/job/11901471
 
-		String serviceId = (String) body.get("service_id");
-		String serviceName = getServiceNameById(serviceId);
+		String serviceName = getServiceNameById(body.getServiceId());
 
 		// String serviceId = body.getServiceId();
 		System.out.println("requestJSON: " + body);
@@ -116,14 +116,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		// 创建DBAAS服务实例
 		else if (serviceName.equalsIgnoreCase("dbaas")) {
-
-			// JSON Body 转 DBAAS对象
-			DaasServiceInstance dsi = TransformUtil.mapToObject(body,
-					DaasServiceInstance.class);
-
-			return Response.status(Response.Status.ACCEPTED)
-					.entity(this.createDBCSInstance(dsi, ramdonId, localobj))
-					.build();
+			return createDBCSInstance(body, ramdonId, localobj);
 		}
 
 		else if (serviceName.equalsIgnoreCase("jaas")) {
@@ -483,8 +476,16 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	}
 
 	// 创建DBAAS服务实例
-	private JSONObject createDBCSInstance(DaasServiceInstance body,
-			String ramdonId, LocalDbObject localobj) {
+	private Response createDBCSInstance(ServiceInstance body, String ramdonId, LocalDbObject localobj) {
+		// Citic Request body => Oracle Request Body
+		JSONObject citicParameters = TransformUtil.mapToJson(body.getParameters());
+		DbaasCreateInstanceBody reqBody = TransformUtil.mapToObject(citicParameters, DbaasCreateInstanceBody.class);
+		DbaasParameter parameters = TransformUtil.mapToObject(citicParameters, DbaasParameter.class);
+		DbaasadditionalParams additionalParams = TransformUtil.mapToObject(citicParameters, DbaasadditionalParams.class);
+
+		// 从里到外，设置变量
+		parameters.setAdditionalParams(additionalParams);
+		reqBody.getParameters().add(parameters);
 
 		// API 请求
 		DbConnection dbCon = new DbConnection();
@@ -492,33 +493,35 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		String domain = daasInfo.get("domain");
 		String baseUrl = daasInfo.get("baseUrl");
 		String targetUrl = baseUrl + domain;
-		JSONObject reqBody = TransformUtil.mapToJson(body.getParameters());
 
-		Response response = dbCon.reqPost(reqBody, targetUrl);
+		JSONObject reqBodyJson = TransformUtil.mapToJson(reqBody);
+		Response response = dbCon.reqPost(reqBodyJson, targetUrl);
 
 		String responseStr = response.readEntity(String.class);
+		String contentType = response.getHeaderString("content-type");
 
 		System.out.println(">>>>>> Create DBCSInstance Response:\n" + response);
 		System.out.println(">>>>>> Response Body:\n" + responseStr);
 
 		// 根据返回值更新Local数据库
-		localobj.setJobId(response.getLocation().toString());
-		localobj.setServiceUri(baseUrl + domain + "/"
-				+ body.getParameters().getServiceName());
+		if (response.getStatus() !=  202) {
+			localobj.setJobId("");
+		}
+		else {
+			localobj.setJobId(response.getLocation().toString()); //操作成功202， header中返回job id
+		}
+
+		localobj.setServiceUri(baseUrl + domain + "/" + reqBody.getServiceName());
 		localobj.setRep_status(String.valueOf(response.getStatus()));
 		localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
-		localobj.setRep_LastModifiedTime(getOracleTimestamp(response
-				.getLastModified()));
+		localobj.setRep_LastModifiedTime(getOracleTimestamp(response.getLastModified()));
 		localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
 
 		String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
 		// 向本地数据库更新数据
 		dbCon.updateSQLByInsertReply(sql, localobj);
 
-		Map result = new HashMap();
-		result.put("status", String.valueOf(response.getStatus()));
-		JSONObject obj = new JSONObject(result);
-		return obj;
+		return Response.status(response.getStatus()).entity(responseStr).type(contentType).build();
 	}
 
 	// 查询JOB状态
@@ -567,6 +570,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// API 返回
 		Response response = dbCon.reqPost(reqBody, targetUrl);
 		String responseStr = response.readEntity(String.class);
+		String contentType = response.getHeaderString("content-type");
 
 		System.out.println(">>>>>> Operate DBCSInstance Response:\n" + response);
 		System.out.println(">>>>>> Response Body:\n" + responseStr);
@@ -590,7 +594,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 向本地数据库更新数据
 		dbCon.updateSQLByInsertReply(sql, localobj);
 
-		return Response.status(response.getStatus()).entity("").build();
+		return Response.status(response.getStatus()).entity(responseStr).type(contentType).build();
 	}
 
 	// 打补丁
@@ -642,7 +646,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		}
 	}
 
-	private JSONObject createJCSInstance(JSONObject body) {
+	private JSONObject createJCSInstance(ServiceInstance body) {
 		// TODO Auto-generated method stub
 		return null;
 	}
