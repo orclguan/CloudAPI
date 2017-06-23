@@ -155,8 +155,10 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 根据SeriviceId 查询最新的数据
 		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		LocalDbObject localobj = null;
+		String jobId = "";
 		try {
 			while (rs.next()) {
+				jobId = rs.getString("jobId");
 				localobj = dbconn.setInsertRepObj(rs, ramdonId, operationType);
 			}
 		} catch (SQLException e) {
@@ -171,7 +173,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		}
 
 		// 根据JobId获取Job状态
-		String jobStatus = queryJobStatus(localobj.getJobId()).getJob_status();
+		String jobStatus = queryJobStatus(jobId).getJob_status();
 
 		// 没有其他JOB正常运行时，
 		if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
@@ -578,7 +580,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 
 		// 根据返回值更新Local数据库
 		if (response.getStatus() !=  202) {
-			localobj.setJobId(localobj.getJobId());
+			localobj.setJobId(null);
 		}
 		else {
 			localobj.setJobId(response.getLocation().toString()); //操作成功202， header中返回job id
@@ -587,8 +589,7 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		localobj.setServiceUri(localobj.getServiceUri());
 		localobj.setRep_status(String.valueOf(response.getStatus()));
 		localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
-		localobj.setRep_LastModifiedTime(getOracleTimestamp(response
-				.getLastModified()));
+		localobj.setRep_LastModifiedTime(getOracleTimestamp(response.getLastModified()));
 		localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
 
 		String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
@@ -637,11 +638,9 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 	}
 
 	// 转换成TimeStamp
-	private Timestamp getOracleTimestamp(Object value) {
+	private Timestamp getOracleTimestamp(Date date) {
 		try {
-			Class clz = value.getClass();
-			Method method = clz.getMethod("dateValue", null);
-			return (Timestamp) method.invoke(value, null);
+			return new Timestamp(date.getTime());
 		} catch (Exception e) {
 			return null;
 		}

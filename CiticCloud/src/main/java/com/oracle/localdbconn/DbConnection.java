@@ -268,9 +268,9 @@ public class DbConnection {
 			localDBO.setOperationId(ramdonId);// 随机数
 			localDBO.setOprationType(oprationType); // 创建时为根据传入的操作stop/start/restart/backup/recovery
 			localDBO.setReq_UpdateTime(new Timestamp(System.currentTimeMillis()));// 当前时间
-			localDBO.setJobId(rs.getString("jobId"));
+			localDBO.setJobId(null);
 			localDBO.setServiceUri(rs.getString("serviceUri")); 
-			localDBO.setRep_status(rs.getString("rep_status")); 
+			localDBO.setRep_status(null); 
 			localDBO.setRep_CreateTime(null); 
 			localDBO.setRep_LastModifiedTime(null); 
 		} catch (SQLException e) {
