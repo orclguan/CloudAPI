@@ -14,16 +14,17 @@
 package com.oracle.citiccloud.model;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
 
 /**
  * UsageAndExpensesFormat
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UsageAndExpensesFormat   {
   @JsonProperty("name")
   private String name = null;
