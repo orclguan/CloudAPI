@@ -5,6 +5,9 @@
        <mgmtUrl>https://dbaas.oraclecloud.com/paas/api/v1.1/instancemgmt/cnzhongxin/services/dbaas/instances/</mgmtUrl>
        <username>wanghl6@citic.com</username>
        <password>Zhongxin123!</password>
+       <cloudStorageContainer>Storage-cnzhongxin/zx_db_backup</cloudStorageContainer>
+       <cloudStorageUser>sharon.li@oracle.com</cloudStorageUser>
+       <cloudStoragePwd>P3rf3c4d@y!</cloudStoragePwd>
 </database>
 
 <!-- SQL 语句

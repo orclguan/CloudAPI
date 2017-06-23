@@ -494,13 +494,26 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		DbaasParameter parameters = TransformUtil.mapToObject(citicParameters, DbaasParameter.class);
 		DbaasadditionalParams additionalParams = TransformUtil.mapToObject(citicParameters, DbaasadditionalParams.class);
 
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+
+		// 从配置文件中配置Storage备份账户
+		// An Oracle Storage Cloud Service container is not required
+		// when provisioning a Database Cloud Service - Virtual Image instance (level:BASIC)
+		if (reqBody.getLevel().equals("PAAS") &&
+			!parameters.getBackupDestination().equals("NONE") &&
+			(parameters.getCloudStorageContainer() == null || parameters.getCloudStorageContainer() == "")) {
+			
+			parameters.setCloudStorageContainer(daasInfo.get("cloudStorageContainer"));
+			parameters.setCloudStorageUser(daasInfo.get("cloudStorageUser"));
+			parameters.setCloudStoragePwd(daasInfo.get("cloudStoragePwd"));
+		}
+
 		// 从里到外，设置变量
 		parameters.setAdditionalParams(additionalParams);
 		reqBody.getParameters().add(parameters);
 
 		// API 请求
-		DbConnection dbCon = new DbConnection();
-		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
 		String domain = daasInfo.get("domain");
 		String baseUrl = daasInfo.get("baseUrl");
 		String targetUrl = baseUrl + domain;
