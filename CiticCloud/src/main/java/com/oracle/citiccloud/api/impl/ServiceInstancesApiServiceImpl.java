@@ -353,6 +353,14 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		str.append(orgId);
 		str.append("'");
 
+		// 限定可查询instance id为200个
+		String[] idArray = instanceIds.split(",");
+		if(idArray.length > 200) {
+			String lastOne = idArray[199];
+			int offset = lastOne.length();
+			instanceIds = instanceIds.substring(0, instanceIds.indexOf(lastOne) + offset);
+		}
+
 		if (instanceIds != null && !instanceIds.equals("")) {
 			str.append(" AND req_instanceId IN ('");
 			str.append(instanceIds.replaceAll(" ", "").replaceAll(",", "','")); // 去掉空格，添加单引号
