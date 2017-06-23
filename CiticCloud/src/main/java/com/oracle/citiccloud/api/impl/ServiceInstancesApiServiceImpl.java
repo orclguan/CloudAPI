@@ -1,6 +1,5 @@
 package com.oracle.citiccloud.api.impl;
 
-import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -26,6 +25,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.json.simple.JSONObject;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.oracle.citiccloud.api.ApiResponseMessage;
 import com.oracle.citiccloud.api.NotFoundException;
 import com.oracle.citiccloud.api.ServiceInstancesApiService;
@@ -33,9 +33,10 @@ import com.oracle.citiccloud.api.TransformUtil;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.Service;
 import com.oracle.citiccloud.model.ServiceInstance;
-import com.oracle.citiccloud.model.dbaas.DbaasadditionalParams;
 import com.oracle.citiccloud.model.dbaas.DbaasCreateInstanceBody;
 import com.oracle.citiccloud.model.dbaas.DbaasParameter;
+import com.oracle.citiccloud.model.dbaas.DbaasadditionalParams;
+import com.oracle.citiccloud.model.dbaas.resp.DbaasPatch;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasViewList;
 import com.oracle.citiccloud.model.dbaas.resp.JobStatus;
@@ -599,14 +600,73 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		return Response.status(response.getStatus()).entity(responseStr).type(contentType).build();
 	}
 
-	// 打补丁
+	/**
+	 *  打补丁
+	 */
 	private Response applyPatches(LocalDbObject localobj) {
-//			// 查询所有可用补丁
-//			targetUrl = daasInfo.get("mgmtUrl")
-//				+ localobj.getInstanceId()
-//				+ "/patches/available";
-//		}
-		return null;
+		// 查询所有可用补丁
+		List<DbaasPatch> patchList = getAvailablePatches(localobj.getInstanceId());
+		// 打补丁
+		if(!patchList.isEmpty()) {
+			DbConnection dbCon = new DbConnection();
+			HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+			String targetUrl = daasInfo.get("mgmtUrl") + localobj.getInstanceId() + "/patches/";
+
+			// 强制操作 forceApply
+			JSONObject body = new JSONObject();
+			body.put("forceApply", true);
+
+			// 遍历每一个patchId
+			for (DbaasPatch p : patchList) {
+				targetUrl += p.getPatchId();
+				Response response = dbCon.reqPost(body, targetUrl);
+				
+				String responseStr = response.readEntity(String.class);
+				String contentType = response.getHeaderString("content-type");
+
+				System.out.println(">>>>>> Apply a Patch Response:\n" + response);
+				System.out.println(">>>>>> Response Body:\n" + responseStr);
+
+				// 根据返回值更新Local数据库
+				if (response.getStatus() !=  202) {
+					localobj.setJobId("");
+				}
+				else {
+					localobj.setJobId(response.getLocation().toString()); //操作成功202， header中返回job id
+				}
+
+				localobj.setServiceUri(localobj.getServiceUri());
+				localobj.setRep_status(String.valueOf(response.getStatus()));
+				localobj.setRep_CreateTime(getOracleTimestamp(response.getDate()));
+				localobj.setRep_LastModifiedTime(getOracleTimestamp(response.getLastModified()));
+				localobj.setReq_UpdateTime(localobj.getReq_UpdateTime());
+
+				String sql = dbCon.getLocalSql().get("updateSQLByInsertReply");
+				// 向本地数据库更新数据
+				dbCon.updateSQLByInsertReply(sql, localobj);
+
+				if (response.getStatus() !=  202) {
+					return Response.status(response.getStatus()).entity(responseStr).type(contentType).build();
+				}
+			}
+			
+			return Response.status(Response.Status.ACCEPTED).build();
+
+		}
+		else {
+			return Response.ok().entity("No Patch Available").type(MediaType.TEXT_PLAIN).build();
+		}
+	}
+
+	private List<DbaasPatch> getAvailablePatches(String instanceId) {
+		DbConnection dbCon = new DbConnection();
+		HashMap<String, String> daasInfo = dbCon.getOracleCloudAccInfo();
+
+		String targetUrl = daasInfo.get("mgmtUrl") + instanceId + "/patches/available";
+		String response = dbCon.reqGet(targetUrl);
+
+		List<DbaasPatch> patchList = TransformUtil.mapToObject(response, new TypeReference<List<DbaasPatch>>(){});
+		return patchList;
 	}
 
 	// 删除DBAAS服务实例
