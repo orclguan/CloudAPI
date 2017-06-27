@@ -156,10 +156,10 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 根据SeriviceId 查询最新的数据
 		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		LocalDbObject localobj = null;
-		String jobId = "";
+		String lastJobId = "";
 		try {
 			while (rs.next()) {
-				jobId = rs.getString("jobId");
+				lastJobId = rs.getString("jobId");
 				localobj = dbconn.setInsertRepObj(rs, ramdonId, operationType);
 			}
 		} catch (SQLException e) {
@@ -167,21 +167,21 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		}
 
 		// 本地无记录，返回错误信息
-		if (localobj == null) {
+		if (localobj == null || lastJobId.equals("")) {
 			return Response.status(Response.Status.NOT_FOUND)
-					.entity("{\"error\": \"Instance does not exist!\"}")
+					.entity("{\"error\": \"Instance or Last Job of Instance does not exist!\"}")
 					.type(MediaType.APPLICATION_JSON).build();
 		}
 
-		// 根据JobId获取Job状态
-		String jobStatus = queryJobStatus(jobId).getJob_status();
+		// 记录操作日志
+		String insertSql = dbconn.getLocalSql().get("insertSQL");
+		// 向本地数据库插入数据
+		dbconn.insertData(insertSql, localobj);
 
+		// 根据JobId获取Job状态
+		String jobStatus = queryJobStatus(lastJobId).getJob_status();
 		// 没有其他JOB正常运行时，
 		if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
-			// 记录操作日志
-			String insertSql = dbconn.getLocalSql().get("insertSQL");
-			// 向本地数据库插入数据
-			dbconn.insertData(insertSql, localobj);
 			// 执行操作
 			if ("patch".equals(operationType)) {
 				return applyPatches(localobj);
@@ -215,12 +215,21 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		// 根据SeriviceId 查询最新的数据
 		ResultSet rs = dbconn.selectLastRecordByInstanceId(reqInstanceId);
 		LocalDbObject localobj = null;
+		String lastJobId = "";
 		try {
 			while (rs.next()) {
+				lastJobId = rs.getString("jobId");
 				localobj = dbconn.setInsertRepObj(rs, ramdonId, oprationType);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+
+		// 本地无记录，返回错误信息
+		if (localobj == null || lastJobId.equals("")) {
+			return Response.status(Response.Status.NOT_FOUND)
+					.entity("{\"error\": \"Instance or Last Job of Instance does not exist!\"}")
+					.type(MediaType.APPLICATION_JSON).build();
 		}
 
 		// 记录操作日志
@@ -229,18 +238,18 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		dbconn.insertData(insertSql, localobj);
 		
 		// 先查看该instance是否有未完成任务
-				// 根据JobId获取Job状态
-				String jobStatus = queryJobStatus(localobj.getJobId()).getJob_status();
-				
-				// 没有其他JOB正常运行时，
-				if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
-					// 没有不正常的JOB时，执行删除操作
-					return Response.status(Response.Status.ACCEPTED).entity(this.deleteDBCSInstance(ramdonId,localobj)).build();
-					// Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
-				} else {
-					// JOB有未完成任务时返回错误
-					return Response.status(Response.Status.SERVICE_UNAVAILABLE).type(MediaType.APPLICATION_JSON).build();
-				}
+		// 根据JobId获取Job状态
+		String jobStatus = queryJobStatus(lastJobId).getJob_status();
+		
+		// 没有其他JOB正常运行时，
+		if (jobStatus.toUpperCase().equals("SUCCEEDED")) {
+			// 没有不正常的JOB时，执行删除操作
+			return Response.status(Response.Status.ACCEPTED).entity(this.deleteDBCSInstance(ramdonId,localobj)).build();
+			// Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+		} else {
+			// JOB有未完成任务时返回错误
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).type(MediaType.APPLICATION_JSON).build();
+		}
 	}
 
 	/**
@@ -353,15 +362,16 @@ public class ServiceInstancesApiServiceImpl extends ServiceInstancesApiService {
 		str.append(orgId);
 		str.append("'");
 
-		// 限定可查询instance id为200个
-		String[] idArray = instanceIds.split(",");
-		if(idArray.length > 200) {
-			String lastOne = idArray[199];
-			int offset = lastOne.length();
-			instanceIds = instanceIds.substring(0, instanceIds.indexOf(lastOne) + offset);
-		}
-
 		if (instanceIds != null && !instanceIds.equals("")) {
+			// 限定可查询instance id为200个
+			String[] idArray = instanceIds.split(",");
+
+			if(idArray.length > 200) {
+				String lastOne = idArray[199];
+				int offset = lastOne.length();
+				instanceIds = instanceIds.substring(0, instanceIds.indexOf(lastOne) + offset);
+			}
+
 			str.append(" AND req_instanceId IN ('");
 			str.append(instanceIds.replaceAll(" ", "").replaceAll(",", "','")); // 去掉空格，添加单引号
 			str.append("')");
