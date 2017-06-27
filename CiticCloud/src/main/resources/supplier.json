@@ -1,18 +1,26 @@
 {"suppliers":
 [{
-  "id": "oracleid",
-  "name": "Oracle Cloud",
+ "id": "5eec3b37-33f4-4cde-a8ff-347b17bf7b8b",
+  "name": "oracle",
   "score": "85",
   "is_a_citic": false,
-  "lan": true,
+  "lan": false,
   "payment": {
-    "deposit_bank": "招商银行杭州高新支行",
-    "account": "阿里云计算有限公司",
-    "account_number": "为中信云在阿里云申请的招行专属账号"
+    "deposit_bank": "招商银行XXXX支行",
+    "account": "甲骨文（中国）软件系统有限公司",
+    "account_number": "8888888888888888"
   },
   "credential": {
-    "username": "中信云",
-    "password": "mypassword"
+    "username": "wanghl6@citic.com",
+    "password": "Zhongxin123!"
+  },
+  "metadata": {
+    "display_name": "甲骨文云",
+    "description": "甲骨文云在业内是一款覆盖面非常广、集成度非常高的公有云",
+    "long_description": "甲骨文云在业内是一款覆盖面非常广、集成度非常高的公有云。它在软件即服务 (SaaS)、平台即服务 (PaaS) 和基础设施即服务 (IaaS) 这些领域提供先进的云服务，甚至允许您将 Oracle 云置于您自己的数据中心内。Oracle 云可提高业务敏捷性、降低成本并降低 IT 复杂性，从而帮助公司推动创新和业务转型。",
+    "image_url": "https://cloud.oracle.com/res/images/header/oracle-cloud-logo.png",
+    "document_url": "https://docs.oracle.com/en/cloud/",
+    "support_url": "http://support.oracle.com/"
   },
   "services": [
     {
