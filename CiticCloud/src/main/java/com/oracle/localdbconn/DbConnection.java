@@ -293,6 +293,9 @@ public class DbConnection {
 
 		HashMap<String, String> resultMap = new HashMap<String, String>();
 
+		resultMap = xmlInfo();
+		if(resultMap.size()> 0)return resultMap;
+
 		SAXReader saxReader = new SAXReader();
 		try {
 			Document document = saxReader.read(file);
@@ -307,7 +310,29 @@ public class DbConnection {
 		}
 		return resultMap;
 	}
+	/*
+	/ 从注册表中读取数据库配置信息
+	 */
+	private HashMap<String, String> xmlInfo() {
 
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		try {
+			String dbconfig = System.getenv("Orcldbconf");
+
+			if(null == dbconfig || dbconfig.equals(""))
+			    return resultMap;
+
+			String[] config = dbconfig.split("|");
+			resultMap.put("driver",config[0]);
+			resultMap.put("url",config[1]);
+			resultMap.put("tablename",config[2]);
+			resultMap.put("username",config[3]);
+			resultMap.put("password",config[4]);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 	// 从XML中获取本地数据库配置信息
 	public HashMap<String, String> getDbConfig() {
 		return xmlInfo(localDbConfig);
