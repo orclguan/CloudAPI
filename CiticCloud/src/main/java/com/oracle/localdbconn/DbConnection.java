@@ -322,7 +322,7 @@ public class DbConnection {
 			if(null == dbconfig || dbconfig.equals(""))
 			    return resultMap;
 
-			String[] config = dbconfig.split("|");
+			String[] config = dbconfig.split("\\|");
 			resultMap.put("driver",config[0]);
 			resultMap.put("url",config[1]);
 			resultMap.put("tablename",config[2]);
