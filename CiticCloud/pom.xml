@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>1.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>OrclCiticCloud</groupId>
 	<artifactId>OrclCiticCloud-server</artifactId>
 	<packaging>war</packaging>
@@ -16,7 +16,22 @@
 	</licenses>
 
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>../CiticCloud</sourceDirectory>
+		<resources>
+			<!--<resource>-->
+				<!--<directory>/src/main/resources</directory>-->
+				<!--<filtering>false</filtering>-->
+			<!--</resource>-->
+			<resource>
+				<directory>../CiticCloud</directory>
+				<includes>
+					<include>Dockerfile</include>
+					<include>DeployDev.sh</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -79,7 +94,7 @@
 				<version>1.9.1</version>
 				<executions>
 					<execution>
-          	<?m2e execute onConfiguration?>
+                  	<?m2e execute onConfiguration?>
 						<id>add-source</id>
 						<phase>generate-sources</phase>
 						<goals>
