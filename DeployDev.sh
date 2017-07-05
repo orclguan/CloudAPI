@@ -18,34 +18,34 @@
   image=${imgname}${tag}   
   # mvn build    
   mvn clean   
-  mvn package    
+  mvn package
   # build image   
-  docker build -t ${}/${image} .    
+  docker build -t ${}/${image} .
   # push image   
-  docker push ${repository}/$image    
+  docker push ${repository}/$image
   # update yml    
   # echo sed -i "s%${repository}/${appname}:.*%${repository}/${image}%g" Compose.yml    #    registry.user.pcloud.citic.com/zxyw/cloud/adapter/adapter-azure:dev-2017-05-17_18-51-01 
   
-   sed -i "s%${repository}/${imgname}:.*%${repository}/${image}%g" Compose.yml    
+   sed -i "s%${repository}/${imgname}:.*%${repository}/${image}%g" Compose.yml
    #sed -i 's/"/\\\"/g' Compose.yml   
    # build template string 
-    template=$(cat Compose.yml | awk '{printf $N"\\r\\n"}') 
-	version="${sec}"   
+    template=$(cat Compose.yml | awk '{printf $N"\\r\\n"}')
+	version="${sec}"
 	# build json   
-	echo "{\"name\":\"${appname}\",\"description\":\"${desc}\", \"template\":\"${template}\", \"version\": \"${version}\"}" > json.txt  
+	echo "{\"name\":\"${appname}\",\"description\":\"${desc}\", \"template\":\"${template}\", \"version\": \"${version}\"}" > json.txt
 	# check app  
 
- curl -s -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname}   
+ curl -s -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname}
  if  $? == 1  then  
  # app is not exist    
  # create app    
  #echo curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/     
-    echo create app [${appname} image ${image}] 
+    echo create app [${appname} image ${image}]
     curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/   
  else    
  # update app     
  #echo curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update    
-    echo update app [${appname} image ${image}]   
-    curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update 
+    echo update app [${appname} image ${image}]
+    curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update
  fi 
 	
