@@ -18,10 +18,10 @@
 	<build>
 		<sourceDirectory>../CiticCloud</sourceDirectory>
 		<resources>
-			<!--<resource>-->
-				<!--<directory>/src/main/resources</directory>-->
-				<!--<filtering>false</filtering>-->
-			<!--</resource>-->
+			<resource>
+				<directory>../CiticCloud/src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
 			<resource>
 				<directory>../CiticCloud</directory>
 				<includes>
@@ -228,7 +228,7 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
 		</dependency>
 
 		<dependency>
