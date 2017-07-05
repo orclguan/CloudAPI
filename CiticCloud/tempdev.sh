@@ -13,20 +13,25 @@
   image=${imgname}${tag}   
   # mvn build     
   mvn clean   
-  mvn package    
+  mvn package
+   echo $TOMCATPATH
+   $TOMCATPATH/bin/shutdown.sh
+   rm -fr $TOMCATPATH/webapps/OrclCiticCloud-server*
+   cp -b target/OrclCiticCloud-server-1.0.0.war $TOMCATPATH/webapps/
+    $TOMCATPATH/bin/startup.sh
   # build image   
-  docker build -t ${}/${image} .    
+  #docker build -t ${}/${image} .
   # push image   
-  docker push ${repository}/$image    
+ # docker push ${repository}/$image
   # update yml    
   # echo sed -i "s%${repository}/${appname}:.*%${repository}/${image}%g" Compose.yml    #    registry.user.pcloud.citic.com/zxyw/cloud/adapter/adapter-azure:dev-2017-05-17_18-51-01 
   
-   sed -i "s%${repository}/${imgname}:.*%${repository}/${image}%g" Compose.yml    
+  # sed -i "s%${repository}/${imgname}:.*%${repository}/${image}%g" Compose.yml
    #sed -i 's/"/\\\"/g' Compose.yml   
    # build template string 
-    template=$(cat Compose.yml | awk '{printf $N"\\r\\n"}') 
-	version="${sec}"   
+   # template=$(cat Compose.yml | awk '{printf $N"\\r\\n"}')
+	#version="${sec}"
 	# build json   
-	echo "{\"name\":\"${appname}\",\"description\":\"${desc}\", \"template\":\"${template}\", \"version\": \"${version}\"}" > json.txt  
+	#echo "{\"name\":\"${appname}\",\"description\":\"${desc}\", \"template\":\"${template}\", \"version\": \"${version}\"}" > json.txt
 	# check app  
 	
