@@ -38,7 +38,7 @@
 
  #curl -s -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/${appname} | grep ${appname} >/dev/null
  curl -s -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname} | grep ${appname} >/dev/null
- if  $? == 1  then  
+ if [[ $? == 1 ]] then  
  # app is not exist    
  # create app    
  #echo curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/     
