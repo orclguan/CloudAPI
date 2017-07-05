@@ -1,5 +1,5 @@
  #!/usr/bin/ksh  
- #需要根据用户环境确定 
+ #需要根据用户环境确定 sign
  #repository="registry.user.pcloud.citic.com/zxyw/cloud/adapter/zxorcl"
   repository="registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.1"
  appname="dev-zxorcl-adapter"    
