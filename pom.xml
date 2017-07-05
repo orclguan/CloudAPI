@@ -16,7 +16,7 @@
 	</licenses>
 
 	<build>
-		<sourceDirectory>CiticCloud</sourceDirectory>
+		<!--<sourceDirectory>CiticCloud</sourceDirectory>-->
 		<resources>
 			<resource>
 				<directory>CiticCloud/src/main/resources</directory>
