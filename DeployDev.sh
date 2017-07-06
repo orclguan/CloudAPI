@@ -7,9 +7,9 @@
  desc="orcle云适配器"    
  export DOCKER_TLS_VERIFY="1"    
  export DOCKER_HOST="tcp://10.247.14.60:13945"  
- export DOCKER_CERT_PATH="/root/orclcloud_dev"  
+ #export DOCKER_CERT_PATH="/root/orclcloud_dev"
  #需要与用户沟通
- #export DOCKER_CERT_PATH="/root/aliyun_dev" 
+ export DOCKER_CERT_PATH="/root/aliyun_dev"
  
   sec=`date +%Y-%m-%d_%H-%M-%S`    
   #tag=":latest" 日期标志
@@ -36,19 +36,19 @@
 	echo "{\"name\":\"${appname}\",\"description\":\"${desc}\", \"template\":\"${template}\", \"version\": \"${version}\"}" > json.txt
 	# check app  
 
- #curl -s -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/${appname} | grep ${appname} >/dev/null
- curl -s -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname} | grep ${appname} >/dev/null
+ curl -s -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/${appname} | grep ${appname} >/dev/null
+ #curl -s -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname} | grep ${appname} >/dev/null
  if [[ $? == 1 ]] then  
  # app is not exist    
  # create app    
  #echo curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/     
     echo create app [${appname} image ${image}]
-    curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/  -d @json.txt  
-   #curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/ -d @json.txt
+    #curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/  -d @json.txt
+    curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/ -d @json.txt
  else    
- # update app     
- #echo curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update    
+ # update app
     echo update app [${appname} image ${image}]
-    curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update -d @json.txt
+    #curl -X POST -k --cert /root/orclcloud_dev/cert.pem --key /root/orclcloud_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update -d @json.txt
+     curl -X POST -k --cert /root/aliyun_dev/cert.pem --key /root/aliyun_dev/key.pem https://10.247.14.60:13945/projects/${appname}/update -d @json.txt
  fi 
 	
