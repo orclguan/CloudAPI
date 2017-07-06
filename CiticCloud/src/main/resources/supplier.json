@@ -245,18 +245,6 @@
             }
             
         ]
-    },
-    {
-        "id": "25ac1eec-28d9-4978-bbfb-cb8ae68969b9",
-        "name": "jaas",
-        "score": "99",
-        "config_options": [
-            {
-                "name": "配置项的名称，在用户选定配置后将以此域作为返回值的key",
-                "display_name": "WEB页面显示的选项名称",
-                "default": "该配置项的默认值"
-            }
-        ]
     }
 ]
 }
