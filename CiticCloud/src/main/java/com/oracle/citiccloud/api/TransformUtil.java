@@ -49,6 +49,18 @@ public final class TransformUtil {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			// 读取markdown
+			if(catalog.getSuppliers() != null){
+				Supplier spl = catalog.getSuppliers().get(0);
+				List<Service> svcList = spl.getServices();
+
+				for(int i=0; i<svcList.size(); i++){
+					Service svc = svcList.get(i);
+					String md = readJsonFile(svc.getName() + ".md");
+					svc.getMetadata().setMarkdownDesc(md);
+				}
+			}
 		}
 
 		return catalog;
