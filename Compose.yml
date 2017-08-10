@@ -1,5 +1,5 @@
 oracle-adapter:
-    image: registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.2
+    image: registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.1
     hostname: oracle-adapter
     environment:
     - Orcldbconf=com.mysql.jdbc.Driver|jdbc:mysql://10.247.33.19:3306/|citiccloud_orcl|orclapt|Orcl_apt
