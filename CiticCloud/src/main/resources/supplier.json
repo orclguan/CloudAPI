@@ -31,8 +31,8 @@
 		  "display_name": "Oracle数据库云服务",
 		  "description": "Oracle数据库云服务",
 		  "long_description": "Oracle数据库云服务经过企业验证，支持从开发/测试到大规模生产部署的任何规模的负载。默认情况下，系统会对数据进行加密，提供多重的深度安全保护。该数据库云服务具有高可用性和可扩展性，速度快，简单灵活，能够加快价值实现速度并节省开支。",
-		  "markdown_desc":"",
-		  "image_url": "",
+		  "markdown_desc":"dbcs",
+		  "image_url": "images/icon-database-cloud_2x.png",
 		  "document_url": "http://docs.oracle.com/en/cloud/paas/database-dbaas-cloud/index.html",
 		  "support_url": "http://support.oracle.com/"
 		},
@@ -263,8 +263,8 @@
 		  "display_name": "Oracle Java云服务",
 		  "description": "方便、快速、敏捷地部署任意 Java 应用。全面、灵活地控制公有云中的应用。",
 		  "long_description": "Oracle Java 云服务是进行开发、测试、用户验收测试、暂时存放和生产的理想之选。快速创建单独的专用 WebLogic 服务器环境（可选择 11g 或 12c 版本）来运行整个集群并支持扩展。",
-		  "markdown_desc":"",
-		  "image_url": "",
+		  "markdown_desc":"jcs",
+		  "image_url": "images/icon-java-cloud_2x.png",
 		  "document_url": "http://docs.oracle.com/en/cloud/paas/java-cloud/index.html",
 		  "support_url": "http://support.oracle.com/"
 		},
