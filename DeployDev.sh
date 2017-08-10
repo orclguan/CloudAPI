@@ -1,7 +1,7 @@
  #!/usr/bin/ksh  
  #需要根据用户环境确定 sign--last
  #repository="registry.user.pcloud.citic.com/zxyw/cloud/adapter/zxorcl"
-  repository="registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.1"
+  repository="registry.user.pcloud.citic.com/zxyw/cloud/adapter"
  appname="dev-oracle-adapter"
  imgname="oracle"
  desc="中信云oracle适配器"
