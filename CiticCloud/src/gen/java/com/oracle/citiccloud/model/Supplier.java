@@ -293,7 +293,7 @@ public class Supplier   {
     sb.append("class Supplier {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    citicOrgId: ").append(toIndentedString(citicOrgId)).append("\n");
+//    sb.append("    citicOrgId: ").append(toIndentedString(citicOrgId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
     sb.append("    isACitic: ").append(toIndentedString(isACitic)).append("\n");
