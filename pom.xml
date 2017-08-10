@@ -4,7 +4,7 @@
 	<groupId>OrclCiticCloud</groupId>
 	<artifactId>OrclCiticCloud-server</artifactId>
 	<packaging>war</packaging>
-	<name>CiticCloud-Server</name>
+	<name>OrclCiticCloud-server</name>
 	<version>1.0.0</version>
 
 	<licenses>
