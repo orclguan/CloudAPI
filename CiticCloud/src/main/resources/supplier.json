@@ -27,6 +27,15 @@
         "id": "369fb62a-6341-4581-8ed0-b355f7c3093a",
         "name": "dbaas",
         "score": "99",
+		"metadata": {
+		  "display_name": "Oracle数据库云服务",
+		  "description": "Oracle数据库云服务",
+		  "long_description": "Oracle数据库云服务经过企业验证，支持从开发/测试到大规模生产部署的任何规模的负载。默认情况下，系统会对数据进行加密，提供多重的深度安全保护。该数据库云服务具有高可用性和可扩展性，速度快，简单灵活，能够加快价值实现速度并节省开支。",
+		  "markdown_desc":"",
+		  "image_url": "",
+		  "document_url": "http://docs.oracle.com/en/cloud/paas/database-dbaas-cloud/index.html",
+		  "support_url": "http://support.oracle.com/"
+		},
         "config_options": [
             {
                 "name": "description",
@@ -244,6 +253,165 @@
                 "default": ""
             }
             
+        ]
+    },
+    {
+        "id": "25ac1eec-28d9-4978-bbfb-cb8ae68969b9",
+        "name": "jaas",
+        "score": "99",
+		"metadata": {
+		  "display_name": "Oracle Java云服务",
+		  "description": "方便、快速、敏捷地部署任意 Java 应用。全面、灵活地控制公有云中的应用。",
+		  "long_description": "Oracle Java 云服务是进行开发、测试、用户验收测试、暂时存放和生产的理想之选。快速创建单独的专用 WebLogic 服务器环境（可选择 11g 或 12c 版本）来运行整个集群并支持扩展。",
+		  "markdown_desc":"",
+		  "image_url": "",
+		  "document_url": "http://docs.oracle.com/en/cloud/paas/java-cloud/index.html",
+		  "support_url": "http://support.oracle.com/"
+		},
+        "config_options": [
+            {
+                "name": "serviceName",
+                "required": true,
+                "display_name": "Service Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "description",
+                "display_name": "Service Description",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "subscriptionType",
+                "required": true,
+                "display_name": "Metering Frequency",
+                "data_type": "options",
+                "default": "MONTHLY",
+                "values": [
+                    {
+                        "key": "MONTHLY",
+                        "value": "Monthly"
+                    },{
+                        "key": "HOURLY",
+                        "value": "Hourly"
+                    }
+                ]
+            },{
+                "name": "version",
+                "required": true,
+                "display_name": "Software Release",
+                "data_type": "options",
+                "default": "12.2.1",
+                "values": [
+                    {
+                        "key": "12.2.1",
+                        "value": "Oracle WebLogic Server 12c, 12.2.1.2.0"
+                    },{
+                        "key": "12.1.3",
+                        "value": "Oracle WebLogic Server 12c, 12.1.3.0"
+                    },{
+                        "key": "10.3.6",
+                        "value": "Oracle WebLogic Server 11g, 11.1.1.7"
+                    }
+                ]
+            },{
+                "name": "weblogic-edition",
+                "required": true,
+                "display_name": "Software Edition",
+                "data_type": "options",
+                "default": "",
+                "values": [
+                    {
+                        "key": "SE",
+                        "value": "Standard Edition"
+                    },{
+                        "key": "EE",
+                        "value": "Enterprise Edition"
+                    },{
+                        "key": "SUITE",
+                        "value": "Suite edition"
+                    }
+                ]
+            },{
+                "name": "serviceName",
+                "required": true,
+                "display_name": "Service Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-shape",
+                "required": true,
+                "display_name": "Compute Shape",
+                "data_type": "options",
+                "default": "oc3",
+                "values": [
+                    {
+                        "key": "oc3",
+                        "value": "oc3: 1 OCPU, 7.5 GB memory"
+                    },{
+                        "key": "oc4",
+                        "value": "oc4: 2 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc5",
+                        "value": "oc5: 4 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc6",
+                        "value": "oc6: 8 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc1m",
+                        "value": "oc1m: 1 OCPU, 15 GB memory"
+                    },{
+                        "key": "oc2m",
+                        "value": "oc2m: 2 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc3m",
+                        "value": "oc3m: 4 OCPUs, 60 GB memory"
+                    },{
+                        "key": "oc4m",
+                        "value": "oc4m: 8 OCPUs, 120 GB memory"
+                    }
+                ]
+            },{
+                "name": "weblogic-VMsPublicKey",
+                "required": true,
+                "display_name": "SSH Public Key",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-adminUserName",
+                "required": true,
+                "display_name": "Local Administrative Username",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-adminPassword",
+                "required": true,
+                "display_name": "Password",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-dbServiceName",
+                "required": true,
+                "display_name": "Database Service Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-pdbServiceName",
+                "display_name": "PDB Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-dbaName",
+                "required": true,
+                "display_name": "Administrator Username",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-dbaPassword",
+                "required": true,
+                "display_name": "Password",
+                "data_type": "string",
+                "default": ""
+            }
         ]
     }
 ]
