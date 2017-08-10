@@ -1,12 +1,12 @@
 oracle-adapter:
-    image: registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.1
+    image: registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.2
     hostname: oracle-adapter
     environment:
     - Orcldbconf=com.mysql.jdbc.Driver|jdbc:mysql://10.247.33.19:3306/|citiccloud_orcl|orclapt|Orcl_apt
     expose:
     - 8080/tcp
     labels:
-        aliyun.routing.port_8080: orclzxapt.citiccloud-dev.pcloud.citic.com;orclzxapt.local
+        aliyun.routing.port_8080: oracleapt.citiccloud-dev.pcloud.citic.com;oracleapt.local
         aliyun.routing.session_sticky: 'true'
     dns: 10.200.1.1
     restart: always
