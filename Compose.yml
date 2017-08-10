@@ -6,7 +6,7 @@ oracle-adapter:
     expose:
     - 8080/tcp
     labels:
-        aliyun.routing.port_8080: orclapt.citiccloud-dev.pcloud.citic.com;orclapt.local
+        aliyun.routing.port_8080: orclzxapt.citiccloud-dev.pcloud.citic.com;orclzxapt.local
         aliyun.routing.session_sticky: 'true'
     dns: 10.200.1.1
     restart: always
