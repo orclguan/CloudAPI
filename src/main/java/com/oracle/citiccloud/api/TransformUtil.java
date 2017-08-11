@@ -49,7 +49,7 @@ public final class TransformUtil {
 			String supplierJson = readJsonFile("supplier.json");
 			try {
 				//JSON映射
-				mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 				catalog = mapper.readValue(supplierJson, Catalog.class);
 
 				// 读取markdown
