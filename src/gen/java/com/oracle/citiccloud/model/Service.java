@@ -30,16 +30,16 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
 public class Service   {
   @JsonProperty("id")
-  private String id = null;
+  private String id = "";
 
   @JsonProperty("name")
-  private String name = null;
+  private String name = "";
 
   @JsonProperty("score")
-  private String score = null;
+  private String score = "";
 
   @JsonProperty("price")
-  private String price = null;
+  private String price = "";
 
   @JsonProperty("customizable")
   private Boolean customizable = false;
