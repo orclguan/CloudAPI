@@ -1,0 +1,420 @@
+{"suppliers":
+[{
+ "id": "5eec3b37-33f4-4cde-a8ff-347b17bf7b8b",
+  "name": "oracle",
+  "score": "85",
+  "citic_org_id":"orcl-org-id",
+  "is_a_citic": false,
+  "lan": false,
+  "payment": {
+    "deposit_bank": "招商银行XXXX支行",
+    "account": "甲骨文（中国）软件系统有限公司",
+    "account_number": "8888888888888888"
+  },
+  "credential": {
+    "username": "wanghl6@citic.com",
+    "password": "Zhongxin123!"
+  },
+  "metadata": {
+    "display_name": "甲骨文云",
+    "description": "甲骨文云在业内是一款覆盖面非常广、集成度非常高的公有云",
+    "long_description": "甲骨文云在业内是一款覆盖面非常广、集成度非常高的公有云。它在软件即服务 (SaaS)、平台即服务 (PaaS) 和基础设施即服务 (IaaS) 这些领域提供先进的云服务，甚至允许您将 Oracle 云置于您自己的数据中心内。Oracle 云可提高业务敏捷性、降低成本并降低 IT 复杂性，从而帮助公司推动创新和业务转型。",
+    "image_url": "https://cloud.oracle.com/res/images/header/oracle-cloud-logo.png",
+    "document_url": "https://docs.oracle.com/en/cloud/",
+    "support_url": "http://support.oracle.com/"
+  },
+  "services": [
+    {
+        "id": "369fb62a-6341-4581-8ed0-b355f7c3093a",
+        "name": "dbaas",
+        "score": "99",
+		"metadata": {
+		  "display_name": "Oracle数据库云服务",
+		  "description": "Oracle数据库云服务",
+		  "long_description": "Oracle数据库云服务经过企业验证，支持从开发/测试到大规模生产部署的任何规模的负载。默认情况下，系统会对数据进行加密，提供多重的深度安全保护。该数据库云服务具有高可用性和可扩展性，速度快，简单灵活，能够加快价值实现速度并节省开支。",
+		  "markdown_desc":"dbcs",
+		  "image_url": "images/icon-database-cloud_2x.png",
+		  "document_url": "http://docs.oracle.com/en/cloud/paas/database-dbaas-cloud/index.html",
+		  "support_url": "http://support.oracle.com/"
+		},
+        "config_options": [
+            {
+                "name": "description",
+                "display_name": "Description",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "edition",
+                "required": true,
+                "display_name": "Software Edition",
+                "data_type": "options",
+                "default": "EE",
+                "values": [
+                    {
+                        "key": "SE",
+                        "value": "Standard Edition"
+                    },{
+                        "key": "EE",
+                        "value": "Enterprise Edition"
+                    },{
+                        "key": "EE_HP",
+                        "value": "Enterprise Edition - High Performance"
+                    },{
+                        "key": "EE_EP",
+                        "value": "Enterprise Edition - Extreme Performance"
+                    }
+                ]
+            },{
+                "name": "level",
+                "required": true,
+                "display_name": "Service level",
+                "data_type": "options",
+                "default": "PAAS",
+                "values": [
+                    {
+                        "key": "PAAS",
+                        "value": "PAAS"
+                    },{
+                        "key": "BASIC",
+                        "value": "BASIC"
+                    }
+                ]
+            },{
+                "name": "db_demo",
+                "required": true,
+                "display_name": "Whether to include the Demos PDB",
+                "data_type": "string",
+                "default": "no",
+                "values": [
+                    {
+                        "key": "yes",
+                        "value": "Yes"
+                    },{
+                        "key": "no",
+                        "value": "No"
+                    }
+                ]
+            },{
+                "name": "adminPassword",
+                "required": true,
+                "display_name": "Administration Password",
+                "data_type": "string",
+                "default": "",
+                "instruction": "Starts with a letter.Is between 8 and 30 characters long.Contains letters, at least one number, and optionally, any number of these special characters: dollar sign ($), pound sign (#), and underscore (_)."
+            },{
+                "name": "backupDestination",
+                "required": true,
+                "display_name": "Backup Destination",
+                "data_type": "options",
+                "default": "NONE",
+                "values": [
+                    {
+                        "key": "BOTH",
+                        "value": "Both Cloud Storage and Local Storage"
+                    },{
+                        "key": "OSS",
+                        "value": "Cloud Storage only"
+                    },{
+                        "key": "NONE",
+                        "value": "None"
+                    }
+                ]
+            },{
+                "name": "charset",
+                "display_name": "Character Set",
+                "data_type": "string",
+                "default": "AL32UTF8"
+            },{
+                "name": "cloudStorageContainer",
+                "display_name": "Cloud Storage Container",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "cloudStoragePwd",
+                "display_name": "Password for the Oracle Storage Cloud Service administrator",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "cloudStorageUser",
+                "display_name": "Username for the Oracle Storage Cloud Service administrator",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "ncharset",
+                "display_name": "National Character Set",
+                "data_type": "string",
+                "default": "AL16UTF16"
+            },{
+                "name": "pdbName",
+                "display_name": "PDB Name",
+                "data_type": "string",
+                "default": "pdb1",
+                "instruction": "This attribute is valid when Database Cloud Service instance is configured with version 12c."
+            },{
+                "name": "sid",
+                "required": true,
+                "display_name": "DB Name(SID)",
+                "data_type": "string",
+                "default": "ORCL"
+            },{
+                "name": "timezone",
+                "display_name": "Time Zone",
+                "data_type": "string",
+                "default": "UTC"
+            },{
+                "name": "type",
+                "required": true,
+                "display_name": "Component type",
+                "data_type": "string",
+                "default": "db"
+            },{
+                "name": "usableStorage",
+                "required": true,
+                "display_name": "Usable Database Storage(GB)",
+                "data_type": "string",
+                "default": "15"
+            },{
+                "name": "serviceName",
+                "required": true,
+                "display_name": "Service Name",
+                "data_type": "string",
+                "default": "",
+                "instruction": "Must not exceed 50 characters.Must start with a letter.Must contain only letters, numbers, or hyphens.Must not contain any other special characters.Must be unique within the identity domain."
+            },{
+                "name": "shape",
+                "required": true,
+                "display_name": "Compute shape",
+                "data_type": "options",
+                "default": "oc3",
+                "values": [
+                    {
+                        "key": "oc3",
+                        "value": "oc3: 1 OCPU, 7.5 GB memory"
+                    },{
+                        "key": "oc4",
+                        "value": "oc4: 2 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc5",
+                        "value": "oc5: 4 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc6",
+                        "value": "oc6: 8 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc1m",
+                        "value": "oc1m: 1 OCPU, 15 GB memory"
+                    },{
+                        "key": "oc2m",
+                        "value": "oc2m: 2 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc3m",
+                        "value": "oc3m: 4 OCPUs, 60 GB memory"
+                    },{
+                        "key": "oc4m",
+                        "value": "oc4m: 8 OCPUs, 120 GB memory"
+                    }
+                ]
+            },{
+                "name": "subscriptionType",
+                "required": true,
+                "display_name": "Metering Frequency",
+                "data_type": "options",
+                "default": "MONTHLY",
+                "values": [
+                    {
+                        "key": "MONTHLY",
+                        "value": "Monthly"
+                    },{
+                        "key": "HOURLY",
+                        "value": "Hourly"
+                    }
+                ]
+            },{
+                "name": "version",
+                "required": true,
+                "display_name": "Software Release",
+                "data_type": "options",
+                "default": "12.1.0.2",
+                "values": [
+                    {
+                        "key": "11.2.0.4",
+                        "value": "Oracle Database 11g Release 2"
+                    },{
+                        "key": "12.1.0.2",
+                        "value": "Oracle Database 12c Release 1"
+                    },{
+                        "key": "12.2.0.1",
+                        "value": "Oracle Database 12c Release 2"
+                    }
+                ]
+            },{
+                "name": "vmPublicKeyText",
+                "required": true,
+                "display_name": "SSH Public Key",
+                "data_type": "string",
+                "default": ""
+            }
+            
+        ]
+    },
+    {
+        "id": "25ac1eec-28d9-4978-bbfb-cb8ae68969b9",
+        "name": "jaas",
+        "score": "99",
+		"metadata": {
+		  "display_name": "Oracle Java云服务",
+		  "description": "方便、快速、敏捷地部署任意 Java 应用。全面、灵活地控制公有云中的应用。",
+		  "long_description": "Oracle Java 云服务是进行开发、测试、用户验收测试、暂时存放和生产的理想之选。快速创建单独的专用 WebLogic 服务器环境（可选择 11g 或 12c 版本）来运行整个集群并支持扩展。",
+		  "markdown_desc":"jcs",
+		  "image_url": "images/icon-java-cloud_2x.png",
+		  "document_url": "http://docs.oracle.com/en/cloud/paas/java-cloud/index.html",
+		  "support_url": "http://support.oracle.com/"
+		},
+        "config_options": [
+            {
+                "name": "serviceName",
+                "required": true,
+                "display_name": "Service Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "description",
+                "display_name": "Service Description",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "subscriptionType",
+                "required": true,
+                "display_name": "Metering Frequency",
+                "data_type": "options",
+                "default": "MONTHLY",
+                "values": [
+                    {
+                        "key": "MONTHLY",
+                        "value": "Monthly"
+                    },{
+                        "key": "HOURLY",
+                        "value": "Hourly"
+                    }
+                ]
+            },{
+                "name": "version",
+                "required": true,
+                "display_name": "Software Release",
+                "data_type": "options",
+                "default": "12.2.1",
+                "values": [
+                    {
+                        "key": "12.2.1",
+                        "value": "Oracle WebLogic Server 12c, 12.2.1.2.0"
+                    },{
+                        "key": "12.1.3",
+                        "value": "Oracle WebLogic Server 12c, 12.1.3.0"
+                    },{
+                        "key": "10.3.6",
+                        "value": "Oracle WebLogic Server 11g, 11.1.1.7"
+                    }
+                ]
+            },{
+                "name": "weblogic-edition",
+                "required": true,
+                "display_name": "Software Edition",
+                "data_type": "options",
+                "default": "",
+                "values": [
+                    {
+                        "key": "SE",
+                        "value": "Standard Edition"
+                    },{
+                        "key": "EE",
+                        "value": "Enterprise Edition"
+                    },{
+                        "key": "SUITE",
+                        "value": "Suite edition"
+                    }
+                ]
+            },{
+                "name": "serviceName",
+                "required": true,
+                "display_name": "Service Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-shape",
+                "required": true,
+                "display_name": "Compute Shape",
+                "data_type": "options",
+                "default": "oc3",
+                "values": [
+                    {
+                        "key": "oc3",
+                        "value": "oc3: 1 OCPU, 7.5 GB memory"
+                    },{
+                        "key": "oc4",
+                        "value": "oc4: 2 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc5",
+                        "value": "oc5: 4 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc6",
+                        "value": "oc6: 8 OCPUs, 15 GB memory"
+                    },{
+                        "key": "oc1m",
+                        "value": "oc1m: 1 OCPU, 15 GB memory"
+                    },{
+                        "key": "oc2m",
+                        "value": "oc2m: 2 OCPUs, 30 GB memory"
+                    },{
+                        "key": "oc3m",
+                        "value": "oc3m: 4 OCPUs, 60 GB memory"
+                    },{
+                        "key": "oc4m",
+                        "value": "oc4m: 8 OCPUs, 120 GB memory"
+                    }
+                ]
+            },{
+                "name": "weblogic-VMsPublicKey",
+                "required": true,
+                "display_name": "SSH Public Key",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-adminUserName",
+                "required": true,
+                "display_name": "Local Administrative Username",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-adminPassword",
+                "required": true,
+                "display_name": "Password",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-dbServiceName",
+                "required": true,
+                "display_name": "Database Service Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-pdbServiceName",
+                "display_name": "PDB Name",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-dbaName",
+                "required": true,
+                "display_name": "Administrator Username",
+                "data_type": "string",
+                "default": ""
+            },{
+                "name": "weblogic-dbaPassword",
+                "required": true,
+                "display_name": "Password",
+                "data_type": "string",
+                "default": ""
+            }
+        ]
+    }
+]
+}
+]}
