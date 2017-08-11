@@ -34,6 +34,13 @@ public final class TransformUtil {
 	public final static String SERVICE_NAME_DBCS = "dbaas";
 	public final static String SERVICE_NAME_JCS = "jaas";
 
+	public static void main(String[] args){
+
+		Catalog c = getCatalog();
+
+		System.out.println(c.getSuppliers().get(0).getName());
+
+	}
 	public static Catalog getCatalog() {
 		if (catalog == null) {
 			catalog = new Catalog();
@@ -199,8 +206,11 @@ public final class TransformUtil {
 	}
 
 	public static String readJsonFile(String fileName) {
-		ClassLoader classLoader = TransformUtil.class.getClassLoader();
-		File file = new File(classLoader.getResource(fileName).getFile());
+		//ClassLoader classLoader = TransformUtil.class.getClassLoader();
+		//File file = new File(classLoader.getResource(fileName).getFile());
+
+		File file = new File("resources/" + fileName);
+
 		BufferedReader reader = null;
 		String laststr = "";
 		try {
