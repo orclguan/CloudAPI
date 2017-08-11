@@ -16,10 +16,14 @@
 	</licenses>
 
 	<build>
-		<sourceDirectory>CiticCloud</sourceDirectory>
+		<!--<sourceDirectory>CiticCloud</sourceDirectory>-->
 		<resources>
 			<resource>
-				<directory>CiticCloud/src/main/resources</directory>
+			<directory>CiticCloud/src/main/resources</directory>
+			<filtering>false</filtering>
+		</resource>
+			<resource>
+				<directory>CiticCloud/src/main/webapp</directory>
 				<filtering>false</filtering>
 			</resource>
 			<resource>
