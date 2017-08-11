@@ -62,13 +62,15 @@ public final class TransformUtil {
 
 			// 读取markdown
 			if(catalog.getSuppliers() != null){
-				Supplier spl = catalog.getSuppliers().get(0);
-				List<Service> svcList = spl.getServices();
+				if(catalog.getSuppliers().size() > 0) {
+					Supplier spl = catalog.getSuppliers().get(0);
+					List<Service> svcList = spl.getServices();
 
-				for(int i=0; i<svcList.size(); i++){
-					Service svc = svcList.get(i);
-					String md = readJsonFile(svc.getName() + ".md");
-					svc.getMetadata().setMarkdownDesc(md);
+					for (int i = 0; i < svcList.size(); i++) {
+						Service svc = svcList.get(i);
+						String md = readJsonFile(svc.getName() + ".md");
+						svc.getMetadata().setMarkdownDesc(md);
+					}
 				}
 			}
 		}
@@ -206,11 +208,8 @@ public final class TransformUtil {
 	}
 
 	public static String readJsonFile(String fileName) {
-		//ClassLoader classLoader = TransformUtil.class.getClassLoader();
-		//File file = new File(classLoader.getResource(fileName).getFile());
-
-		File file = new File("resources/" + fileName);
-
+		ClassLoader classLoader = TransformUtil.class.getClassLoader();
+		File file = new File(classLoader.getResource(fileName).getFile());
 		BufferedReader reader = null;
 		String laststr = "";
 		try {
