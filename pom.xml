@@ -19,21 +19,22 @@
 		<!--<sourceDirectory>CiticCloud</sourceDirectory>-->
 		<resources>
 			<resource>
+				<directory>CiticCloud/src/main/webapp</directory>
+				<targetPath>//</targetPath>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
 			<directory>CiticCloud/src/main/resources</directory>
 			<filtering>false</filtering>
 		</resource>
-			<resource>
-				<directory>CiticCloud/src/main/webapp</directory>
-				<filtering>false</filtering>
-			</resource>
-			<resource>
-				<directory>../CiticCloud</directory>
-				<includes>
-					<include>Dockerfile</include>
-					<include>DeployDev.sh</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
+			<!--<resource>-->
+				<!--<directory>../CiticCloud</directory>-->
+				<!--<includes>-->
+					<!--<include>Dockerfile</include>-->
+					<!--<include>DeployDev.sh</include>-->
+				<!--</includes>-->
+				<!--<filtering>false</filtering>-->
+			<!--</resource>-->
 		</resources>
 
 		<plugins>
@@ -42,7 +43,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-					<webXml>CiticCloud\src\main\webapp\WEB-INF\web.xml</webXml>
+					<webXml>src\main\webapp\WEB-INF\web.xml</webXml>
 				</configuration>
 			</plugin>
 			<plugin>
