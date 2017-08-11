@@ -32,7 +32,7 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
 public class Supplier   {
   @JsonProperty("id")
-  private String id = "";
+  private String id = "" ;
 
   @JsonProperty("citic_org_id")
   private String citicOrgId = "";
