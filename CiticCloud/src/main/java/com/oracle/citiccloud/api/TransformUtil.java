@@ -25,6 +25,9 @@ import com.oracle.citiccloud.model.ModelConfiguration;
 import com.oracle.citiccloud.model.Operations;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
 import com.oracle.localdbconn.DbConnection;
+import com.oracle.citiccloud.model.Supplier;
+import com.oracle.citiccloud.model.Service;
+
 
 public final class TransformUtil {
 

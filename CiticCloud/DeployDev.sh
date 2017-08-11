@@ -4,7 +4,7 @@
   repository="registry.user.pcloud.citic.com/zxyw/cloud/adapter/oracle:t0.1"
  appname="dev-zxorcl-adapter"    
  imgname="zxorcl"    
- desc="orcle云适配器"    
+ desc="oracle云适配器"
  export DOCKER_TLS_VERIFY="1"    
  export DOCKER_HOST="tcp://10.247.14.60:13945"  
  export DOCKER_CERT_PATH="/root/orclcloud_dev"  
