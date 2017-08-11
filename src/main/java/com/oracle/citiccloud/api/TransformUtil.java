@@ -212,10 +212,10 @@ public final class TransformUtil {
 	}
 
 	public static String readJsonFile(String fileName) {
-//		ClassLoader classLoader = TransformUtil.class.getClassLoader();
-//		File file = new File(classLoader.getResource(fileName).getFile());
 
-		File file = new File("resources/"+fileName);
+		ClassLoader classLoader = TransformUtil.class.getClassLoader();
+		File file = new File(classLoader.getResource(fileName).getFile());
+
 		BufferedReader reader = null;
 		String laststr = "";
 		try {
