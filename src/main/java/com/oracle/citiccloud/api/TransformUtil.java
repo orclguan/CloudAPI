@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -48,7 +49,23 @@ public final class TransformUtil {
 			String supplierJson = readJsonFile("supplier.json");
 			try {
 				//JSON映射
+				mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 				catalog = mapper.readValue(supplierJson, Catalog.class);
+
+				// 读取markdown
+				if(catalog.getSuppliers() != null){
+					if(catalog.getSuppliers().size() > 0) {
+						Supplier spl = catalog.getSuppliers().get(0);
+						List<Service> svcList = spl.getServices();
+
+						for (int i = 0; i < svcList.size(); i++) {
+							Service svc = svcList.get(i);
+							String md = readJsonFile(svc.getName() + ".md");
+							svc.getMetadata().setMarkdownDesc(md);
+						}
+					}
+				}
+
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,19 +77,7 @@ public final class TransformUtil {
 				e.printStackTrace();
 			}
 
-			// 读取markdown
-			if(catalog.getSuppliers() != null){
-				if(catalog.getSuppliers().size() > 0) {
-					Supplier spl = catalog.getSuppliers().get(0);
-					List<Service> svcList = spl.getServices();
 
-					for (int i = 0; i < svcList.size(); i++) {
-						Service svc = svcList.get(i);
-						String md = readJsonFile(svc.getName() + ".md");
-						svc.getMetadata().setMarkdownDesc(md);
-					}
-				}
-			}
 		}
 
 		return catalog;
@@ -231,7 +236,12 @@ public final class TransformUtil {
 		}
 		return laststr;
 	}
-
+    private static void DelNull(Supplier sp)
+	{
+		sp.setId(sp.getId()==null?"":sp.getId());
+		sp.setName(sp.getName()==null?"":sp.getName());
+		sp.setScore(sp.getScore()==null?"":sp.getScore());
+	}
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static Catalog catalog = null;
 
