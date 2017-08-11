@@ -27,13 +27,13 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
 public class Payment   {
   @JsonProperty("deposit_bank")
-  private String depositBank = "";
+  private String depositBank = null;
 
   @JsonProperty("account")
-  private String account = "";
+  private String account = null;
 
   @JsonProperty("account_number")
-  private String accountNumber = "";
+  private String accountNumber = null;
 
   public Payment depositBank(String depositBank) {
     this.depositBank = depositBank;
@@ -134,7 +134,7 @@ public class Payment   {
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
-      return "";
+      return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }

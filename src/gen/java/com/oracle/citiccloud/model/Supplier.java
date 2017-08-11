@@ -32,22 +32,22 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
 public class Supplier   {
   @JsonProperty("id")
-  private String id = "" ;
+  private String id = null;
 
   @JsonProperty("citic_org_id")
-  private String citicOrgId = "";
+  private String citicOrgId = null;
 
   @JsonProperty("name")
-  private String name = "";
+  private String name = null;
 
   @JsonProperty("score")
-  private String score = "";
+  private String score = null;
 
   @JsonProperty("is_a_citic")
-  private Boolean isACitic = false;
+  private Boolean isACitic = null;
 
   @JsonProperty("lan")
-  private Boolean lan = false;
+  private Boolean lan = null;
 
   @JsonProperty("payment")
   private Payment payment = null;
@@ -291,7 +291,7 @@ public class Supplier   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Supplier {\n");
-
+    
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    citicOrgId: ").append(toIndentedString(citicOrgId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

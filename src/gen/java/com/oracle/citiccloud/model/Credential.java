@@ -27,10 +27,10 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-05-17T12:22:27.214+08:00")
 public class Credential   {
   @JsonProperty("username")
-  private String username = "";
+  private String username = null;
 
   @JsonProperty("password")
-  private String password = "";
+  private String password = null;
 
   public Credential username(String username) {
     this.username = username;
@@ -109,7 +109,7 @@ public class Credential   {
    */
   private String toIndentedString(java.lang.Object o) {
     if (o == null) {
-      return "";
+      return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
