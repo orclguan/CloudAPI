@@ -3,6 +3,8 @@ package com.oracle.citiccloud.api.impl;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.citiccloud.api.CatalogApiService;
 import com.oracle.citiccloud.api.NotFoundException;
 import com.oracle.citiccloud.api.TransformUtil;
@@ -18,7 +20,18 @@ public class CatalogApiServiceImpl extends CatalogApiService {
 	@Override
 	public Response catalogGet(SecurityContext securityContext) throws NotFoundException {
 		Catalog catalog = TransformUtil.getCatalog();
-		return Response.ok().entity(catalog).build();
+		ObjectMapper OM = new ObjectMapper();
+		OM.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		String Reponse = new String();
+		try{
+			Reponse = OM.writeValueAsString(catalog);
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+
+		return Response.ok().entity(Reponse).build();
 	}
 
 }

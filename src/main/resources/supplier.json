@@ -3,7 +3,7 @@
  "id": "5eec3b37-33f4-4cde-a8ff-347b17bf7b8b",
   "name": "oracle",
   "score": "85",
-  "citic_org_id":"orcl-org-id",
+  "citic_org_id":"",
   "is_a_citic": false,
   "lan": false,
   "payment": {

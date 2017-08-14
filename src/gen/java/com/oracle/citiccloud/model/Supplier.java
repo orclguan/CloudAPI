@@ -34,8 +34,8 @@ public class Supplier   {
   @JsonProperty("id")
   private String id = null;
 
-//  @JsonProperty("citic_org_id")
-//  private String citicOrgId = null;
+  @JsonProperty("citic_org_id")
+  private String citicOrgId = "";
 
   @JsonProperty("name")
   private String name = null;
@@ -80,24 +80,24 @@ public class Supplier   {
     this.id = id;
   }
 
-//  public Supplier citicOrgId(String citicOrgId) {
-//    this.citicOrgId = citicOrgId;
-//    return this;
-//  }
+  public Supplier citicOrgId(String citicOrgId) {
+    this.citicOrgId = citicOrgId;
+    return this;
+  }
 
    /**
    * 如果这个供应商是集团下属企业，需提供在集团LDAP中的ID.
    * @return citicOrgId
   **/
-//  @JsonProperty("citic_org_id")
-//  @ApiModelProperty(value = "如果这个供应商是集团下属企业，需提供在集团LDAP中的ID.")
-//  public String getCiticOrgId() {
-//    return citicOrgId;
-//  }
-//
-//  public void setCiticOrgId(String citicOrgId) {
-//    this.citicOrgId = citicOrgId;
-//  }
+  @JsonProperty("citic_org_id")
+  @ApiModelProperty(value = "如果这个供应商是集团下属企业，需提供在集团LDAP中的ID.")
+  public String getCiticOrgId() {
+    return citicOrgId;
+  }
+
+  public void setCiticOrgId(String citicOrgId) {
+    this.citicOrgId = citicOrgId;
+  }
 
   public Supplier name(String name) {
     this.name = name;
@@ -270,7 +270,7 @@ public class Supplier   {
     }
     Supplier supplier = (Supplier) o;
     return Objects.equals(this.id, supplier.id) &&
-//        Objects.equals(this.citicOrgId, supplier.citicOrgId) &&
+        Objects.equals(this.citicOrgId, supplier.citicOrgId) &&
         Objects.equals(this.name, supplier.name) &&
         Objects.equals(this.score, supplier.score) &&
         Objects.equals(this.isACitic, supplier.isACitic) &&
@@ -283,8 +283,7 @@ public class Supplier   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, score, isACitic, lan, payment, credential, metadata, services);
-//    return Objects.hash(id, citicOrgId, name, score, isACitic, lan, payment, credential, metadata, services);
+    return Objects.hash(id, citicOrgId, name, score, isACitic, lan, payment, credential, metadata, services);
   }
 
 
@@ -294,7 +293,7 @@ public class Supplier   {
     sb.append("class Supplier {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-//    sb.append("    citicOrgId: ").append(toIndentedString(citicOrgId)).append("\n");
+    sb.append("    citicOrgId: ").append(toIndentedString(citicOrgId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
     sb.append("    isACitic: ").append(toIndentedString(isACitic)).append("\n");

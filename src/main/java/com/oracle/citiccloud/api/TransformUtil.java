@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,27 +20,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.citiccloud.model.Catalog;
+import com.oracle.citiccloud.model.Supplier;
+import com.oracle.citiccloud.model.Service;
 import com.oracle.citiccloud.model.Instances;
 import com.oracle.citiccloud.model.ModelConfiguration;
 import com.oracle.citiccloud.model.Operations;
 import com.oracle.citiccloud.model.dbaas.resp.DbaasView;
 import com.oracle.localdbconn.DbConnection;
-import com.oracle.citiccloud.model.Supplier;
-import com.oracle.citiccloud.model.Service;
-
 
 public final class TransformUtil {
 
 	public final static String SERVICE_NAME_DBCS = "dbaas";
 	public final static String SERVICE_NAME_JCS = "jaas";
 
-	public static void main(String[] args){
-
-		Catalog c = getCatalog();
-
-		System.out.println(c.getSuppliers().get(0).getName());
-
-	}
 	public static Catalog getCatalog() {
 		if (catalog == null) {
 			catalog = new Catalog();
@@ -56,7 +47,6 @@ public final class TransformUtil {
 					if(catalog.getSuppliers().size() > 0) {
 						Supplier spl = catalog.getSuppliers().get(0);
 						List<Service> svcList = spl.getServices();
-
 						for (int i = 0; i < svcList.size(); i++) {
 							Service svc = svcList.get(i);
 							String md = readJsonFile(svc.getName() + ".md");
@@ -64,7 +54,6 @@ public final class TransformUtil {
 						}
 					}
 				}
-
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -75,8 +64,6 @@ public final class TransformUtil {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-
 		}
 
 		return catalog;
@@ -212,10 +199,8 @@ public final class TransformUtil {
 	}
 
 	public static String readJsonFile(String fileName) {
-
 		ClassLoader classLoader = TransformUtil.class.getClassLoader();
 		File file = new File(classLoader.getResource(fileName).getFile());
-
 		BufferedReader reader = null;
 		String laststr = "";
 		try {
@@ -237,12 +222,7 @@ public final class TransformUtil {
 		}
 		return laststr;
 	}
-    private static void DelNull(Supplier sp)
-	{
-		sp.setId(sp.getId()==null?"":sp.getId());
-		sp.setName(sp.getName()==null?"":sp.getName());
-		sp.setScore(sp.getScore()==null?"":sp.getScore());
-	}
+
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static Catalog catalog = null;
 
