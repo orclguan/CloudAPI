@@ -54,7 +54,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 </table>
 ## 4、Oracle数据库云服务能力分析
 
-![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0a77b6b7-452a-44d6-9207-6fc4626109ed.png){width="10" height="10"}
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0a77b6b7-452a-44d6-9207-6fc4626109ed.png)
 
 ### 4.1、自动供应
 
@@ -183,7 +183,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 <tr>
 <td></td>
 <td><font color="#000000">11g</font></td>
-<thd><font color="#000000">12c</font></td>
+<td><font color="#000000">12c</font></td>
 <td><font color="#000000">Cloud Edition</font></td>
 </tr>
 <tr>
