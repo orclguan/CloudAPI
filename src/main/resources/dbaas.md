@@ -33,12 +33,6 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 ## 3、Oracle数据库云服务多版本选择
 
 <table dir="auto" class=\"table table-bordered table-striped table-condensed\">
-<thead>
-<tr>
-<th>版本</th>
-<th style="text-align: left">特征</th>
-</tr>
-</thead>
 <tbody>
 <tr>
 <td><strong>标准版1</strong></td>
@@ -66,22 +60,31 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/749930c6-a21c-4336-905d-5c5dec795657.png)
 
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f956c911-de41-4bf8-ab99-3014f5f99413.png) | 高效率、便捷供应数据库服务       |
-| ------------------ | ------------------- |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/e37ce9a8-b345-4965-a30f-cb6c72987d6a.png) | **批量工作实现标准化**       |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0372c3db-f4b3-4c81-ad03-da06c1f10838.png) | **创新、可行的新的数据库供应方式** |
-
+<table dir="auto">
+<tbody>
+<tr>
+       <td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f956c911-de41-4bf8-ab99-3014f5f99413.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f956c911-de41-4bf8-ab99-3014f5f99413.png" alt=""></a></div></td>
+       <td><strong>高效率、便捷供应数据库服务</strong></td>
+       </tr>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/e37ce9a8-b345-4965-a30f-cb6c72987d6a.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/e37ce9a8-b345-4965-a30f-cb6c72987d6a.png" alt=""></a></div></td>
+<td><strong>批量工作实现标准化</strong></td>
+</tr>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0372c3db-f4b3-4c81-ad03-da06c1f10838.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0372c3db-f4b3-4c81-ad03-da06c1f10838.png" alt=""></a></div></td>
+<td><strong>创新、可行的新的数据库供应方式</strong></td>
+</tr>
+</tbody>
+</table>
 ### 4.2、自动基础设施与数据库管理
 
 <table dir="auto" class=\"table table-bordered table-striped table-condensed\">
-<thead>
-<tr>
-<th><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" alt=""></a></div></th>
-<th>计算资源</th>
-<th>CPU 和 内存 随需分配</th>
-</tr>
-</thead>
 <tbody>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" alt=""></a></div></td>
+<td><strong>计算资源</strong></td>
+<td><strong>CPU 和 内存 随需分配</strong></td>
+</tr>
 <tr>
 <td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png" alt=""></a></div></td>
 <td><strong>块和对象存储</strong></td>
@@ -323,7 +326,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/790064f6-a570-48ba-9b5e-f8049b0620aa.png)
 
-|<table dir="auto">
+<table dir="auto">
  <thead>
  <tr>
  <th></th>
@@ -484,12 +487,10 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 **数据库**
 
 <table dir="auto">
-<thead>
-<tr>
-<th><strong>数据库版本</strong></th>
-</tr>
-</thead>
 <tbody>
+<tr>
+<td><strong>数据库版本</strong></td>
+</tr>
 <tr>
 <td>提供 Oracle 数据库 11g、12.1  和 12.2 的专用数据库实例，您可以选择标准包、企业包、高性能包或极致性能包。</td>
 </tr>
@@ -516,12 +517,10 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 **数据访问**
 
 <table dir="auto">
-<thead>
-<tr>
-<th><strong>管理访问</strong></th>
-</tr>
-</thead>
 <tbody>
+<tr>
+<td><strong>管理访问</strong></td>
+</tr>
 <tr>
 <td>通过 SSH、SQL 开发人员工具、数据泵、SQL*Plus 以及其他工具对数据进行管理访问。</td>
 </tr>
@@ -548,12 +547,10 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 **管理**
 
 <table dir="auto">
-<thead>
-<tr>
-<th><strong>扩展</strong></th>
-</tr>
-</thead>
 <tbody>
+<tr>
+<td><strong>扩展</strong></td>
+</tr>
 <tr>
 <td>通过 Web 控制台（或 REST API）控制存储和计算能力扩展。提供超出订阅的突发容量和计量式计算服务，支持您经济高效地处理高峰负载。</td>
 </tr>
