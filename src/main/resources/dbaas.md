@@ -73,92 +73,372 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ### 4.2、自动基础设施与数据库管理
 
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png) | 计算资源                  | CPU 和 内存 随需分配        |
-| ------------------ | --------------------- | -------------------- |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png) | **块和对象存储**            | **增容、归档（加密）**        |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/23693508-9244-4e84-a71c-67b2c1d6f416.png) | **升级和补丁**             | **自动化升级**            |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/bc40c72e-421f-4099-9d4a-ef966530cc50.png) | **Point-in-time 恢复**  | **从人为错误中恢复**         |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8c9e9e96-b198-4ea2-ae2b-7f06be652b85.png) | **Point-to-point 网络** | **仅打开必需的端口**         |
-| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/97a583c0-901c-4232-8330-ee285c87daf4.png) | **服务集成**              | **当需要时，增加其他PaaS 服务** |
-
+<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<thead>
+<tr>
+<th><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" alt=""></a></div></th>
+<th>计算资源</th>
+<th>CPU 和 内存 随需分配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png" alt=""></a></div></td>
+<td><strong>块和对象存储</strong></td>
+<td><strong>增容、归档（加密）</strong></td>
+</tr>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/23693508-9244-4e84-a71c-67b2c1d6f416.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/23693508-9244-4e84-a71c-67b2c1d6f416.png" alt=""></a></div></td>
+<td><strong>升级和补丁</strong></td>
+<td><strong>自动化升级</strong></td>
+</tr>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/bc40c72e-421f-4099-9d4a-ef966530cc50.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/bc40c72e-421f-4099-9d4a-ef966530cc50.png" alt=""></a></div></td>
+<td><strong>Point-in-time 恢复</strong></td>
+<td><strong>从人为错误中恢复</strong></td>
+</tr>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8c9e9e96-b198-4ea2-ae2b-7f06be652b85.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8c9e9e96-b198-4ea2-ae2b-7f06be652b85.png" alt=""></a></div></td>
+<td><strong>Point-to-point 网络</strong></td>
+<td><strong>仅打开必需的端口</strong></td>
+</tr>
+<tr>
+<td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/97a583c0-901c-4232-8330-ee285c87daf4.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/97a583c0-901c-4232-8330-ee285c87daf4.png" alt=""></a></div></td>
+<td><strong>服务集成</strong></td>
+<td><strong>当需要时，增加其他PaaS 服务</strong></td>
+</tr>
+</tbody>
+</table>
 ### 4.3、安全
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7740f9cf-47c5-4fdf-957a-c2f4f91bcd12.png)
 
-|                             | 11g  | 12c  | Cloud Edition |
-| --------------------------- | ---- | ---- | ------------- |
-| Transparent Data Encryption | √    | √    | EE, HP, EP    |
-| Database Vault*             | √    | √    | HP, EP        |
-| Audit Vault*                | √    | √    | HP, EP        |
-| Database Firewall*          | √    | √    | HP, EP        |
-| Key Vault                   | √    | √    | EE, HP, EP    |
-| Data Redaction              | √    | √    | EE, HP, EP    |
-| Data Masking                |      | √    | EE, HP, EP    |
-| Auditing                    | √    | √    | EE, HP, EP    |
-
+<table dir="auto">
+<thead>
+<tr>
+<th></th>
+<th>11g</th>
+<th>12c</th>
+<th>Cloud Edition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transparent Data Encryption</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Database Vault*</td>
+<td>√</td>
+<td>√</td>
+<td>HP, EP</td>
+</tr>
+<tr>
+<td>Audit Vault*</td>
+<td>√</td>
+<td>√</td>
+<td>HP, EP</td>
+</tr>
+<tr>
+<td>Database Firewall*</td>
+<td>√</td>
+<td>√</td>
+<td>HP, EP</td>
+</tr>
+<tr>
+<td>Key Vault</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Data Redaction</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Data Masking</td>
+<td></td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Auditing</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+</tbody>
+</table>
 ### 4.4、高可用性
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8213fbe7-003c-4d1e-b88d-5bd608c10213.png)
 
-|                            | 11g  | 12c  | Cloud Edition |
-| -------------------------- | ---- | ---- | ------------- |
-| Real Application Clusters* | √    | √    | EP            |
-| Data Guard                 | √    | √    | EE, HP, EP    |
-| Active Data Guard*         | √    | √    | EP            |
-| Golden Gate*               | √    | √    | HP, EP        |
-| Secure Backup              |      | √    | EE, HP, EP    |
-| Online Reorganization      |      | √    | EE, HP, EP    |
-| Edition-Based Redefinition |      | √    | EE, HP, EP    |
-| Flashback, Total Recall    | √    | √    | EE, HP, EP    |
-| Automated Rolling Upgrade* | √    | √    | EE, HP, EP    |
-| Failover to the Cloud*     | √    | √    | EE, HP, EP    |
-
+<table dir="auto">
+<thead>
+<tr>
+<th></th>
+<th>11g</th>
+<th>12c</th>
+<th>Cloud Edition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real Application Clusters*</td>
+<td>√</td>
+<td>√</td>
+<td>EP</td>
+</tr>
+<tr>
+<td>Data Guard</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Active Data Guard*</td>
+<td>√</td>
+<td>√</td>
+<td>EP</td>
+</tr>
+<tr>
+<td>Golden Gate*</td>
+<td>√</td>
+<td>√</td>
+<td>HP, EP</td>
+</tr>
+<tr>
+<td>Secure Backup</td>
+<td></td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Online Reorganization</td>
+<td></td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Edition-Based Redefinition</td>
+<td></td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Flashback, Total Recall</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Automated Rolling Upgrade*</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Failover to the Cloud*</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+</tbody>
+</table>
 ### 4.5、高性能
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0cc585bd-b833-41d8-bf6b-7d03886789cf.png)
 
-|                                 | 11g  | 12c  | Cloud Edition |
-| ------------------------------- | ---- | ---- | ------------- |
-| Multi version read consistency  | √    | √    | EE, HP, EP    |
-| Row level locking               | √    | √    | EE, HP, EP    |
-| In-Memory                       |      | √    | EP            |
-| Compression                     | √    | √    | HP, EP        |
-| Partitioning                    | √    | √    | EE, HP, EP    |
-| Hadoop, Big Data SQL, R*        |      | √    | Big Data      |
-| Cost based query optimizer      | √    | √    | EE, HP, EP    |
-| Scale-out with Oracle RAC*      | √    | √    | EP            |
-| Exadata Smartscan & Infiniband* | √    | √    | Exadata       |
-
+<table dir="auto">
+<thead>
+<tr>
+<th></th>
+<th>11g</th>
+<th>12c</th>
+<th>Cloud Edition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi version read consistency</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Row level locking</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>In-Memory</td>
+<td></td>
+<td>√</td>
+<td>EP</td>
+</tr>
+<tr>
+<td>Compression</td>
+<td>√</td>
+<td>√</td>
+<td>HP, EP</td>
+</tr>
+<tr>
+<td>Partitioning</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Hadoop, Big Data SQL, R*</td>
+<td></td>
+<td>√</td>
+<td>Big Data</td>
+</tr>
+<tr>
+<td>Cost based query optimizer</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Scale-out with Oracle RAC*</td>
+<td>√</td>
+<td>√</td>
+<td>EP</td>
+</tr>
+<tr>
+<td>Exadata Smartscan &amp; Infiniband*</td>
+<td>√</td>
+<td>√</td>
+<td>Exadata</td>
+</tr>
+</tbody>
+</table>
 ### 4.6、使用多租户选件简化整合/部署/集成
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/790064f6-a570-48ba-9b5e-f8049b0620aa.png)
 
-|                                          | 12c  | Cloud Edition |
-| ---------------------------------------- | ---- | ------------- |
-| PDB Deployment                           | √    | HP, EP        |
-| PDB Cloning                              | √    | HP, EP        |
-| PDB Self Service App                     | √    | HP, EP        |
-| PDB Migration                            | √    | EE, HP, EP    |
-| High Density Consolidation               | √    | HP, EP        |
-| Automated Provisioning and  Configuration | √    | HP, EP        |
-| PDB Resource Management                  | √    | HP, EP        |
-
+|<table dir="auto">
+ <thead>
+ <tr>
+ <th></th>
+ <th>12c</th>
+ <th>Cloud Edition</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>PDB Deployment</td>
+ <td>√</td>
+ <td>HP, EP</td>
+ </tr>
+ <tr>
+ <td>PDB Cloning</td>
+ <td>√</td>
+ <td>HP, EP</td>
+ </tr>
+ <tr>
+ <td>PDB Self Service App</td>
+ <td>√</td>
+ <td>HP, EP</td>
+ </tr>
+ <tr>
+ <td>PDB Migration</td>
+ <td>√</td>
+ <td>EE, HP, EP</td>
+ </tr>
+ <tr>
+ <td>High Density Consolidation</td>
+ <td>√</td>
+ <td>HP, EP</td>
+ </tr>
+ <tr>
+ <td>Automated Provisioning and  Configuration</td>
+ <td>√</td>
+ <td>HP, EP</td>
+ </tr>
+ <tr>
+ <td>PDB Resource Management</td>
+ <td>√</td>
+ <td>HP, EP</td>
+ </tr>
+ </tbody>
+ </table>
 ### 4.7、数据库应用开发特性
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/9361c984-9015-445d-848d-2e4fd3bd47aa.png)
 
-| SQL and PL/SQL      | 11g  | 12c  | Cloud Edition |
-| ------------------- | ---- | ---- | ------------- |
-| Java in Database    | √    | √    | EE, HP, EP    |
-| Analytics           | √    | √    | EE, HP, EP    |
-| Text                | √    | √    | HP, EP        |
-| Regular Expressions | √    | √    | EE, HP, EP    |
-| Spatial             | √    | √    | EE, HP, EP    |
-| Pattern Matching    |      | √    | EE, HP, EP    |
-| Database XML        | √    | √    | EE, HP, EP    |
-| Database JSON       |      | √    | EE, HP, EP    |
-| AQ                  | √    | √    | EE, HP, EP    |
-
+<table dir="auto">
+<thead>
+<tr>
+<th>SQL and PL/SQL</th>
+<th>11g</th>
+<th>12c</th>
+<th>Cloud Edition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java in Database</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>√</td>
+<td>√</td>
+<td>HP, EP</td>
+</tr>
+<tr>
+<td>Regular Expressions</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Spatial</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Pattern Matching</td>
+<td></td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Database XML</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>Database JSON</td>
+<td></td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+<tr>
+<td>AQ</td>
+<td>√</td>
+<td>√</td>
+<td>EE, HP, EP</td>
+</tr>
+</tbody>
+</table>
 ## 5、Oracle数据库云服务开发与管理终端
 
 -   在网站cloud.oracle.com 上数据库服务终端
@@ -203,40 +483,104 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 **数据库**
 
-| **数据库版本**                                |
-| ---------------------------------------- |
-| 提供 Oracle 数据库 11g、12.1  和 12.2 的专用数据库实例，您可以选择标准包、企业包、高性能包或极致性能包。 |
-| **服务包**                                  |
-| 标准包和企业包具有各自的内部部署功能；此外，在这两种包中都增加了透明数据加密功能。高性能包增加了除 RAC、内存数据库和活动数据卫士以外的所有数据库选件。极致性能包具有全部选件。 |
-| **数据库容器化**                               |
-| Oracle  数据库 12c 包括 Oracle 多租户选件，可用于管理可插拔式数据库。 |
-| **开发运维**                                 |
-| 创建测试主数据并屏蔽敏感数据。创建克隆和执行生命周期管理，实现敏捷开发。     |
-
+<table dir="auto">
+<thead>
+<tr>
+<th><strong>数据库版本</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>提供 Oracle 数据库 11g、12.1  和 12.2 的专用数据库实例，您可以选择标准包、企业包、高性能包或极致性能包。</td>
+</tr>
+<tr>
+<td><strong>服务包</strong></td>
+</tr>
+<tr>
+<td>标准包和企业包具有各自的内部部署功能；此外，在这两种包中都增加了透明数据加密功能。高性能包增加了除 RAC、内存数据库和活动数据卫士以外的所有数据库选件。极致性能包具有全部选件。</td>
+</tr>
+<tr>
+<td><strong>数据库容器化</strong></td>
+</tr>
+<tr>
+<td>Oracle  数据库 12c 包括 Oracle 多租户选件，可用于管理可插拔式数据库。</td>
+</tr>
+<tr>
+<td><strong>开发运维</strong></td>
+</tr>
+<tr>
+<td>创建测试主数据并屏蔽敏感数据。创建克隆和执行生命周期管理，实现敏捷开发。</td>
+</tr>
+</tbody>
+</table>
 **数据访问**
 
-| **管理访问**                                 |
-| ---------------------------------------- |
-| 通过 SSH、SQL 开发人员工具、数据泵、SQL*Plus 以及其他工具对数据进行管理访问。 |
-| **数据访问**                                 |
-| 使用任何可用的 Oracle 客户端语言库来访问您的专用实例，包括 Oracle Net  (SQL*Net)、JDBC、JSON 及其他驱动程序。 |
-| **工具**                                   |
-| 可使用企业管理器、SQL 开发人员工具、Application Express 或者其他 Oracle 工具或第三方工具。 |
-| **安全网络访问**                               |
-| 使用 IPsec VPN 选件进行安全访问。                   |
-
+<table dir="auto">
+<thead>
+<tr>
+<th><strong>管理访问</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通过 SSH、SQL 开发人员工具、数据泵、SQL*Plus 以及其他工具对数据进行管理访问。</td>
+</tr>
+<tr>
+<td><strong>数据访问</strong></td>
+</tr>
+<tr>
+<td>使用任何可用的 Oracle 客户端语言库来访问您的专用实例，包括 Oracle Net  (SQL*Net)、JDBC、JSON 及其他驱动程序。</td>
+</tr>
+<tr>
+<td><strong>工具</strong></td>
+</tr>
+<tr>
+<td>可使用企业管理器、SQL 开发人员工具、Application Express 或者其他 Oracle 工具或第三方工具。</td>
+</tr>
+<tr>
+<td><strong>安全网络访问</strong></td>
+</tr>
+<tr>
+<td>使用 IPsec VPN 选件进行安全访问。</td>
+</tr>
+</tbody>
+</table>
 **管理**
 
-| **扩展**                                   |
-| ---------------------------------------- |
-| 通过 Web 控制台（或 REST API）控制存储和计算能力扩展。提供超出订阅的突发容量和计量式计算服务，支持您经济高效地处理高峰负载。 |
-| **打补丁和升级**                               |
-| 使用 Web 控制台（或 REST API）中内置的自动化打补丁工具，轻松应用每季度的数据库补丁程序。使用简单的迁移过程来验证升级。 |
-| **安全**                                   |
-| 使用计算服务的 Web 控制台（或 REST API）管理安全规则和 IPsec 列表，实现灵活的企业级网络安全。利用所有 Oracle 数据库深度防御安全功能，实现全面的数据安全。 |
-| **备份选项**                                 |
-| 安排自动化备份，加快本地存储、Oracle 云对象存储或两者的备份速度。基于备份副本实例化新服务，以便进行开发和测试。 |
-| **弹性**                                   |
-| 根据自己的需要增加或减少计算资源、内存或存储空间                 |
-
+<table dir="auto">
+<thead>
+<tr>
+<th><strong>扩展</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通过 Web 控制台（或 REST API）控制存储和计算能力扩展。提供超出订阅的突发容量和计量式计算服务，支持您经济高效地处理高峰负载。</td>
+</tr>
+<tr>
+<td><strong>打补丁和升级</strong></td>
+</tr>
+<tr>
+<td>使用 Web 控制台（或 REST API）中内置的自动化打补丁工具，轻松应用每季度的数据库补丁程序。使用简单的迁移过程来验证升级。</td>
+</tr>
+<tr>
+<td><strong>安全</strong></td>
+</tr>
+<tr>
+<td>使用计算服务的 Web 控制台（或 REST API）管理安全规则和 IPsec 列表，实现灵活的企业级网络安全。利用所有 Oracle 数据库深度防御安全功能，实现全面的数据安全。</td>
+</tr>
+<tr>
+<td><strong>备份选项</strong></td>
+</tr>
+<tr>
+<td>安排自动化备份，加快本地存储、Oracle 云对象存储或两者的备份速度。基于备份副本实例化新服务，以便进行开发和测试。</td>
+</tr>
+<tr>
+<td><strong>弹性</strong></td>
+</tr>
+<tr>
+<td>根据自己的需要增加或减少计算资源、内存或存储空间</td>
+</tr>
+</tbody>
+</table>
 
