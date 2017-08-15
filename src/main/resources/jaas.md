@@ -116,11 +116,33 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ## 5、视频资源链接
 
-| 视频链接                                     | 内容介绍                                     |
-| ---------------------------------------- | ---------------------------------------- |
-| [Java  云服务：Oracle 云平台服务概览](https://www.youtube.com/embed/FLSG9XGsPtw?autoplay=1) | 本视频简要介绍了 Oracle 云当前提供的 PaaS 服务 — Oracle 数据库云服务和 Oracle Java  云服务 |
-| [Java  云服务：了解 Oracle Java 云服务产品](https://www.youtube.com/embed/fWHQuV9482w?autoplay=1) | 了解新 Java 云服务的特性和功能，包括实例创建（设置）、应用部署、补丁操作、备份和恢复。 |
-| [Java  云服务：创建 Oracle Java 云服务实例](https://www.youtube.com/embed/b3T_MuB-7WY?autoplay=1) | 详细演练如何创建新的 Java 云服务实例。                   |
-| [Java  云服务：备份和恢复 Oracle Java 云服务实例](https://www.youtube.com/embed/lwkTiC5PiMU?autoplay=1) | 详细演练备份和恢复新 Java 云服务实例的流程。                |
-| [Java  云服务：将应用部署到 Oracle Java 云服务实例](https://www.youtube.com/embed/T_DnKeGdXhA?autoplay=1) | 了解如何在 Oracle Java 云服务中部署实例               |
-
+<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<thead>
+<tr>
+<th>视频链接</th>
+<th>内容介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.youtube.com/embed/FLSG9XGsPtw?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：Oracle 云平台服务概览</a></td>
+<td>本视频简要介绍了 Oracle 云当前提供的 PaaS 服务 — Oracle 数据库云服务和 Oracle Java  云服务</td>
+</tr>
+<tr>
+<td><a href="https://www.youtube.com/embed/fWHQuV9482w?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：了解 Oracle Java 云服务产品</a></td>
+<td>了解新 Java 云服务的特性和功能，包括实例创建（设置）、应用部署、补丁操作、备份和恢复。</td>
+</tr>
+<tr>
+<td><a href="https://www.youtube.com/embed/b3T_MuB-7WY?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：创建 Oracle Java 云服务实例</a></td>
+<td>详细演练如何创建新的 Java 云服务实例。</td>
+</tr>
+<tr>
+<td><a href="https://www.youtube.com/embed/lwkTiC5PiMU?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：备份和恢复 Oracle Java 云服务实例</a></td>
+<td>详细演练备份和恢复新 Java 云服务实例的流程。</td>
+</tr>
+<tr>
+<td><a href="https://www.youtube.com/embed/T_DnKeGdXhA?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：将应用部署到 Oracle Java 云服务实例</a></td>
+<td>了解如何在 Oracle Java 云服务中部署实例</td>
+</tr>
+</tbody>
+</table>
