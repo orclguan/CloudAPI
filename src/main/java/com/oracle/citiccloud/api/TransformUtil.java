@@ -203,11 +203,13 @@ public final class TransformUtil {
 		File file = new File(classLoader.getResource(fileName).getFile());
 		BufferedReader reader = null;
 		String laststr = "";
+		boolean bl = fileName.lastIndexOf(".md") >= 0?true:false;
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
 			String tempString = null;
 			while ((tempString = reader.readLine()) != null) {
-//				tempString += "//n";
+				if( bl == true)
+				     tempString += "\n";
 				laststr += tempString;
 			}
 			reader.close();
