@@ -49,8 +49,8 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 <table>
 <tbody>
 <tr>
-<td><strong>云堆栈</strong></td>
-<td>使用 Oracle云堆栈将您的应用堆栈定义为一个组合。您的云堆栈可以包含IaaS 和PaaS 资源，甚至可以有依赖于其他堆栈资源的资源。</td>
+<td><font color="#000000"><strong>云堆栈</strong></font></td>
+<td><font color="#000000">使用 Oracle云堆栈将您的应用堆栈定义为一个组合。您的云堆栈可以包含IaaS 和PaaS 资源，甚至可以有依赖于其他堆栈资源的资源。</font></td>
 </tr>
 <tr>
 <td><strong>连续集成和交付</strong></td>
@@ -117,8 +117,8 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 <table>
 <tbody>
 <tr>
-<td><a href="https://www.youtube.com/embed/FLSG9XGsPtw?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：Oracle 云平台服务概览</a></td>
-<td>本视频简要介绍了 Oracle 云当前提供的 PaaS 服务 — Oracle 数据库云服务和 Oracle Java  云服务</td>
+<td><font color="#000000"><a href="https://www.youtube.com/embed/FLSG9XGsPtw?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：Oracle 云平台服务概览</a></font></td>
+<td><font color="#000000">本视频简要介绍了 Oracle 云当前提供的 PaaS 服务 — Oracle 数据库云服务和 Oracle Java  云服务</font></td>
 </tr>
 <tr>
 <td><a href="https://www.youtube.com/embed/fWHQuV9482w?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：了解 Oracle Java 云服务产品</a></td>
