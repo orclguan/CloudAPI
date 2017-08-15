@@ -19,7 +19,7 @@
     "display_name": "Oracle云",
     "description": "Oracle云在业内是一款覆盖面非常广、集成度非常高的公有云",
     "long_description": "Oracle云在业内是一款覆盖面非常广、集成度非常高的公有云。它在软件即服务 (SaaS)、平台即服务 (PaaS) 和基础设施即服务 (IaaS) 这些领域提供先进的云服务，甚至允许您将 Oracle 云置于您自己的数据中心内。Oracle 云可提高业务敏捷性、降低成本并降低 IT 复杂性，从而帮助公司推动创新和业务转型。",
-    "image_url": "https://cloud.oracle.com/res/images/header/oracle-cloud-logo.png",
+    "image_url": "https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/54b0e3af-8499-497e-8994-7acd60ef10d8.png",
     "document_url": "https://docs.oracle.com/en/cloud/",
     "support_url": "http://support.oracle.com/"
   },
@@ -33,7 +33,7 @@
 		  "description": "Oracle数据库云服务",
 		  "long_description": "Oracle数据库云服务经过企业验证，支持从开发/测试到大规模生产部署的任何规模的负载。默认情况下，系统会对数据进行加密，提供多重的深度安全保护。该数据库云服务具有高可用性和可扩展性，速度快，简单灵活，能够加快价值实现速度并节省开支。",
 		  "markdown_desc":"dbcs",
-		  "image_url": "images/icon-database-cloud_2x.png",
+		  "image_url": "https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/4b78157a-757e-4c16-be33-7ca76bc678ae.png",
 		  "document_url": "http://docs.oracle.com/en/cloud/paas/database-dbaas-cloud/index.html",
 		  "support_url": "http://support.oracle.com/"
 		},
@@ -265,7 +265,7 @@
 		  "description": "方便、快速、敏捷地部署任意 Java 应用。全面、灵活地控制公有云中的应用。",
 		  "long_description": "Oracle Java 云服务是进行开发、测试、用户验收测试、暂时存放和生产的理想之选。快速创建单独的专用 WebLogic 服务器环境（可选择 11g 或 12c 版本）来运行整个集群并支持扩展。",
 		  "markdown_desc":"jcs",
-		  "image_url": "images/icon-java-cloud_2x.png",
+		  "image_url": "https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/89d07fb1-a9b1-4c81-aca8-883a870636d1.png",
 		  "document_url": "http://docs.oracle.com/en/cloud/paas/java-cloud/index.html",
 		  "support_url": "http://support.oracle.com/"
 		},

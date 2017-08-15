@@ -1,6 +1,6 @@
 ## 1、Oracle Java云服务的通用介绍
 
-![](images/j1.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f109c5c2-a231-457d-a918-770261176fd9.png)
 
 Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的完整平台和基础架构云解决方案。Oracle Java 云服务立足于 Oracle 计算云服务所提供的基础架构，使用它可以快速供应应用程序环境，该环境以 Oracle WebLogic Server 作为应用程序容器，以 OracleTraffic Director 作为软件负载平衡器。
 
@@ -17,7 +17,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ### 2.1、在云中开发和测试
 
-![](images/j2.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/fd9e1600-be51-4459-96cc-0de5e1f44dc3.png)
 
 - 更快的创建开发/测试实例
 - 开发环境与测试环境集成
@@ -28,7 +28,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ### 2.2、将应用迁移至云
 
-![](images/j3.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/60fa8487-057c-4a13-8c4d-784ba31bc9e1.png)
 
 - 降低总体成本 — 无数据中心
 - 通过面向生产类操作（备份、恢复、管理、监视、扩展、补丁）的 内置工具降低持续管理成本
@@ -37,7 +37,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ### 2.3、在云中开发新应用
 
-![](images/j4.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/349124d1-29b0-4d55-95fc-ecf7734683f7.png)
 
 - 简化的 Java 基础架构，助力构建云原生应用
 - 广泛的云服务组合可满足一切技术需求
@@ -59,14 +59,14 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ### 4.1、供应
 
-![](images/j5.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/a8ceb9ac-6071-4069-89ed-380bc7f02b05.png)
 
 - 降低成本；通过自助服务快速供应加快产品上市
 - 消除创建复杂多层环境过程中的错误，节省成本
 
 ### 4.2、扩展
 
-![](images/j6.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0acbaf9f-9b68-4627-b824-ad002ceb79a7.png)
 
 - 永远不会容量不足
 - 一键式轻松添加或删除容量
@@ -74,7 +74,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ### 4.3、备份
 
-![](images/j7.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/fb3cbf45-0fbc-4f8c-a0da-99692164a402.png)
 
 - 永不丢失数据或应用
 - 每日、每周或按需自动备份
@@ -82,7 +82,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ### 4.4、补丁
 
-![](images/j8.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/edebb0be-ad53-42ae-b3a3-c33719a55b28.png)
 
 - 总是保持最新
 - 一键式轻松修补整个环境

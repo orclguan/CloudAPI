@@ -43,30 +43,30 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ## 4、Oracle数据库云服务能力分析
 
-![](images/p1.png){width="10" height="10"}
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0a77b6b7-452a-44d6-9207-6fc4626109ed.png){width="10" height="10"}
 
 ### 4.1、自动供应
 
-![](images/p2.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/749930c6-a21c-4336-905d-5c5dec795657.png)
 
-| ![](images/s1.png) | 高效率、便捷供应数据库服务       |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f956c911-de41-4bf8-ab99-3014f5f99413.png) | 高效率、便捷供应数据库服务       |
 | ------------------ | ------------------- |
-| ![](images/s2.png) | **批量工作实现标准化**       |
-| ![](images/s3.png) | **创新、可行的新的数据库供应方式** |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/e37ce9a8-b345-4965-a30f-cb6c72987d6a.png) | **批量工作实现标准化**       |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0372c3db-f4b3-4c81-ad03-da06c1f10838.png) | **创新、可行的新的数据库供应方式** |
 
 ### 4.2、自动基础设施与数据库管理
 
-| ![](images/s4.png) | 计算资源                  | CPU 和 内存 随需分配        |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png) | 计算资源                  | CPU 和 内存 随需分配        |
 | ------------------ | --------------------- | -------------------- |
-| ![](images/s5.png) | **块和对象存储**            | **增容、归档（加密）**        |
-| ![](images/s6.png) | **升级和补丁**             | **自动化升级**            |
-| ![](images/s7.png) | **Point-in-time 恢复**  | **从人为错误中恢复**         |
-| ![](images/s8.png) | **Point-to-point 网络** | **仅打开必需的端口**         |
-| ![](images/s9.png) | **服务集成**              | **当需要时，增加其他PaaS 服务** |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png) | **块和对象存储**            | **增容、归档（加密）**        |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/23693508-9244-4e84-a71c-67b2c1d6f416.png) | **升级和补丁**             | **自动化升级**            |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/bc40c72e-421f-4099-9d4a-ef966530cc50.png) | **Point-in-time 恢复**  | **从人为错误中恢复**         |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8c9e9e96-b198-4ea2-ae2b-7f06be652b85.png) | **Point-to-point 网络** | **仅打开必需的端口**         |
+| ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/97a583c0-901c-4232-8330-ee285c87daf4.png) | **服务集成**              | **当需要时，增加其他PaaS 服务** |
 
 ### 4.3、安全
 
-![](images/p3.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7740f9cf-47c5-4fdf-957a-c2f4f91bcd12.png)
 
 |                             | 11g  | 12c  | Cloud Edition |
 | --------------------------- | ---- | ---- | ------------- |
@@ -81,7 +81,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ### 4.4、高可用性
 
-![](images/p4.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8213fbe7-003c-4d1e-b88d-5bd608c10213.png)
 
 |                            | 11g  | 12c  | Cloud Edition |
 | -------------------------- | ---- | ---- | ------------- |
@@ -98,7 +98,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ### 4.5、高性能
 
-![](images/p5.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0cc585bd-b833-41d8-bf6b-7d03886789cf.png)
 
 |                                 | 11g  | 12c  | Cloud Edition |
 | ------------------------------- | ---- | ---- | ------------- |
@@ -114,7 +114,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ### 4.6、使用多租户选件简化整合/部署/集成
 
-![](images/p6.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/790064f6-a570-48ba-9b5e-f8049b0620aa.png)
 
 |                                          | 12c  | Cloud Edition |
 | ---------------------------------------- | ---- | ------------- |
@@ -128,7 +128,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ### 4.7、数据库应用开发特性
 
-![](images/p7.png)
+![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/9361c984-9015-445d-848d-2e4fd3bd47aa.png)
 
 | SQL and PL/SQL      | 11g  | 12c  | Cloud Edition |
 | ------------------- | ---- | ---- | ------------- |
