@@ -372,8 +372,8 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
  </tr>
  </tbody>
  </table>
+ 
 ### 4.7、数据库应用开发特性
-
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/9361c984-9015-445d-848d-2e4fd3bd47aa.png)
 
 <table dir="auto">
