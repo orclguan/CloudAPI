@@ -1,4 +1,4 @@
-## 1、Oracle数据库云服务通用介绍
+# 1、Oracle数据库云服务通用介绍
 
 Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企业级数据库云平台
 
@@ -16,7 +16,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 -   行业级物理和逻辑安全性
 
-## 2、Oracle数据库云服务特性介绍
+# 2、Oracle数据库云服务特性介绍
 
 -   具备Oracle数据库的全部功能，包括SQL和PL/SQL支持
 
@@ -30,7 +30,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 -   用户信息库和一次性登录(SSO )的集成式身份管理
 
-## 3、Oracle数据库云服务多版本选择
+# 3、Oracle数据库云服务多版本选择
 
 企业无论部署生产负载还是部署开发与测试，都可以在多个版本中进行选择，包括：
 
@@ -41,11 +41,11 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | **企业高性能版（包含大部分数据库选件）** | Multitenant<br/>Data    Guard<br/>Partitioning<br/> Advanced    Compression<br/>Advanced    Security <br/>Label    Security<br/>Database    Vault<br/>Real    Application Testing<br/>OLAP,    Analytics, Spatial and Graph<br/>Management    Packs |
 | **企业极致性能版（包含所有数据库选件）** | Real    Application Clusters (RAC) <br/>In    Memory<br/>Active    Data Guard<br/>Others    all… |
 
-## 4、Oracle数据库云服务能力分析
+# 4、Oracle数据库云服务能力分析
 
 ![](images/p1.png){width="10" height="10"}
 
-### 4.1、自动供应
+## 4.1、自动供应
 
 ![](images/p2.png)
 
@@ -54,7 +54,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | ![](images/s2.png) | **批量工作实现标准化**       |
 | ![](images/s3.png) | **创新、可行的新的数据库供应方式** |
 
-### 4.2、自动基础设施与数据库管理
+## 4.2、自动基础设施与数据库管理
 
 | ![](images/s4.png) | 计算资源                  | CPU 和 内存 随需分配        |
 | ------------------ | --------------------- | -------------------- |
@@ -64,7 +64,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | ![](images/s8.png) | **Point-to-point 网络** | **仅打开必需的端口**         |
 | ![](images/s9.png) | **服务集成**              | **当需要时，增加其他PaaS 服务** |
 
-### 4.3、安全
+## 4.3、安全
 
 ![](images/p3.png)
 
@@ -79,7 +79,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | Data Masking                |      | √    | EE, HP, EP    |
 | Auditing                    | √    | √    | EE, HP, EP    |
 
-### 4.4、高可用性
+## 4.4、高可用性
 
 ![](images/p4.png)
 
@@ -96,7 +96,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | Automated Rolling Upgrade* | √    | √    | EE, HP, EP    |
 | Failover to the Cloud*     | √    | √    | EE, HP, EP    |
 
-### 4.5、高性能
+## 4.5、高性能
 
 ![](images/p5.png)
 
@@ -112,7 +112,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | Scale-out with Oracle RAC*      | √    | √    | EP            |
 | Exadata Smartscan & Infiniband* | √    | √    | Exadata       |
 
-### 4.6、使用多租户选件简化整合/部署/集成
+## 4.6、使用多租户选件简化整合/部署/集成
 
 ![](images/p6.png)
 
@@ -126,7 +126,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | Automated Provisioning and  Configuration | √    | HP, EP        |
 | PDB Resource Management                  | √    | HP, EP        |
 
-### 4.7、数据库应用开发特性
+## 4.7、数据库应用开发特性
 
 ![](images/p7.png)
 
@@ -142,7 +142,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 | Database JSON       |      | √    | EE, HP, EP    |
 | AQ                  | √    | √    | EE, HP, EP    |
 
-## 5、Oracle数据库云服务开发与管理终端
+# 5、Oracle数据库云服务开发与管理终端
 
 -   在网站cloud.oracle.com 上数据库服务终端
 
@@ -164,7 +164,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 -   Appliction Express (APEX)
 
-## 6、使用场景
+# 6、使用场景
 
 -   数据库供应：开发、测试、生产、数据库特性评估
 
@@ -182,7 +182,7 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 -   克隆12c 的可插拔数据库 (PDB)
 
-## 7、优势分析
+# 7、优势分析
 
 **数据库**
 
