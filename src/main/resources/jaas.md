@@ -46,7 +46,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ## 3、Oracle Java云服务特性介绍
 
-<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<table>
 <tbody>
 <tr>
 <td><strong>云堆栈</strong></td>
@@ -114,7 +114,7 @@ Oracle Java 云服务是一个构建、部署和管理 Java EE 应用程序的�
 
 ## 5、视频资源链接
 
-<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<table>
 <tbody>
 <tr>
 <td><a href="https://www.youtube.com/embed/FLSG9XGsPtw?autoplay=1" rel="nofollow noreferrer" target="_blank">Java  云服务：Oracle 云平台服务概览</a></td>
