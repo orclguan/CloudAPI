@@ -32,15 +32,32 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ## 3、Oracle数据库云服务多版本选择
 
-企业无论部署生产负载还是部署开发与测试，都可以在多个版本中进行选择，包括：
-
-| 版本                     | 特征                                       |
-| ---------------------- | :--------------------------------------- |
-| **标准版1**               | Transparent Data Encryption (TDE)<br/>Full database instance<br/>Up to 16 OCPUs |
-| **企业版（不含数据库选件）**       | Transparent    Data Encryption (TDE)<br/>Data    Guard<br/>All    standard EE features |
-| **企业高性能版（包含大部分数据库选件）** | Multitenant<br/>Data    Guard<br/>Partitioning<br/> Advanced    Compression<br/>Advanced    Security <br/>Label    Security<br/>Database    Vault<br/>Real    Application Testing<br/>OLAP,    Analytics, Spatial and Graph<br/>Management    Packs |
-| **企业极致性能版（包含所有数据库选件）** | Real    Application Clusters (RAC) <br/>In    Memory<br/>Active    Data Guard<br/>Others    all… |
-
+<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<thead>
+<tr>
+<th>版本</th>
+<th style="text-align: left">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>标准版1</strong></td>
+<td style="text-align: left">Transparent Data Encryption (TDE)<br>Full database instance<br>Up to 16 OCPUs</td>
+</tr>
+<tr>
+<td><strong>企业版（不含数据库选件）</strong></td>
+<td style="text-align: left">Transparent    Data Encryption (TDE)<br>Data    Guard<br>All    standard EE features</td>
+</tr>
+<tr>
+<td><strong>企业高性能版（包含大部分数据库选件）</strong></td>
+<td style="text-align: left">Multitenant<br>Data    Guard<br>Partitioning<br> Advanced    Compression<br>Advanced    Security <br>Label    Security<br>Database    Vault<br>Real    Application Testing<br>OLAP,    Analytics, Spatial and Graph<br>Management    Packs</td>
+</tr>
+<tr>
+<td><strong>企业极致性能版（包含所有数据库选件）</strong></td>
+<td style="text-align: left">Real    Application Clusters (RAC) <br>In    Memory<br>Active    Data Guard<br>Others    all…</td>
+</tr>
+</tbody>
+</table>
 ## 4、Oracle数据库云服务能力分析
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0a77b6b7-452a-44d6-9207-6fc4626109ed.png){width="10" height="10"}
