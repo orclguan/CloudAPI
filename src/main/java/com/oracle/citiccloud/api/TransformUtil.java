@@ -207,7 +207,7 @@ public final class TransformUtil {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
 			String tempString = null;
 			while ((tempString = reader.readLine()) != null) {
-				tempString += "//n";
+//				tempString += "//n";
 				laststr += tempString;
 			}
 			reader.close();
