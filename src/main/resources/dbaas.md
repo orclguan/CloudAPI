@@ -32,11 +32,11 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ## 3、Oracle数据库云服务多版本选择
 
-<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<table>
 <tbody>
 <tr>
-<td><strong>标准版1</strong></td>
-<td style="text-align: left">Transparent Data Encryption (TDE)<br>Full database instance<br>Up to 16 OCPUs</td>
+<td><font color="#000000"><strong>标准版1</strong></font></td>
+<td style="text-align: left"><font color="#000000">Transparent Data Encryption (TDE)<br>Full database instance<br>Up to 16 OCPUs</font></td>
 </tr>
 <tr>
 <td><strong>企业版（不含数据库选件）</strong></td>
@@ -60,11 +60,11 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/749930c6-a21c-4336-905d-5c5dec795657.png)
 
-<table dir="auto">
+<table >
 <tbody>
 <tr>
        <td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f956c911-de41-4bf8-ab99-3014f5f99413.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/f956c911-de41-4bf8-ab99-3014f5f99413.png" alt=""></a></div></td>
-       <td><strong>高效率、便捷供应数据库服务</strong></td>
+       <td><font color="#000000"><strong>高效率、便捷供应数据库服务</strong></font></td>
        </tr>
 <tr>
 <td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/e37ce9a8-b345-4965-a30f-cb6c72987d6a.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/e37ce9a8-b345-4965-a30f-cb6c72987d6a.png" alt=""></a></div></td>
@@ -78,12 +78,12 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 </table>
 ### 4.2、自动基础设施与数据库管理
 
-<table dir="auto" class=\"table table-bordered table-striped table-condensed\">
+<table>
 <tbody>
 <tr>
 <td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/3c31b296-66ff-481a-9344-767a108b8734.png" alt=""></a></div></td>
-<td><strong>计算资源</strong></td>
-<td><strong>CPU 和 内存 随需分配</strong></td>
+<td><font color="#000000"><strong>计算资源</strong></font></td>
+<td><font color="#000000"><strong>CPU 和 内存 随需分配</strong></font></td>
 </tr>
 <tr>
 <td><div class="image-container"><a class="no-attachment-icon" href="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png" target="_blank" rel="nofollow noreferrer"><img src="https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7abcf15b-c77b-43b2-b6c6-83d313b2766d.png" alt=""></a></div></td>
@@ -116,16 +116,14 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/7740f9cf-47c5-4fdf-957a-c2f4f91bcd12.png)
 
-<table dir="auto">
-<thead>
-<tr>
-<th></th>
-<th>11g</th>
-<th>12c</th>
-<th>Cloud Edition</th>
-</tr>
-</thead>
+<table>
 <tbody>
+<tr>
+<td></td>
+<td><font color="#000000">11g</font></td>
+<td><font color="#000000">12c</font></td>
+<td><font color="#000000">Cloud Edition</font></td>
+</tr>
 <tr>
 <td>Transparent Data Encryption</td>
 <td>√</td>
@@ -180,16 +178,14 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/8213fbe7-003c-4d1e-b88d-5bd608c10213.png)
 
-<table dir="auto">
-<thead>
-<tr>
-<th></th>
-<th>11g</th>
-<th>12c</th>
-<th>Cloud Edition</th>
-</tr>
-</thead>
+<table>
 <tbody>
+<tr>
+<td></td>
+<td><font color="#000000">11g</font></td>
+<thd><font color="#000000">12c</font></td>
+<td><font color="#000000">Cloud Edition</font></td>
+</tr>
 <tr>
 <td>Real Application Clusters*</td>
 <td>√</td>
@@ -256,16 +252,14 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/0cc585bd-b833-41d8-bf6b-7d03886789cf.png)
 
-<table dir="auto">
-<thead>
-<tr>
-<th></th>
-<th>11g</th>
-<th>12c</th>
-<th>Cloud Edition</th>
-</tr>
-</thead>
+<table>
 <tbody>
+<tr>
+<td><font color="#000000"></font></td>
+<td><font color="#000000">11g</font></td>
+<td><font color="#000000">12c</font></td>
+<td><font color="#000000">Cloud Edition</font></td>
+</tr>
 <tr>
 <td>Multi version read consistency</td>
 <td>√</td>
@@ -326,15 +320,13 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/790064f6-a570-48ba-9b5e-f8049b0620aa.png)
 
-<table dir="auto">
- <thead>
- <tr>
- <th></th>
- <th>12c</th>
- <th>Cloud Edition</th>
- </tr>
- </thead>
+<table>
  <tbody>
+  <tr>
+  <td></td>
+  <td><font color="#000000">12c</font></td>
+  <td><font color="#000000">Cloud Edition</font></td>
+  </tr>
  <tr>
  <td>PDB Deployment</td>
  <td>√</td>
@@ -376,16 +368,14 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 ### 4.7、数据库应用开发特性
 ![](https://public-supply-service.oss-cn-beijing.aliyuncs.com/public_dev_supplier/9361c984-9015-445d-848d-2e4fd3bd47aa.png)
 
-<table dir="auto">
-<thead>
-<tr>
-<th>SQL and PL/SQL</th>
-<th>11g</th>
-<th>12c</th>
-<th>Cloud Edition</th>
-</tr>
-</thead>
+<table>
 <tbody>
+<tr>
+<td><font color="#000000">SQL and PL/SQL</font></td>
+<td><font color="#000000">11g</font></td>
+<td><font color="#000000">12c</font></td>
+<td><font color="#000000">Cloud Edition</font></td>
+</tr>
 <tr>
 <td>Java in Database</td>
 <td>√</td>
@@ -486,10 +476,10 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 
 **数据库**
 
-<table dir="auto">
+<table>
 <tbody>
 <tr>
-<td><strong>数据库版本</strong></td>
+<td><font color="#000000"><strong>数据库版本</strong></font></td>
 </tr>
 <tr>
 <td>提供 Oracle 数据库 11g、12.1  和 12.2 的专用数据库实例，您可以选择标准包、企业包、高性能包或极致性能包。</td>
@@ -516,10 +506,10 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 </table>
 **数据访问**
 
-<table dir="auto">
+<table>
 <tbody>
 <tr>
-<td><strong>管理访问</strong></td>
+<td><font color="#000000"><strong>管理访问</strong></font></td>
 </tr>
 <tr>
 <td>通过 SSH、SQL 开发人员工具、数据泵、SQL*Plus 以及其他工具对数据进行管理访问。</td>
@@ -546,10 +536,10 @@ Oracle数据库云服务（DBCS）～适用于任何负载、任何业务的企�
 </table>
 **管理**
 
-<table dir="auto">
+<table>
 <tbody>
 <tr>
-<td><strong>扩展</strong></td>
+<td><font color="#000000"><strong>扩展</strong></font></td>
 </tr>
 <tr>
 <td>通过 Web 控制台（或 REST API）控制存储和计算能力扩展。提供超出订阅的突发容量和计量式计算服务，支持您经济高效地处理高峰负载。</td>
