@@ -261,7 +261,7 @@
         "name": "jaas",
         "score": "99",
 		"metadata": {
-		  "display_name": "Oracle Java云服务(即将上线，敬请期待！）",
+		  "display_name": "Oracle Java云服务",
 		  "description": "方便、快速、敏捷地部署任意 Java 应用。全面、灵活地控制公有云中的应用。",
 		  "long_description": "Oracle Java 云服务是进行开发、测试、用户验收测试、暂时存放和生产的理想之选。快速创建单独的专用 WebLogic 服务器环境（可选择 11g 或 12c 版本）来运行整个集群并支持扩展。",
 		  "markdown_desc":"jcs",
